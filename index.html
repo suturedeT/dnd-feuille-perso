@@ -503,16 +503,14 @@
     header { background: #1c1c1c !important; padding: 4px 12px !important; }
 
     /* ── Un onglet = une page ──────────────────────────────
-       zoom: 0.68 réduit le contenu à 68 % → tient sur A4
-       page-break-before force le saut entre chaque onglet */
+       Le zoom est appliqué dynamiquement par printSheet() en JS
+       pour s'adapter exactement à la hauteur réelle de chaque onglet */
     .page {
       display: block !important;
       padding: 4px !important;
       max-width: 100% !important;
-      zoom: 0.68;
-      page-break-inside: avoid;
     }
-    .page + .page { page-break-before: always; }
+    .page + .page { page-break-before: always; break-before: page; }
 
     /* ── Double bordure D&D à l'impression ─────────────────
        box-shadow n'est pas imprimé par les navigateurs ;
@@ -3608,19 +3606,39 @@ function renderLanguages() {
 //  IMPRESSION / PDF
 // ══════════════════════════════════════════
 function printSheet() {
-  // Temporarily show all pages so every tab prints
   const pages = document.querySelectorAll('.page');
-  const wasActive = [];
+  const saved = [];
+
+  // 1 — Rendre toutes les pages visibles et réinitialiser le zoom
   pages.forEach(p => {
-    wasActive.push(p.classList.contains('active'));
+    saved.push({ display: p.style.display, zoom: p.style.zoom });
     p.style.display = 'block';
+    p.style.zoom = '1';
   });
-  window.print();
-  // Restore after print dialog closes
-  pages.forEach((p, i) => {
-    p.style.display = '';
-    if (!wasActive[i]) p.classList.remove('active');
-  });
+
+  // 2 — Laisser le navigateur calculer les hauteurs réelles (2 frames)
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+
+    // Hauteur utile A4 portrait en pixels écran (~96 dpi, marges 6 mm)
+    const A4_H = 1010;
+
+    pages.forEach(p => {
+      const h = p.scrollHeight;
+      if (h > A4_H) {
+        p.style.zoom = (A4_H / h).toFixed(4);
+      }
+    });
+
+    // 3 — Restaurer APRÈS fermeture de la boîte d'impression
+    window.addEventListener('afterprint', () => {
+      pages.forEach((p, i) => {
+        p.style.display = saved[i].display;
+        p.style.zoom    = saved[i].zoom;
+      });
+    }, { once: true });
+
+    window.print();
+  }));
 }
 </script>
 </body>
