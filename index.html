@@ -458,6 +458,16 @@
   .small-num { width: 70px !important; text-align: center; }
   textarea.notes { min-height: 160px; }
 
+  /* ════════════════════ MULTI-SELECT ════════════════════ */
+  select[multiple] { min-height: 90px; max-height: 150px; padding: 2px; overflow-y: auto; }
+  select[multiple] option { padding: 3px 6px; margin: 1px 0; border-radius: 2px; line-height: 1.5; cursor: pointer; }
+  select[multiple] option:checked { background: linear-gradient(0deg,var(--red) 0,var(--red)) !important; color: #fff; }
+  .multi-hint { font-size: 10px; color: var(--text-dim); margin-top: 3px; font-style: italic; }
+  /* ════════════════════ MINI TABLE ATTAQUES ════════════════════ */
+  .atk-mini-table { width: 100%; border-collapse: collapse; }
+  .atk-mini-table th { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--red); text-align: left; padding: 3px 4px; border-bottom: 1px solid var(--border); }
+  .atk-mini-table td { padding: 2px 3px; }
+  .atk-mini-table input[type=text] { font-size: 12px; width: 100%; }
   /* ════════════════════ LANGUES — tags ════════════════════ */
   .lang-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
   .lang-tag {
@@ -810,15 +820,33 @@
         </select>
       </div>
       <div class="field" style="flex:2;min-width:200px;">
-        <label>Langue</label>
-        <select id="lang-picker" onchange="updateLangPickerInfo()">
-          <option value="">— Sélectionner —</option>
+        <label>Langue <span class="multi-hint">(Ctrl+clic = plusieurs)</span></label>
+        <select id="lang-picker" multiple size="5" onchange="updateLangPickerInfo()">
         </select>
       </div>
-      <button class="btn btn-gold" onclick="addLanguage()" style="white-space:nowrap;">+ Ajouter</button>
+      <button class="btn btn-gold" onclick="addLanguage()" style="white-space:nowrap;align-self:flex-end;">+ Ajouter</button>
     </div>
     <div id="lang-picker-info" style="margin-top:6px;font-size:12px;color:var(--text-dim);min-height:16px;"></div>
     <div class="lang-tags" id="languages-list"></div>
+  </div>
+
+  <!-- Attaques résumé -->
+  <div class="panel section-gap">
+    <div class="panel-title">Attaques
+      <button class="btn btn-sm no-print" onclick="addAttack()" style="float:right;background:var(--panel2);border:1px solid var(--red);color:var(--red);font-size:11px;padding:2px 8px;">+ Vide</button>
+    </div>
+    <table class="atk-mini-table">
+      <thead>
+        <tr>
+          <th style="width:36%">Nom</th>
+          <th style="width:14%">Bonus att.</th>
+          <th>Dégâts / Type</th>
+          <th style="width:50px;"></th>
+        </tr>
+      </thead>
+      <tbody id="attacks-body-mini"></tbody>
+    </table>
+    <div id="attacks-mini-empty" style="color:var(--text-dim);font-size:13px;padding:10px 0;">Aucune attaque — ajoutez des armes depuis l'onglet <strong>Combat</strong> ou cliquez <strong>+ Vide</strong>.</div>
   </div>
 
 </div>
@@ -861,9 +889,8 @@
         </select>
       </div>
       <div class="field" style="flex:2;min-width:200px;">
-        <label>Arme</label>
-        <select id="weapon-picker" onchange="updateWeaponPickerInfo()">
-          <option value="">— Sélectionner une arme —</option>
+        <label>Arme <span class="multi-hint">(Ctrl+clic = plusieurs)</span></label>
+        <select id="weapon-picker" multiple size="5" onchange="updateWeaponPickerInfo()">
         </select>
       </div>
       <div class="field" style="min-width:110px;">
@@ -971,12 +998,11 @@
         </select>
       </div>
       <div class="field" style="flex:2;min-width:200px;">
-        <label>Sort</label>
-        <select id="spell-picker" style="font-size:14px;">
-          <option value="">— Sélectionner un sort —</option>
+        <label>Sort <span class="multi-hint">(Ctrl+clic = plusieurs)</span></label>
+        <select id="spell-picker" multiple size="5" style="font-size:13px;" onchange="updateSpellPickerInfo()">
         </select>
       </div>
-      <button class="btn btn-gold" onclick="addSpellFromPicker()" style="white-space:nowrap;">+ Ajouter ce sort</button>
+      <button class="btn btn-gold" onclick="addSpellFromPicker()" style="white-space:nowrap;align-self:flex-end;">+ Ajouter</button>
     </div>
     <div id="spell-picker-info" style="margin-top:8px;font-size:12px;color:var(--text-dim);min-height:18px;"></div>
   </div>
@@ -1050,13 +1076,12 @@
         </select>
       </div>
       <div class="field" style="flex:2;min-width:220px;">
-        <label>Objet magique</label>
-        <select id="magic-picker" onchange="updateMagicPickerInfo()">
-          <option value="">— Sélectionner —</option>
+        <label>Objet magique <span class="multi-hint">(Ctrl+clic = plusieurs)</span></label>
+        <select id="magic-picker" multiple size="5" onchange="updateMagicPickerInfo()">
         </select>
       </div>
-      <button class="btn btn-gold" onclick="addMagicItemToInventory()" style="white-space:nowrap;">+ Inventaire</button>
-      <button class="btn" onclick="addMagicItemAsAttack()" style="white-space:nowrap;background:var(--green);">⚔ Attaque</button>
+      <button class="btn btn-gold" onclick="addMagicItemToInventory()" style="white-space:nowrap;align-self:flex-end;">+ Inventaire</button>
+      <button class="btn" onclick="addMagicItemAsAttack()" style="white-space:nowrap;align-self:flex-end;background:var(--green);">⚔ Attaque</button>
     </div>
     <div id="magic-picker-info" style="margin-top:8px;font-size:12px;color:var(--text-dim);min-height:18px;"></div>
   </div>
@@ -1112,12 +1137,11 @@
         </select>
       </div>
       <div class="field" style="flex:2;min-width:220px;">
-        <label>Objet</label>
-        <select id="equip-picker" onchange="updateEquipPickerInfo()">
-          <option value="">— Sélectionner —</option>
+        <label>Objet <span class="multi-hint">(Ctrl+clic = plusieurs)</span></label>
+        <select id="equip-picker" multiple size="5" onchange="updateEquipPickerInfo()">
         </select>
       </div>
-      <button class="btn btn-gold" onclick="addEquipmentItem()" style="white-space:nowrap;">+ Inventaire</button>
+      <button class="btn btn-gold" onclick="addEquipmentItem()" style="white-space:nowrap;align-self:flex-end;">+ Inventaire</button>
     </div>
     <div id="equip-picker-info" style="margin-top:8px;font-size:12px;color:var(--text-dim);min-height:18px;"></div>
   </div>
@@ -1201,12 +1225,11 @@
         </select>
       </div>
       <div class="field" style="flex:2;min-width:220px;">
-        <label>Don</label>
-        <select id="feat-picker" onchange="updateFeatPickerInfo()">
-          <option value="">— Sélectionner —</option>
+        <label>Don <span class="multi-hint">(Ctrl+clic = plusieurs)</span></label>
+        <select id="feat-picker" multiple size="5" onchange="updateFeatPickerInfo()">
         </select>
       </div>
-      <button class="btn btn-gold" onclick="addFeat()" style="white-space:nowrap;">+ Ajouter</button>
+      <button class="btn btn-gold" onclick="addFeat()" style="white-space:nowrap;align-self:flex-end;">+ Ajouter</button>
     </div>
     <div id="feat-picker-info" style="margin-top:8px;font-size:12px;color:var(--text-dim);min-height:18px;"></div>
   </div>
@@ -3350,12 +3373,15 @@ function filterWeaponPicker() {
 function updateWeaponPickerInfo() {
   const picker = document.getElementById('weapon-picker');
   const info   = document.getElementById('weapon-picker-info');
-  const w = WEAPONS_DB.find(x => x.name === picker.value);
-  if (!w) { info.innerHTML = ''; return; }
+  const sel    = Array.from(picker.selectedOptions);
+  const lastVal = sel.length ? sel[sel.length-1].value : '';
+  const w = WEAPONS_DB.find(x => x.name === lastVal);
+  if (!w) { info.innerHTML = sel.length > 1 ? `<span style="color:var(--gold);">${sel.length} armes sélectionnées</span>` : ''; return; }
+  const badge = sel.length > 1 ? `<span style="margin-left:8px;background:var(--gold);color:#1c1c1c;font-size:10px;padding:1px 5px;border-radius:3px;">${sel.length} sélectionnées</span>` : '';
   const catLabel  = w.cat  === 'simple' ? 'Simple'    : 'Guerre';
   const typeLabel = w.type === 'melee'  ? 'Corps à corps' : 'Distance';
   info.innerHTML = `
-    <span style="color:var(--red);font-weight:bold;">${w.name}</span>
+    <span style="color:var(--red);font-weight:bold;">${w.name}</span>${badge}
     <span style="color:var(--text-dim);"> — ${catLabel} · ${typeLabel}</span><br>
     <span style="color:var(--text);font-size:12px;">
       <b>${w.damage} ${w.damageType}</b> &bull; Portée : ${w.range} &bull; ${w.properties}
@@ -3385,12 +3411,14 @@ function calcWeaponBonus(w) {
 }
 
 function addAttackFromPicker() {
-  const picker = document.getElementById('weapon-picker');
-  if (!picker.value) return;
-  const w = WEAPONS_DB.find(x => x.name === picker.value);
+  const picker   = document.getElementById('weapon-picker');
+  const selected = Array.from(picker.selectedOptions).map(o => o.value).filter(v => v);
+  if (!selected.length) return;
+  const magicBonus = parseInt(document.getElementById('weapon-magic-bonus')?.value||0);
+  selected.forEach(wname => {
+  const w = WEAPONS_DB.find(x => x.name === wname);
   if (!w) return;
   const { bonus, dmgBonus } = calcWeaponBonus(w);
-  const magicBonus = parseInt(document.getElementById('weapon-magic-bonus')?.value||0);
   const id = Date.now()+'_'+Math.random();
   // Apply magic bonus to attack bonus string
   let atkBonus = bonus;
@@ -3403,8 +3431,9 @@ function addAttackFromPicker() {
   if (magicBonus > 0) {
     dmgStr = w.damage + (dmgBonus ? ' ' + dmgBonus : '') + ' +' + magicBonus + ' ' + w.damageType;
   }
+  const _id = Date.now()+'_'+Math.random();
   state.attacks.push({
-    id,
+    id: _id,
     name:  w.name,
     bonus: atkBonus,
     dmg:   dmgStr,
@@ -3412,6 +3441,7 @@ function addAttackFromPicker() {
     notes: w.properties,
     magicBonus,
   });
+  }); // end forEach
   renderAttacks();
   autoSave();
 }
@@ -3466,6 +3496,35 @@ function renderAttacks() {
     `;
     body.appendChild(tr);
   });
+  // ── Sync mini table (onglet Principal) ──────────────────
+  const mini = document.getElementById('attacks-body-mini');
+  const emptyMsg = document.getElementById('attacks-mini-empty');
+  if (mini) {
+    mini.innerHTML = '';
+    if (emptyMsg) emptyMsg.style.display = state.attacks.length ? 'none' : 'block';
+    state.attacks.forEach(atk => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><input type="text" value="${atk.name||''}" placeholder="Nom" style="font-size:12px;width:100%;" oninput="syncAtk('${atk.id}','name',this.value)"></td>
+        <td><input type="text" value="${atk.bonus||''}" placeholder="+5" style="font-size:12px;max-width:65px;" oninput="syncAtk('${atk.id}','bonus',this.value)"></td>
+        <td><input type="text" value="${atk.dmg||''}" placeholder="1d8+3" style="font-size:12px;width:100%;" oninput="syncAtk('${atk.id}','dmg',this.value)"></td>
+        <td style="text-align:center;">
+          <button class="btn btn-sm" title="Détails" style="background:var(--panel2);border:1px solid var(--red);color:var(--red);padding:1px 4px;font-size:11px;" onclick="showWeaponModal(state.attacks.find(a=>a.id==='${atk.id}')?.name||'')">?</button>
+          <button class="btn btn-sm" style="background:var(--accent);padding:1px 5px;font-size:11px;" onclick="removeAttack('${atk.id}')">✕</button>
+        </td>
+      `;
+      mini.appendChild(tr);
+    });
+  }
+}
+
+function syncAtk(id, field, value) {
+  const atk = state.attacks.find(a => a.id === id);
+  if (!atk) return;
+  atk[field] = value;
+  const el = document.getElementById('atk-' + field + '-' + id);
+  if (el && el.value !== value) el.value = value;
+  autoSave();
 }
 
 function saveAttack(id) {
@@ -3560,7 +3619,7 @@ function filterSpellPicker() {
     const matchLevel = level === '' || s.level === parseInt(level);
     return matchClass && matchLevel;
   }).sort((a,b) => a.level - b.level || a.name.localeCompare(b.name));
-  picker.innerHTML = '<option value="">— Sélectionner un sort —</option>' +
+  picker.innerHTML =
     filtered.map(s => {
       const lvlLabel = s.level === 0 ? 'Tour' : `Niv.${s.level}`;
       return `<option value="${s.name}" data-level="${s.level}" data-school="${s.school}">[${lvlLabel}] ${s.name} — ${s.school}</option>`;
@@ -3571,14 +3630,15 @@ function filterSpellPicker() {
 function updateSpellPickerInfo() {
   const picker = document.getElementById('spell-picker');
   const info   = document.getElementById('spell-picker-info');
-  const opt    = picker.options[picker.selectedIndex];
-  if (!opt || !opt.dataset.level) { info.innerHTML = ''; return; }
-  const sp = SPELLS_DB.find(s => s.name === picker.value);
-  if (!sp) { info.innerHTML = ''; return; }
-  const lvl  = sp.level === 0 ? 'Tour de magie' : `Niveau ${sp.level}`;
-  const desc = SPELL_DESC[sp.name] || '';
+  const sel    = Array.from(picker.selectedOptions);
+  const lastVal = sel.length ? sel[sel.length-1].value : '';
+  const sp = SPELLS_DB.find(s => s.name === lastVal);
+  if (!sp) { info.innerHTML = sel.length > 1 ? `<span style="color:var(--gold);">${sel.length} sorts sélectionnés</span>` : ''; return; }
+  const lvl   = sp.level === 0 ? 'Tour de magie' : `Niveau ${sp.level}`;
+  const desc  = SPELL_DESC[sp.name] || '';
+  const badge = sel.length > 1 ? `<span style="margin-left:8px;background:var(--gold);color:#1c1c1c;font-size:10px;padding:1px 5px;border-radius:3px;">${sel.length} sélectionnés</span>` : '';
   info.innerHTML = `
-    <span style="color:var(--red);font-weight:bold;">${sp.name}</span>
+    <span style="color:var(--red);font-weight:bold;">${sp.name}</span>${badge}
     <span style="color:var(--text-dim);"> — ${lvl} · ${sp.school}</span><br>
     <span style="color:var(--ink-light);font-size:12px;">${sp.classes}</span>
     ${desc ? `<br><span style="color:var(--text);font-size:12px;line-height:1.6;">${desc}</span>` : ''}
@@ -3604,16 +3664,14 @@ function showSpellModal(name) {
 }
 
 function addSpellFromPicker() {
-  const picker = document.getElementById('spell-picker');
-  if (!picker.value) return;
-  const sp = SPELLS_DB.find(s => s.name === picker.value);
-  if (!sp) return;
-  const id = Date.now()+'_'+Math.random();
-  state.spells.push({
-    id, prepared: false,
-    name: sp.name,
-    level: String(sp.level),
-    notes: sp.school + ' — ' + sp.classes
+  const picker   = document.getElementById('spell-picker');
+  const selected = Array.from(picker.selectedOptions).map(o => o.value).filter(v => v);
+  if (!selected.length) return;
+  selected.forEach(name => {
+    const sp = SPELLS_DB.find(s => s.name === name);
+    if (!sp) return;
+    const id = Date.now()+'_'+Math.random();
+    state.spells.push({ id, prepared: false, name: sp.name, level: String(sp.level), notes: sp.school + ' — ' + sp.classes });
   });
   renderSpells();
   autoSave();
@@ -3862,22 +3920,28 @@ function filterMagicPicker() {
 function updateMagicPickerInfo() {
   const picker = document.getElementById('magic-picker');
   const info   = document.getElementById('magic-picker-info');
-  const item   = MAGIC_ITEMS_DB.find(i => i.name === picker.value);
-  if (!item) { info.innerHTML = ''; return; }
+  const sel    = Array.from(picker.selectedOptions);
+  const lastVal = sel.length ? sel[sel.length-1].value : '';
+  const item   = MAGIC_ITEMS_DB.find(i => i.name === lastVal);
+  if (!item) { info.innerHTML = sel.length > 1 ? `<span style="color:var(--gold);">${sel.length} objets sélectionnés</span>` : ''; return; }
+  const badge = sel.length > 1 ? `<span style="margin-left:8px;background:var(--gold);color:#1c1c1c;font-size:10px;padding:1px 5px;border-radius:3px;">${sel.length} sélectionnés</span>` : '';
   const att = item.attunement ? '<span style="color:var(--purple);">◆ Harmonisation requise</span> · ' : '';
   const wb  = item.weaponBonus > 0 ? `<span style="color:var(--gold);font-weight:bold;">+${item.weaponBonus} attaque/dégâts</span> · ` : '';
   const ac  = item.acBonus    > 0 ? `<span style="color:var(--blue);font-weight:bold;">+${item.acBonus} CA</span> · ` : '';
-  info.innerHTML = `<span style="color:var(--red);font-weight:bold;">${item.name}</span> · <span style="text-transform:capitalize;">${item.rarity}</span> · ${att}${wb}${ac}<span>${item.desc}</span>`;
+  info.innerHTML = `<span style="color:var(--red);font-weight:bold;">${item.name}</span>${badge} · <span style="text-transform:capitalize;">${item.rarity}</span> · ${att}${wb}${ac}<span>${item.desc}</span>`;
 }
 
 function addMagicItemToInventory() {
-  const picker = document.getElementById('magic-picker');
-  if (!picker.value) return;
-  const item = MAGIC_ITEMS_DB.find(i => i.name === picker.value);
-  if (!item) return;
-  const id = Date.now()+'_'+Math.random();
-  const att = item.attunement ? ' [harmonisation]' : '';
-  state.items.push({ id, name:item.name, qty:1, weight:0, notes:item.type+att, equipped:false });
+  const picker   = document.getElementById('magic-picker');
+  const selected = Array.from(picker.selectedOptions).map(o => o.value).filter(v => v);
+  if (!selected.length) return;
+  selected.forEach(name => {
+    const item = MAGIC_ITEMS_DB.find(i => i.name === name);
+    if (!item) return;
+    const id  = Date.now()+'_'+Math.random();
+    const att = item.attunement ? ' [harmonisation]' : '';
+    state.items.push({ id, name:item.name, qty:1, weight:0, notes:item.type+att, equipped:false });
+  });
   renderItems();
   autoSave();
 }
@@ -3890,26 +3954,31 @@ function filterEquipPicker() {
   const picker = document.getElementById('equip-picker');
   const filtered = EQUIPMENT_DB.filter(e => !cat || e.cat === cat)
     .sort((a,b) => a.name.localeCompare(b.name));
-  picker.innerHTML = '<option value="">— Sélectionner —</option>' +
-    filtered.map(e => `<option value="${e.name}">[${e.cost}] ${e.name}</option>`).join('');
+  picker.innerHTML = filtered.map(e => `<option value="${e.name}">[${e.cost}] ${e.name}</option>`).join('');
   updateEquipPickerInfo();
 }
 
 function updateEquipPickerInfo() {
   const picker = document.getElementById('equip-picker');
   const info   = document.getElementById('equip-picker-info');
-  const item   = EQUIPMENT_DB.find(e => e.name === picker.value);
-  if (!item) { info.innerHTML = ''; return; }
-  info.innerHTML = `<span style="color:var(--red);font-weight:bold;">${item.name}</span> · <span style="color:var(--gold);">${item.cost}</span> · ${item.weight > 0 ? item.weight+' kg · ' : ''}${item.desc}`;
+  const sel    = Array.from(picker.selectedOptions);
+  const lastVal = sel.length ? sel[sel.length-1].value : '';
+  const item   = EQUIPMENT_DB.find(e => e.name === lastVal);
+  if (!item) { info.innerHTML = sel.length > 1 ? `<span style="color:var(--gold);">${sel.length} objets sélectionnés</span>` : ''; return; }
+  const badge = sel.length > 1 ? ` <span style="background:var(--gold);color:#1c1c1c;font-size:10px;padding:1px 5px;border-radius:3px;">${sel.length} sélectionnés</span>` : '';
+  info.innerHTML = `<span style="color:var(--red);font-weight:bold;">${item.name}</span>${badge} · <span style="color:var(--gold);">${item.cost}</span> · ${item.weight > 0 ? item.weight+' kg · ' : ''}${item.desc}`;
 }
 
 function addEquipmentItem() {
-  const picker = document.getElementById('equip-picker');
-  if (!picker.value) return;
-  const item = EQUIPMENT_DB.find(e => e.name === picker.value);
-  if (!item) return;
-  const id = Date.now()+'_'+Math.random();
-  state.items.push({ id, name:item.name, qty:1, weight:item.weight, notes:item.cat, equipped:false });
+  const picker   = document.getElementById('equip-picker');
+  const selected = Array.from(picker.selectedOptions).map(o => o.value).filter(v => v);
+  if (!selected.length) return;
+  selected.forEach(name => {
+    const item = EQUIPMENT_DB.find(e => e.name === name);
+    if (!item) return;
+    const id = Date.now()+'_'+Math.random();
+    state.items.push({ id, name:item.name, qty:1, weight:item.weight, notes:item.cat, equipped:false });
+  });
   renderItems();
   autoSave();
 }
@@ -3923,32 +3992,35 @@ function filterFeatPicker() {
   const filtered = FEATS_DB.filter(f => !cat || f.cat === cat)
     .sort((a,b) => a.name.localeCompare(b.name));
   const catLabel = { origine:'Origine', général:'Général', épique:'Épique' };
-  picker.innerHTML = '<option value="">— Sélectionner —</option>' +
-    filtered.map(f => `<option value="${f.name}">[${catLabel[f.cat]||f.cat}] ${f.name}${f.prereq !== 'Aucun' ? ' — '+f.prereq : ''}</option>`).join('');
+  picker.innerHTML = filtered.map(f => `<option value="${f.name}">[${catLabel[f.cat]||f.cat}] ${f.name}${f.prereq !== 'Aucun' ? ' — '+f.prereq : ''}</option>`).join('');
   updateFeatPickerInfo();
 }
 
 function updateFeatPickerInfo() {
   const picker = document.getElementById('feat-picker');
   const info   = document.getElementById('feat-picker-info');
-  const feat   = FEATS_DB.find(f => f.name === picker.value);
-  if (!feat) { info.innerHTML = ''; return; }
+  const sel    = Array.from(picker.selectedOptions);
+  const lastVal = sel.length ? sel[sel.length-1].value : '';
+  const feat   = FEATS_DB.find(f => f.name === lastVal);
+  if (!feat) { info.innerHTML = sel.length > 1 ? `<span style="color:var(--gold);">${sel.length} dons sélectionnés</span>` : ''; return; }
   const catColors = { origine:'var(--green)', général:'var(--red)', épique:'var(--gold)' };
-  const col = catColors[feat.cat] || 'var(--text)';
+  const col    = catColors[feat.cat] || 'var(--text)';
   const prereq = feat.prereq !== 'Aucun' ? `<span style="color:var(--text-dim);"> · Prérequis : ${feat.prereq}</span>` : '';
-  info.innerHTML = `<span style="color:${col};font-weight:bold;">${feat.name}</span>${prereq}<br><span style="color:var(--text);">${feat.desc}</span>`;
+  const badge  = sel.length > 1 ? `<span style="margin-left:8px;background:var(--gold);color:#1c1c1c;font-size:10px;padding:1px 5px;border-radius:3px;">${sel.length} sélectionnés</span>` : '';
+  info.innerHTML = `<span style="color:${col};font-weight:bold;">${feat.name}</span>${prereq}${badge}<br><span style="color:var(--text);">${feat.desc}</span>`;
 }
 
 function addFeat() {
-  const picker = document.getElementById('feat-picker');
-  if (!picker.value) return;
-  const feat = FEATS_DB.find(f => f.name === picker.value);
-  if (!feat) return;
-  if (state.feats.find(f => f.name === feat.name)) {
-    alert(`Le don "${feat.name}" est déjà dans votre liste.`); return;
-  }
-  const id = Date.now()+'_'+Math.random();
-  state.feats.push({ id, name:feat.name, cat:feat.cat, prereq:feat.prereq, desc:feat.desc, notes:'' });
+  const picker   = document.getElementById('feat-picker');
+  const selected = Array.from(picker.selectedOptions).map(o => o.value).filter(v => v);
+  if (!selected.length) return;
+  selected.forEach(name => {
+    const feat = FEATS_DB.find(f => f.name === name);
+    if (!feat) return;
+    if (state.feats.find(f => f.name === feat.name)) return; // skip duplicates silently
+    const id = Date.now()+'_'+Math.random();
+    state.feats.push({ id, name:feat.name, cat:feat.cat, prereq:feat.prereq, desc:feat.desc, notes:'' });
+  });
   renderFeats();
   autoSave();
 }
@@ -3998,25 +4070,31 @@ function saveFeatNotes(id, val) {
 }
 
 function addMagicItemAsAttack() {
-  const picker = document.getElementById('magic-picker');
-  if (!picker.value) return;
-  const item = MAGIC_ITEMS_DB.find(i => i.name === picker.value);
-  if (!item || item.weaponBonus === 0) { alert('Cet objet magique n\'est pas une arme (bonus d\'attaque = 0).'); return; }
-  const prof   = getProfBonus();
-  const strMod = getMod(getAbilityScore('STR'));
-  const dexMod = getMod(getAbilityScore('DEX'));
+  const picker   = document.getElementById('magic-picker');
+  const selected = Array.from(picker.selectedOptions).map(o => o.value).filter(v => v);
+  if (!selected.length) return;
+  const prof    = getProfBonus();
+  const strMod  = getMod(getAbilityScore('STR'));
+  const dexMod  = getMod(getAbilityScore('DEX'));
   const statMod = Math.max(strMod, dexMod);
-  const total  = statMod + prof + item.weaponBonus;
-  const id = Date.now()+'_'+Math.random();
-  state.attacks.push({
-    id,
-    name: item.name,
-    bonus: fmtMod(total),
-    dmg: '1d8' + (statMod >= 0 ? '+'+statMod : ''+statMod) + ' +' + item.weaponBonus + ' (varie)',
-    range: '1,5 m',
-    notes: item.type + (item.attunement ? ' ◆' : ''),
-    magicBonus: item.weaponBonus,
+  let added = 0;
+  selected.forEach(name => {
+    const item = MAGIC_ITEMS_DB.find(i => i.name === name);
+    if (!item || item.weaponBonus === 0) return;
+    const total = statMod + prof + item.weaponBonus;
+    const id = Date.now()+'_'+Math.random();
+    state.attacks.push({
+      id,
+      name: item.name,
+      bonus: fmtMod(total),
+      dmg: '1d8' + (statMod >= 0 ? '+'+statMod : ''+statMod) + ' +' + item.weaponBonus + ' (varie)',
+      range: '1,5 m',
+      notes: item.type + (item.attunement ? ' ◆' : ''),
+      magicBonus: item.weaponBonus,
+    });
+    added++;
   });
+  if (added === 0) alert('Aucun objet sélectionné n\'est une arme (bonus d\'attaque = 0).');
   renderAttacks();
   autoSave();
 }
@@ -4030,25 +4108,30 @@ function filterLanguagePicker() {
   const filtered = LANGUAGES_DB
     .filter(l => !cat || l.cat === cat)
     .sort((a,b) => a.name.localeCompare(b.name));
-  picker.innerHTML = '<option value="">— Sélectionner —</option>' +
-    filtered.map(l => `<option value="${l.name}">[${l.cat}] ${l.name}</option>`).join('');
+  picker.innerHTML = filtered.map(l => `<option value="${l.name}">[${l.cat}] ${l.name}</option>`).join('');
   updateLangPickerInfo();
 }
 
 function updateLangPickerInfo() {
-  const lang = LANGUAGES_DB.find(l => l.name === document.getElementById('lang-picker').value);
-  const info = document.getElementById('lang-picker-info');
-  if (!lang) { info.textContent = ''; return; }
-  info.innerHTML = `<strong>${lang.name}</strong> — Écriture : ${lang.script} — ${lang.desc}`;
+  const picker = document.getElementById('lang-picker');
+  const info   = document.getElementById('lang-picker-info');
+  const sel    = Array.from(picker.selectedOptions);
+  const lastVal = sel.length ? sel[sel.length-1].value : '';
+  const lang = LANGUAGES_DB.find(l => l.name === lastVal);
+  if (!lang) { info.innerHTML = sel.length > 1 ? `<span style="color:var(--gold);">${sel.length} langues sélectionnées</span>` : ''; return; }
+  const badge = sel.length > 1 ? `<span style="margin-left:8px;background:var(--gold);color:#1c1c1c;font-size:10px;padding:1px 5px;border-radius:3px;">${sel.length} sélectionnées</span>` : '';
+  info.innerHTML = `<strong>${lang.name}</strong>${badge} — Écriture : ${lang.script} — ${lang.desc}`;
 }
 
 function addLanguage() {
-  const picker = document.getElementById('lang-picker');
-  const name   = picker.value;
-  if (!name) return;
-  if (state.languages.find(l => l.name === name)) return;
-  const entry = LANGUAGES_DB.find(l => l.name === name);
-  state.languages.push({ name, cat: entry ? entry.cat : '' });
+  const picker   = document.getElementById('lang-picker');
+  const selected = Array.from(picker.selectedOptions).map(o => o.value).filter(v => v);
+  if (!selected.length) return;
+  selected.forEach(name => {
+    if (state.languages.find(l => l.name === name)) return;
+    const entry = LANGUAGES_DB.find(l => l.name === name);
+    state.languages.push({ name, cat: entry ? entry.cat : '' });
+  });
   renderLanguages();
   autoSave();
 }
