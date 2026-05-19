@@ -458,11 +458,11 @@
   .small-num { width: 70px !important; text-align: center; }
   textarea.notes { min-height: 160px; }
 
-  /* ════════════════════ MULTI-SELECT ════════════════════ */
-  select[multiple] { min-height: 90px; max-height: 150px; padding: 2px; overflow-y: auto; }
-  select[multiple] option { padding: 3px 6px; margin: 1px 0; border-radius: 2px; line-height: 1.5; cursor: pointer; }
-  select[multiple] option:checked { background: linear-gradient(0deg,var(--red) 0,var(--red)) !important; color: #fff; }
-  .multi-hint { font-size: 10px; color: var(--text-dim); margin-top: 3px; font-style: italic; }
+  /* ════════════════════ CHECKBOX PICKER ════════════════════ */
+  .cb-picker { max-height: 150px; overflow-y: auto; border: 1px solid var(--border); border-radius: 4px; padding: 4px; background: var(--panel2); width: 100%; box-sizing: border-box; }
+  .cb-item { display: flex; align-items: flex-start; gap: 6px; padding: 3px 6px; border-radius: 2px; cursor: pointer; font-size: 12px; line-height: 1.4; }
+  .cb-item:hover { background: rgba(255,255,255,0.07); }
+  .cb-item input[type=checkbox] { accent-color: var(--red); cursor: pointer; margin-top: 2px; flex-shrink: 0; }
   /* ════════════════════ MINI TABLE ATTAQUES ════════════════════ */
   .atk-mini-table { width: 100%; border-collapse: collapse; }
   .atk-mini-table th { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--red); text-align: left; padding: 3px 4px; border-bottom: 1px solid var(--border); }
@@ -509,7 +509,8 @@
 
     /* Masquer les éléments non imprimables */
     header .no-print, .tabs, .modal, #dice-roller-wrap,
-    button.btn, .btn-sm, .adv-btn, .roll-mod-row { display: none !important; }
+    button.btn, .btn-sm, .adv-btn, .roll-mod-row,
+    .cb-picker, .picker-ui, .picker-info { display: none !important; }
     header { background: #1c1c1c !important; padding: 4px 12px !important; }
 
     /* ── Un onglet = une page ──────────────────────────────
@@ -838,14 +839,13 @@
           <option value="secrète">Secrète</option>
         </select>
       </div>
-      <div class="field" style="flex:2;min-width:200px;">
-        <label>Langue <span class="multi-hint">(Ctrl+clic = plusieurs)</span></label>
-        <select id="lang-picker" multiple size="5" onchange="updateLangPickerInfo()">
-        </select>
+      <div class="field picker-ui" style="flex:2;min-width:200px;">
+        <label>Langue</label>
+        <div class="cb-picker" id="lang-picker"></div>
       </div>
       <button class="btn btn-gold" onclick="addLanguage()" style="white-space:nowrap;align-self:flex-end;">+ Ajouter</button>
     </div>
-    <div id="lang-picker-info" style="margin-top:6px;font-size:12px;color:var(--text-dim);min-height:16px;"></div>
+    <div id="lang-picker-info" class="picker-info" style="margin-top:6px;font-size:12px;color:var(--text-dim);min-height:16px;"></div>
     <div class="lang-tags" id="languages-list"></div>
   </div>
 
@@ -888,10 +888,9 @@
           <option value="ranged">Distance</option>
         </select>
       </div>
-      <div class="field" style="flex:2;min-width:200px;">
-        <label>Arme <span class="multi-hint">(Ctrl+clic = plusieurs)</span></label>
-        <select id="weapon-picker" multiple size="5" onchange="updateWeaponPickerInfo()">
-        </select>
+      <div class="field picker-ui" style="flex:2;min-width:200px;">
+        <label>Arme</label>
+        <div class="cb-picker" id="weapon-picker"></div>
       </div>
       <div class="field" style="min-width:110px;">
         <label>Caractéristique</label>
@@ -919,7 +918,7 @@
       </div>
       <button class="btn btn-gold" onclick="addAttackFromPicker()" style="white-space:nowrap;">+ Ajouter</button>
     </div>
-    <div id="weapon-picker-info" style="margin-top:8px;font-size:12px;color:var(--text-dim);min-height:18px;"></div>
+    <div id="weapon-picker-info" class="picker-info" style="margin-top:8px;font-size:12px;color:var(--text-dim);min-height:18px;"></div>
   </div>
 
   <div class="panel section-gap">
@@ -997,14 +996,13 @@
           <option value="9">Niveau 9</option>
         </select>
       </div>
-      <div class="field" style="flex:2;min-width:200px;">
-        <label>Sort <span class="multi-hint">(Ctrl+clic = plusieurs)</span></label>
-        <select id="spell-picker" multiple size="5" style="font-size:13px;" onchange="updateSpellPickerInfo()">
-        </select>
+      <div class="field picker-ui" style="flex:2;min-width:200px;">
+        <label>Sort</label>
+        <div class="cb-picker" id="spell-picker"></div>
       </div>
       <button class="btn btn-gold" onclick="addSpellFromPicker()" style="white-space:nowrap;align-self:flex-end;">+ Ajouter</button>
     </div>
-    <div id="spell-picker-info" style="margin-top:8px;font-size:12px;color:var(--text-dim);min-height:18px;"></div>
+    <div id="spell-picker-info" class="picker-info" style="margin-top:8px;font-size:12px;color:var(--text-dim);min-height:18px;"></div>
   </div>
 
   <!-- Liste des sorts du personnage -->
@@ -1075,15 +1073,14 @@
           <option value="merveilleux">Merveilleux</option>
         </select>
       </div>
-      <div class="field" style="flex:2;min-width:220px;">
-        <label>Objet magique <span class="multi-hint">(Ctrl+clic = plusieurs)</span></label>
-        <select id="magic-picker" multiple size="5" onchange="updateMagicPickerInfo()">
-        </select>
+      <div class="field picker-ui" style="flex:2;min-width:220px;">
+        <label>Objet magique</label>
+        <div class="cb-picker" id="magic-picker"></div>
       </div>
       <button class="btn btn-gold" onclick="addMagicItemToInventory()" style="white-space:nowrap;align-self:flex-end;">+ Inventaire</button>
       <button class="btn" onclick="addMagicItemAsAttack()" style="white-space:nowrap;align-self:flex-end;background:var(--green);">⚔ Attaque</button>
     </div>
-    <div id="magic-picker-info" style="margin-top:8px;font-size:12px;color:var(--text-dim);min-height:18px;"></div>
+    <div id="magic-picker-info" class="picker-info" style="margin-top:8px;font-size:12px;color:var(--text-dim);min-height:18px;"></div>
   </div>
 
   <div class="panel section-gap">
@@ -1136,14 +1133,13 @@
           <option value="kit">Kits de départ</option>
         </select>
       </div>
-      <div class="field" style="flex:2;min-width:220px;">
-        <label>Objet <span class="multi-hint">(Ctrl+clic = plusieurs)</span></label>
-        <select id="equip-picker" multiple size="5" onchange="updateEquipPickerInfo()">
-        </select>
+      <div class="field picker-ui" style="flex:2;min-width:220px;">
+        <label>Objet</label>
+        <div class="cb-picker" id="equip-picker"></div>
       </div>
       <button class="btn btn-gold" onclick="addEquipmentItem()" style="white-space:nowrap;align-self:flex-end;">+ Inventaire</button>
     </div>
-    <div id="equip-picker-info" style="margin-top:8px;font-size:12px;color:var(--text-dim);min-height:18px;"></div>
+    <div id="equip-picker-info" class="picker-info" style="margin-top:8px;font-size:12px;color:var(--text-dim);min-height:18px;"></div>
   </div>
 
   <div class="panel section-gap">
@@ -1224,14 +1220,13 @@
           <option value="épique">Grâces épiques</option>
         </select>
       </div>
-      <div class="field" style="flex:2;min-width:220px;">
-        <label>Don <span class="multi-hint">(Ctrl+clic = plusieurs)</span></label>
-        <select id="feat-picker" multiple size="5" onchange="updateFeatPickerInfo()">
-        </select>
+      <div class="field picker-ui" style="flex:2;min-width:220px;">
+        <label>Don</label>
+        <div class="cb-picker" id="feat-picker"></div>
       </div>
       <button class="btn btn-gold" onclick="addFeat()" style="white-space:nowrap;align-self:flex-end;">+ Ajouter</button>
     </div>
-    <div id="feat-picker-info" style="margin-top:8px;font-size:12px;color:var(--text-dim);min-height:18px;"></div>
+    <div id="feat-picker-info" class="picker-info" style="margin-top:8px;font-size:12px;color:var(--text-dim);min-height:18px;"></div>
   </div>
 
   <div class="panel section-gap">
@@ -2846,7 +2841,7 @@ document.addEventListener('DOMContentLoaded', () => {
   buildSpellSlots();
   buildSpellsDatalist();
   filterSpellPicker();
-  document.getElementById('spell-picker').addEventListener('change', updateSpellPickerInfo);
+  // spell-picker uses onchange on each checkbox — no extra listener needed
   document.getElementById('spell-modal').addEventListener('click', e => {
     if (e.target === e.currentTarget) e.currentTarget.style.display = 'none';
   });
@@ -3361,19 +3356,18 @@ function filterWeaponPicker() {
     (!cat  || w.cat  === cat) &&
     (!type || w.type === type)
   ).sort((a,b) => a.name.localeCompare(b.name));
-  picker.innerHTML = '<option value="">— Sélectionner une arme —</option>' +
-    filtered.map(w => {
-      const catLabel  = w.cat  === 'simple'  ? 'Simple'  : 'Guerre';
-      const typeLabel = w.type === 'melee'   ? 'CàC'     : 'Distance';
-      return `<option value="${w.name}">[${catLabel} · ${typeLabel}] ${w.name} — ${w.damage} ${w.damageType}</option>`;
-    }).join('');
+  picker.innerHTML = filtered.map(w => {
+    const catLabel  = w.cat  === 'simple'  ? 'Simple'  : 'Guerre';
+    const typeLabel = w.type === 'melee'   ? 'CàC'     : 'Distance';
+    return `<label class="cb-item"><input type="checkbox" value="${w.name}" onchange="updateWeaponPickerInfo()">[${catLabel} · ${typeLabel}] ${w.name} — ${w.damage} ${w.damageType}</label>`;
+  }).join('');
   updateWeaponPickerInfo();
 }
 
 function updateWeaponPickerInfo() {
   const picker = document.getElementById('weapon-picker');
   const info   = document.getElementById('weapon-picker-info');
-  const sel    = Array.from(picker.selectedOptions);
+  const sel    = Array.from(picker.querySelectorAll('input:checked'));
   const lastVal = sel.length ? sel[sel.length-1].value : '';
   const w = WEAPONS_DB.find(x => x.name === lastVal);
   if (!w) { info.innerHTML = sel.length > 1 ? `<span style="color:var(--gold);">${sel.length} armes sélectionnées</span>` : ''; return; }
@@ -3412,7 +3406,7 @@ function calcWeaponBonus(w) {
 
 function addAttackFromPicker() {
   const picker   = document.getElementById('weapon-picker');
-  const selected = Array.from(picker.selectedOptions).map(o => o.value).filter(v => v);
+  const selected = Array.from(picker.querySelectorAll('input:checked')).map(cb => cb.value);
   if (!selected.length) return;
   const magicBonus = parseInt(document.getElementById('weapon-magic-bonus')?.value||0);
   selected.forEach(wname => {
@@ -3442,6 +3436,8 @@ function addAttackFromPicker() {
     magicBonus,
   });
   }); // end forEach
+  picker.querySelectorAll('input').forEach(cb => cb.checked = false);
+  updateWeaponPickerInfo();
   renderAttacks();
   autoSave();
 }
@@ -3619,18 +3615,17 @@ function filterSpellPicker() {
     const matchLevel = level === '' || s.level === parseInt(level);
     return matchClass && matchLevel;
   }).sort((a,b) => a.level - b.level || a.name.localeCompare(b.name));
-  picker.innerHTML =
-    filtered.map(s => {
-      const lvlLabel = s.level === 0 ? 'Tour' : `Niv.${s.level}`;
-      return `<option value="${s.name}" data-level="${s.level}" data-school="${s.school}">[${lvlLabel}] ${s.name} — ${s.school}</option>`;
-    }).join('');
+  picker.innerHTML = filtered.map(s => {
+    const lvlLabel = s.level === 0 ? 'Tour' : `Niv.${s.level}`;
+    return `<label class="cb-item"><input type="checkbox" value="${s.name}" onchange="updateSpellPickerInfo()">[${lvlLabel}] ${s.name} — ${s.school}</label>`;
+  }).join('');
   updateSpellPickerInfo();
 }
 
 function updateSpellPickerInfo() {
   const picker = document.getElementById('spell-picker');
   const info   = document.getElementById('spell-picker-info');
-  const sel    = Array.from(picker.selectedOptions);
+  const sel    = Array.from(picker.querySelectorAll('input:checked'));
   const lastVal = sel.length ? sel[sel.length-1].value : '';
   const sp = SPELLS_DB.find(s => s.name === lastVal);
   if (!sp) { info.innerHTML = sel.length > 1 ? `<span style="color:var(--gold);">${sel.length} sorts sélectionnés</span>` : ''; return; }
@@ -3665,7 +3660,7 @@ function showSpellModal(name) {
 
 function addSpellFromPicker() {
   const picker   = document.getElementById('spell-picker');
-  const selected = Array.from(picker.selectedOptions).map(o => o.value).filter(v => v);
+  const selected = Array.from(picker.querySelectorAll('input:checked')).map(cb => cb.value);
   if (!selected.length) return;
   selected.forEach(name => {
     const sp = SPELLS_DB.find(s => s.name === name);
@@ -3673,6 +3668,8 @@ function addSpellFromPicker() {
     const id = Date.now()+'_'+Math.random();
     state.spells.push({ id, prepared: false, name: sp.name, level: String(sp.level), notes: sp.school + ' — ' + sp.classes });
   });
+  picker.querySelectorAll('input').forEach(cb => cb.checked = false);
+  updateSpellPickerInfo();
   renderSpells();
   autoSave();
 }
@@ -3908,19 +3905,18 @@ function filterMagicPicker() {
     const order = ['commun','peu commun','rare','très rare','légendaire'];
     return order.indexOf(a.rarity)-order.indexOf(b.rarity) || a.name.localeCompare(b.name);
   });
-  picker.innerHTML = '<option value="">— Sélectionner —</option>' +
-    filtered.map(i => {
-      const att = i.attunement ? ' ◆' : '';
-      const wb  = i.weaponBonus > 0 ? ` [+${i.weaponBonus}]` : '';
-      return `<option value="${i.name}">[${i.rarity}] ${i.name}${wb}${att} — ${i.type}</option>`;
-    }).join('');
+  picker.innerHTML = filtered.map(i => {
+    const att = i.attunement ? ' ◆' : '';
+    const wb  = i.weaponBonus > 0 ? ` [+${i.weaponBonus}]` : '';
+    return `<label class="cb-item"><input type="checkbox" value="${i.name}" onchange="updateMagicPickerInfo()">[${i.rarity}] ${i.name}${wb}${att} — ${i.type}</label>`;
+  }).join('');
   updateMagicPickerInfo();
 }
 
 function updateMagicPickerInfo() {
   const picker = document.getElementById('magic-picker');
   const info   = document.getElementById('magic-picker-info');
-  const sel    = Array.from(picker.selectedOptions);
+  const sel    = Array.from(picker.querySelectorAll('input:checked'));
   const lastVal = sel.length ? sel[sel.length-1].value : '';
   const item   = MAGIC_ITEMS_DB.find(i => i.name === lastVal);
   if (!item) { info.innerHTML = sel.length > 1 ? `<span style="color:var(--gold);">${sel.length} objets sélectionnés</span>` : ''; return; }
@@ -3933,7 +3929,7 @@ function updateMagicPickerInfo() {
 
 function addMagicItemToInventory() {
   const picker   = document.getElementById('magic-picker');
-  const selected = Array.from(picker.selectedOptions).map(o => o.value).filter(v => v);
+  const selected = Array.from(picker.querySelectorAll('input:checked')).map(cb => cb.value);
   if (!selected.length) return;
   selected.forEach(name => {
     const item = MAGIC_ITEMS_DB.find(i => i.name === name);
@@ -3942,6 +3938,8 @@ function addMagicItemToInventory() {
     const att = item.attunement ? ' [harmonisation]' : '';
     state.items.push({ id, name:item.name, qty:1, weight:0, notes:item.type+att, equipped:false });
   });
+  picker.querySelectorAll('input').forEach(cb => cb.checked = false);
+  updateMagicPickerInfo();
   renderItems();
   autoSave();
 }
@@ -3954,14 +3952,14 @@ function filterEquipPicker() {
   const picker = document.getElementById('equip-picker');
   const filtered = EQUIPMENT_DB.filter(e => !cat || e.cat === cat)
     .sort((a,b) => a.name.localeCompare(b.name));
-  picker.innerHTML = filtered.map(e => `<option value="${e.name}">[${e.cost}] ${e.name}</option>`).join('');
+  picker.innerHTML = filtered.map(e => `<label class="cb-item"><input type="checkbox" value="${e.name}" onchange="updateEquipPickerInfo()">[${e.cost}] ${e.name}</label>`).join('');
   updateEquipPickerInfo();
 }
 
 function updateEquipPickerInfo() {
   const picker = document.getElementById('equip-picker');
   const info   = document.getElementById('equip-picker-info');
-  const sel    = Array.from(picker.selectedOptions);
+  const sel    = Array.from(picker.querySelectorAll('input:checked'));
   const lastVal = sel.length ? sel[sel.length-1].value : '';
   const item   = EQUIPMENT_DB.find(e => e.name === lastVal);
   if (!item) { info.innerHTML = sel.length > 1 ? `<span style="color:var(--gold);">${sel.length} objets sélectionnés</span>` : ''; return; }
@@ -3971,7 +3969,7 @@ function updateEquipPickerInfo() {
 
 function addEquipmentItem() {
   const picker   = document.getElementById('equip-picker');
-  const selected = Array.from(picker.selectedOptions).map(o => o.value).filter(v => v);
+  const selected = Array.from(picker.querySelectorAll('input:checked')).map(cb => cb.value);
   if (!selected.length) return;
   selected.forEach(name => {
     const item = EQUIPMENT_DB.find(e => e.name === name);
@@ -3979,6 +3977,8 @@ function addEquipmentItem() {
     const id = Date.now()+'_'+Math.random();
     state.items.push({ id, name:item.name, qty:1, weight:item.weight, notes:item.cat, equipped:false });
   });
+  picker.querySelectorAll('input').forEach(cb => cb.checked = false);
+  updateEquipPickerInfo();
   renderItems();
   autoSave();
 }
@@ -3992,14 +3992,14 @@ function filterFeatPicker() {
   const filtered = FEATS_DB.filter(f => !cat || f.cat === cat)
     .sort((a,b) => a.name.localeCompare(b.name));
   const catLabel = { origine:'Origine', général:'Général', épique:'Épique' };
-  picker.innerHTML = filtered.map(f => `<option value="${f.name}">[${catLabel[f.cat]||f.cat}] ${f.name}${f.prereq !== 'Aucun' ? ' — '+f.prereq : ''}</option>`).join('');
+  picker.innerHTML = filtered.map(f => `<label class="cb-item"><input type="checkbox" value="${f.name}" onchange="updateFeatPickerInfo()">[${catLabel[f.cat]||f.cat}] ${f.name}${f.prereq !== 'Aucun' ? ' — '+f.prereq : ''}</label>`).join('');
   updateFeatPickerInfo();
 }
 
 function updateFeatPickerInfo() {
   const picker = document.getElementById('feat-picker');
   const info   = document.getElementById('feat-picker-info');
-  const sel    = Array.from(picker.selectedOptions);
+  const sel    = Array.from(picker.querySelectorAll('input:checked'));
   const lastVal = sel.length ? sel[sel.length-1].value : '';
   const feat   = FEATS_DB.find(f => f.name === lastVal);
   if (!feat) { info.innerHTML = sel.length > 1 ? `<span style="color:var(--gold);">${sel.length} dons sélectionnés</span>` : ''; return; }
@@ -4012,7 +4012,7 @@ function updateFeatPickerInfo() {
 
 function addFeat() {
   const picker   = document.getElementById('feat-picker');
-  const selected = Array.from(picker.selectedOptions).map(o => o.value).filter(v => v);
+  const selected = Array.from(picker.querySelectorAll('input:checked')).map(cb => cb.value);
   if (!selected.length) return;
   selected.forEach(name => {
     const feat = FEATS_DB.find(f => f.name === name);
@@ -4021,6 +4021,8 @@ function addFeat() {
     const id = Date.now()+'_'+Math.random();
     state.feats.push({ id, name:feat.name, cat:feat.cat, prereq:feat.prereq, desc:feat.desc, notes:'' });
   });
+  picker.querySelectorAll('input').forEach(cb => cb.checked = false);
+  updateFeatPickerInfo();
   renderFeats();
   autoSave();
 }
@@ -4071,7 +4073,7 @@ function saveFeatNotes(id, val) {
 
 function addMagicItemAsAttack() {
   const picker   = document.getElementById('magic-picker');
-  const selected = Array.from(picker.selectedOptions).map(o => o.value).filter(v => v);
+  const selected = Array.from(picker.querySelectorAll('input:checked')).map(cb => cb.value);
   if (!selected.length) return;
   const prof    = getProfBonus();
   const strMod  = getMod(getAbilityScore('STR'));
@@ -4108,14 +4110,14 @@ function filterLanguagePicker() {
   const filtered = LANGUAGES_DB
     .filter(l => !cat || l.cat === cat)
     .sort((a,b) => a.name.localeCompare(b.name));
-  picker.innerHTML = filtered.map(l => `<option value="${l.name}">[${l.cat}] ${l.name}</option>`).join('');
+  picker.innerHTML = filtered.map(l => `<label class="cb-item"><input type="checkbox" value="${l.name}" onchange="updateLangPickerInfo()">[${l.cat}] ${l.name}</label>`).join('');
   updateLangPickerInfo();
 }
 
 function updateLangPickerInfo() {
   const picker = document.getElementById('lang-picker');
   const info   = document.getElementById('lang-picker-info');
-  const sel    = Array.from(picker.selectedOptions);
+  const sel    = Array.from(picker.querySelectorAll('input:checked'));
   const lastVal = sel.length ? sel[sel.length-1].value : '';
   const lang = LANGUAGES_DB.find(l => l.name === lastVal);
   if (!lang) { info.innerHTML = sel.length > 1 ? `<span style="color:var(--gold);">${sel.length} langues sélectionnées</span>` : ''; return; }
@@ -4125,13 +4127,15 @@ function updateLangPickerInfo() {
 
 function addLanguage() {
   const picker   = document.getElementById('lang-picker');
-  const selected = Array.from(picker.selectedOptions).map(o => o.value).filter(v => v);
+  const selected = Array.from(picker.querySelectorAll('input:checked')).map(cb => cb.value);
   if (!selected.length) return;
   selected.forEach(name => {
     if (state.languages.find(l => l.name === name)) return;
     const entry = LANGUAGES_DB.find(l => l.name === name);
     state.languages.push({ name, cat: entry ? entry.cat : '' });
   });
+  picker.querySelectorAll('input').forEach(cb => cb.checked = false);
+  updateLangPickerInfo();
   renderLanguages();
   autoSave();
 }
