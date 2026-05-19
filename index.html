@@ -458,6 +458,18 @@
   .small-num { width: 70px !important; text-align: center; }
   textarea.notes { min-height: 160px; }
 
+  /* ════════════════════ PRE-PRINT MEASURE ════════════════════ */
+  /* Masque les mêmes éléments que @media print pour une mesure précise */
+  body.pre-print-measure .no-print,
+  body.pre-print-measure .cb-picker,
+  body.pre-print-measure .picker-ui,
+  body.pre-print-measure .picker-info,
+  body.pre-print-measure button.btn,
+  body.pre-print-measure .btn-sm,
+  body.pre-print-measure .tabs,
+  body.pre-print-measure .modal,
+  body.pre-print-measure .roll-mod-row { display: none !important; }
+
   /* ════════════════════ CHECKBOX PICKER ════════════════════ */
   .cb-picker { max-height: 100px; overflow-y: auto; border: 1px solid var(--border); border-radius: 4px; padding: 2px; background: var(--panel2); width: 100%; box-sizing: border-box; }
   .cb-item { display: flex; align-items: flex-start; gap: 5px; padding: 2px 5px; border-radius: 2px; cursor: pointer; font-size: 11px; line-height: 1.3; }
@@ -517,17 +529,22 @@
        Le zoom est calculé et appliqué dynamiquement par printSheet() */
     .page {
       display: block !important;
-      padding: 4px !important;
+      padding: 2px !important;
       max-width: 100% !important;
+      overflow: hidden !important;
     }
     .page + .page { page-break-before: always; break-before: page; }
+
+    /* ── Marges compactes pour tenir sur une page ───────── */
+    .section-gap  { margin-bottom: 4px !important; }
+    .grid-2       { gap: 4px !important; }
 
     /* ── Double bordure D&D ─────────────────────────────────
        On conserve les box-shadow originaux : Chrome les imprime
        correctement grâce à print-color-adjust: exact.
        On supprime uniquement outline pour éviter les conflits
        avec overflow:hidden sur ability-box. */
-    .panel        { background: #fff !important; border: 1.5px solid #333 !important; margin: 3px !important; padding: 8px !important; }
+    .panel        { background: #fff !important; border: 1.5px solid #333 !important; margin: 2px !important; padding: 5px !important; }
     .char-header  { border: 1.5px solid #333 !important; }
     .ability-box  { border: 1.5px solid #333 !important; overflow: visible !important; }
     .ability-box .modifier { border: 2px solid #333 !important; }
@@ -535,7 +552,7 @@
     .slot-box     { border: 1px solid #555 !important; }
 
     /* Champs texte */
-    textarea { border: 1px solid #aaa !important; min-height: 40px !important; }
+    textarea { border: 1px solid #aaa !important; min-height: 20px !important; }
     input[type=text], input[type=number], select { border: 1px solid #aaa !important; }
     .hp-bar-wrap { border: 1px solid #aaa !important; }
     .ds-box { border: 1px solid #555 !important; }
@@ -4178,10 +4195,13 @@ function printSheet() {
     p.style.zoom = '1';
   });
 
-  // 2 — Attendre 250 ms que le navigateur finisse le layout
+  // 2 — Masquer les éléments .no-print pour mesurer la hauteur réelle imprimée
+  document.body.classList.add('pre-print-measure');
+
+  // 3 — Attendre 300 ms que le navigateur finisse le layout sans les éléments cachés
   setTimeout(() => {
-    // A4 portrait, marges 6 mm, ~96 dpi → hauteur utile ≈ 1060 px
-    const A4_H = 1060;
+    // A4 portrait, marges 6 mm, header ~44px → hauteur utile ≈ 980 px
+    const A4_H = 980;
 
     pages.forEach(p => {
       const h = p.scrollHeight;
@@ -4190,7 +4210,9 @@ function printSheet() {
       }
     });
 
-    // 3 — Restaurer uniquement après fermeture du dialogue d'impression
+    document.body.classList.remove('pre-print-measure');
+
+    // 4 — Restaurer uniquement après fermeture du dialogue d'impression
     window.addEventListener('afterprint', () => {
       pages.forEach((p, i) => {
         p.style.display = saved[i].display;
@@ -4199,7 +4221,7 @@ function printSheet() {
     }, { once: true });
 
     window.print();
-  }, 250);
+  }, 300);
 }
 </script>
 </body>
