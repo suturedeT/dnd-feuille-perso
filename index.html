@@ -503,8 +503,7 @@
     header { background: #1c1c1c !important; padding: 4px 12px !important; }
 
     /* ── Un onglet = une page ──────────────────────────────
-       Le zoom est appliqué dynamiquement par printSheet() en JS
-       pour s'adapter exactement à la hauteur réelle de chaque onglet */
+       Le zoom est calculé et appliqué dynamiquement par printSheet() */
     .page {
       display: block !important;
       padding: 4px !important;
@@ -512,54 +511,21 @@
     }
     .page + .page { page-break-before: always; break-before: page; }
 
-    /* ── Double bordure D&D à l'impression ─────────────────
-       box-shadow n'est pas imprimé par les navigateurs ;
-       outline + outline-offset reproduit l'effet double cadre */
-    .panel {
-      background: #fff !important;
-      border: 1.5px solid #333 !important;
-      outline: 2px solid #888 !important;
-      outline-offset: 2px !important;
-      box-shadow: none !important;
-      margin: 3px !important;
-      padding: 8px !important;
-    }
-    .char-header {
-      border: 1.5px solid #333 !important;
-      outline: 2px solid #888 !important;
-      outline-offset: 2px !important;
-      box-shadow: none !important;
-    }
-    .ability-box {
-      border: 1.5px solid #333 !important;
-      outline: 1.5px solid #888 !important;
-      outline-offset: 2px !important;
-      box-shadow: none !important;
-    }
-    .ability-box .modifier {
-      border: 1.5px solid #333 !important;
-      outline: 1.5px solid #888 !important;
-      outline-offset: 1.5px !important;
-      box-shadow: none !important;
-    }
-    .stat-bubble {
-      border: 1.5px solid #333 !important;
-      outline: 1.5px solid #888 !important;
-      outline-offset: 1.5px !important;
-      box-shadow: none !important;
-    }
-    .slot-box {
-      border: 1px solid #555 !important;
-      outline: 1px solid #999 !important;
-      outline-offset: 1px !important;
-      box-shadow: none !important;
-    }
+    /* ── Double bordure D&D ─────────────────────────────────
+       On conserve les box-shadow originaux : Chrome les imprime
+       correctement grâce à print-color-adjust: exact.
+       On supprime uniquement outline pour éviter les conflits
+       avec overflow:hidden sur ability-box. */
+    .panel        { background: #fff !important; border: 1.5px solid #333 !important; margin: 3px !important; padding: 8px !important; }
+    .char-header  { border: 1.5px solid #333 !important; }
+    .ability-box  { border: 1.5px solid #333 !important; overflow: visible !important; }
+    .ability-box .modifier { border: 2px solid #333 !important; }
+    .stat-bubble  { border: 1.5px solid #333 !important; }
+    .slot-box     { border: 1px solid #555 !important; }
 
     /* Champs texte */
     textarea { border: 1px solid #aaa !important; min-height: 40px !important; }
     input[type=text], input[type=number], select { border: 1px solid #aaa !important; }
-
-    /* Barre HP, pips — garder lisibles */
     .hp-bar-wrap { border: 1px solid #aaa !important; }
     .ds-box { border: 1px solid #555 !important; }
   }
@@ -3609,18 +3575,17 @@ function printSheet() {
   const pages = document.querySelectorAll('.page');
   const saved = [];
 
-  // 1 — Rendre toutes les pages visibles et réinitialiser le zoom
+  // 1 — Rendre toutes les pages visibles, zoom 1 pour mesurer la vraie hauteur
   pages.forEach(p => {
-    saved.push({ display: p.style.display, zoom: p.style.zoom });
+    saved.push({ display: p.style.display, zoom: p.style.zoom || '' });
     p.style.display = 'block';
     p.style.zoom = '1';
   });
 
-  // 2 — Laisser le navigateur calculer les hauteurs réelles (2 frames)
-  requestAnimationFrame(() => requestAnimationFrame(() => {
-
-    // Hauteur utile A4 portrait en pixels écran (~96 dpi, marges 6 mm)
-    const A4_H = 1010;
+  // 2 — Attendre 250 ms que le navigateur finisse le layout
+  setTimeout(() => {
+    // A4 portrait, marges 6 mm, ~96 dpi → hauteur utile ≈ 1060 px
+    const A4_H = 1060;
 
     pages.forEach(p => {
       const h = p.scrollHeight;
@@ -3629,7 +3594,7 @@ function printSheet() {
       }
     });
 
-    // 3 — Restaurer APRÈS fermeture de la boîte d'impression
+    // 3 — Restaurer uniquement après fermeture du dialogue d'impression
     window.addEventListener('afterprint', () => {
       pages.forEach((p, i) => {
         p.style.display = saved[i].display;
@@ -3638,7 +3603,7 @@ function printSheet() {
     }, { once: true });
 
     window.print();
-  }));
+  }, 250);
 }
 </script>
 </body>
