@@ -492,19 +492,78 @@
   /* ════════════════════ IMPRESSION / PDF ════════════════════ */
   @media print {
     * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-    body { background: #fff !important; font-size: 11px !important; }
-    header { background: #1c1c1c !important; padding: 6px 16px !important; }
-    header .no-print, .tabs, .modal, #dice-roller-wrap { display: none !important; }
-    .page { display: block !important; padding: 8px !important; max-width: 100% !important; }
+
+    @page { size: A4 portrait; margin: 6mm; }
+
+    body { background: #fff !important; font-size: 10px !important; }
+
+    /* Masquer les éléments non imprimables */
+    header .no-print, .tabs, .modal, #dice-roller-wrap,
+    button.btn, .btn-sm, .adv-btn, .roll-mod-row { display: none !important; }
+    header { background: #1c1c1c !important; padding: 4px 12px !important; }
+
+    /* ── Un onglet = une page ──────────────────────────────
+       zoom: 0.68 réduit le contenu à 68 % → tient sur A4
+       page-break-before force le saut entre chaque onglet */
+    .page {
+      display: block !important;
+      padding: 4px !important;
+      max-width: 100% !important;
+      zoom: 0.68;
+      page-break-inside: avoid;
+    }
     .page + .page { page-break-before: always; }
-    .panel { box-shadow: none !important; border: 1px solid #555 !important; margin: 2px !important; padding: 8px !important; }
-    .ability-box { box-shadow: none !important; border: 1px solid #555 !important; }
-    .stat-bubble { box-shadow: none !important; border: 1px solid #555 !important; }
-    .char-header { box-shadow: none !important; border: 1px solid #555 !important; }
-    button.btn { display: none !important; }
-    .btn-sm { display: none !important; }
-    textarea { border: 1px solid #ccc !important; min-height: 50px !important; }
-    input[type=number], input[type=text] { border-bottom: 1px solid #aaa !important; border-top: none !important; border-left: none !important; border-right: none !important; }
+
+    /* ── Double bordure D&D à l'impression ─────────────────
+       box-shadow n'est pas imprimé par les navigateurs ;
+       outline + outline-offset reproduit l'effet double cadre */
+    .panel {
+      background: #fff !important;
+      border: 1.5px solid #333 !important;
+      outline: 2px solid #888 !important;
+      outline-offset: 2px !important;
+      box-shadow: none !important;
+      margin: 3px !important;
+      padding: 8px !important;
+    }
+    .char-header {
+      border: 1.5px solid #333 !important;
+      outline: 2px solid #888 !important;
+      outline-offset: 2px !important;
+      box-shadow: none !important;
+    }
+    .ability-box {
+      border: 1.5px solid #333 !important;
+      outline: 1.5px solid #888 !important;
+      outline-offset: 2px !important;
+      box-shadow: none !important;
+    }
+    .ability-box .modifier {
+      border: 1.5px solid #333 !important;
+      outline: 1.5px solid #888 !important;
+      outline-offset: 1.5px !important;
+      box-shadow: none !important;
+    }
+    .stat-bubble {
+      border: 1.5px solid #333 !important;
+      outline: 1.5px solid #888 !important;
+      outline-offset: 1.5px !important;
+      box-shadow: none !important;
+    }
+    .slot-box {
+      border: 1px solid #555 !important;
+      outline: 1px solid #999 !important;
+      outline-offset: 1px !important;
+      box-shadow: none !important;
+    }
+
+    /* Champs texte */
+    textarea { border: 1px solid #aaa !important; min-height: 40px !important; }
+    input[type=text], input[type=number], select { border: 1px solid #aaa !important; }
+
+    /* Barre HP, pips — garder lisibles */
+    .hp-bar-wrap { border: 1px solid #aaa !important; }
+    .ds-box { border: 1px solid #555 !important; }
   }
 </style>
 </head>
