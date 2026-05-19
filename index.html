@@ -130,16 +130,17 @@
   /* ════════════════════ CHAMPS SAISIE ════════════════════ */
   input[type=text], input[type=number], select, textarea {
     background: var(--bg);
-    border: 1px solid #aaa;
+    border: 1px solid var(--frame-outer);
+    box-shadow: 0 0 0 2px #fff, 0 0 0 3.5px var(--frame-inner);
     color: var(--text);
     border-radius: 2px; padding: 5px 8px;
     font-family: 'Source Sans 3', 'Arial', sans-serif;
     font-size: 13px; width: 100%;
-    transition: border-color .15s;
+    transition: border-color .15s, box-shadow .15s;
   }
   input[type=text]:focus, input[type=number]:focus, select:focus, textarea:focus {
     outline: none; border-color: var(--red);
-    box-shadow: 0 0 0 2px rgba(88,24,13,0.12);
+    box-shadow: 0 0 0 2px #fff, 0 0 0 3.5px var(--red);
   }
   select option { background: #fff; color: #000; }
   textarea { resize: vertical; min-height: 80px; }
@@ -551,9 +552,9 @@
     .stat-bubble  { border: 1.5px solid #333 !important; }
     .slot-box     { border: 1px solid #555 !important; }
 
-    /* Champs texte */
-    textarea { border: 1px solid #aaa !important; min-height: 20px !important; }
-    input[type=text], input[type=number], select { border: 1px solid #aaa !important; }
+    /* Champs texte — double bordure conservée en impression */
+    textarea { border: 1px solid #555 !important; box-shadow: 0 0 0 2px #fff, 0 0 0 3px #888 !important; min-height: 20px !important; }
+    input[type=text], input[type=number], select { border: 1px solid #555 !important; box-shadow: 0 0 0 2px #fff, 0 0 0 3px #888 !important; }
     .hp-bar-wrap { border: 1px solid #aaa !important; }
     .ds-box { border: 1px solid #555 !important; }
   }
