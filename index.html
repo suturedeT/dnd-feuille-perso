@@ -50,29 +50,32 @@
     --gold-dark:       #8b6510;
   }
 
+  /* ── GRAS GLOBAL ── */
+  * { font-weight: 700 !important; }
+
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: 'Source Sans 3', 'Arial', sans-serif;
     background: var(--page-bg);
     color: var(--text);
     min-height: 100vh;
-    font-size: 14px;
+    font-size: 17px;
   }
 
   /* ════════════════════ HEADER ════════════════════ */
   header {
     background: #1c1c1c;
-    border-bottom: 4px solid var(--red);
+    border-bottom: 5px solid var(--red);
     padding: 10px 24px;
     display: flex; align-items: center; gap: 16px;
   }
   header h1 {
     font-family: 'Roboto Condensed', 'Arial Narrow', sans-serif;
-    font-size: 18px; letter-spacing: 5px; color: #ffffff;
+    font-size: 21px; letter-spacing: 5px; color: #ffffff;
     text-transform: uppercase; font-weight: 700;
   }
   header .edition {
-    font-size: 10px; color: rgba(255,255,255,0.55);
+    font-size: 13px; color: rgba(255,255,255,0.55);
     margin-left: auto; letter-spacing: 2px; text-transform: uppercase;
   }
 
@@ -80,14 +83,14 @@
   .tabs {
     display: flex;
     background: #ffffff;
-    border-bottom: 1px solid #bbb;
+    border-bottom: 2px solid #bbb;
     overflow-x: auto;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   }
   .tab {
     padding: 10px 16px; cursor: pointer;
-    font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
-    border-bottom: 3px solid transparent; margin-bottom: -1px;
+    font-size: 14px; letter-spacing: 1.5px; text-transform: uppercase;
+    border-bottom: 4px solid transparent; margin-bottom: -1px;
     transition: all .15s; white-space: nowrap; color: #666;
     font-family: 'Roboto Condensed', sans-serif; font-weight: 700;
   }
@@ -111,7 +114,7 @@
   ══════════════════════════════════════════════════════════════════════════ */
   .panel {
     background: var(--panel);
-    border: 1.5px solid var(--frame-outer);
+    border: 2.5px solid var(--frame-outer);
     border-radius: 5px;
     padding: 14px;
     box-shadow: 0 0 0 3px #fff, 0 0 0 5px var(--frame-inner);
@@ -120,22 +123,22 @@
   }
   .panel-title {
     font-family: 'Roboto Condensed', 'Arial Narrow', sans-serif;
-    font-size: 9px; letter-spacing: 2.5px; text-transform: uppercase;
+    font-size: 12px; letter-spacing: 2.5px; text-transform: uppercase;
     font-weight: 700; color: var(--text);
     text-align: center;
-    border-bottom: 1.5px solid var(--text);
+    border-bottom: 2.5px solid var(--text);
     padding-bottom: 5px; margin-bottom: 10px;
   }
 
   /* ════════════════════ CHAMPS SAISIE ════════════════════ */
   input[type=text], input[type=number], select, textarea {
     background: var(--bg);
-    border: 1px solid var(--frame-outer);
+    border: 2px solid var(--frame-outer);
     box-shadow: 0 0 0 2px #fff, 0 0 0 3.5px var(--frame-inner);
     color: var(--text);
     border-radius: 2px; padding: 5px 8px;
     font-family: 'Source Sans 3', 'Arial', sans-serif;
-    font-size: 13px; width: 100%;
+    font-size: 16px; width: 100%;
     transition: border-color .15s, box-shadow .15s;
   }
   input[type=text]:focus, input[type=number]:focus, select:focus, textarea:focus {
@@ -146,7 +149,7 @@
   textarea { resize: vertical; min-height: 80px; }
   label {
     font-family: 'Roboto Condensed', 'Arial Narrow', sans-serif;
-    font-size: 9px; color: var(--text-dim); display: block; margin-bottom: 3px;
+    font-size: 12px; color: var(--text-dim); display: block; margin-bottom: 3px;
     text-transform: uppercase; letter-spacing: 1px; font-weight: 700;
   }
   .field { margin-bottom: 10px; }
@@ -154,7 +157,7 @@
   /* ════════════════════ EN-TÊTE PERSONNAGE ════════════════════ */
   .char-header {
     background: var(--panel);
-    border: 1.5px solid var(--frame-outer);
+    border: 2.5px solid var(--frame-outer);
     border-radius: 5px; padding: 14px;
     box-shadow: 0 0 0 3px #fff, 0 0 0 5px var(--frame-inner);
     margin: 4px 4px 14px;
@@ -165,8 +168,8 @@
   @media(max-width:600px) { .char-header { grid-template-columns: 1fr 1fr; } }
   .char-name-field { grid-column: 1/-1; }
   .char-name-field input {
-    font-size: 22px; font-weight: 700; letter-spacing: 1px;
-    border: none; border-bottom: 2px solid var(--text);
+    font-size: 25px; font-weight: 700; letter-spacing: 1px;
+    border: none; border-bottom: 3px solid var(--text);
     background: transparent; padding: 2px 0; color: var(--text);
     font-family: 'Roboto Condensed', sans-serif;
   }
@@ -179,7 +182,7 @@
 
   .ability-box {
     background: #fff;
-    border: 1.5px solid var(--frame-outer);
+    border: 2.5px solid var(--frame-outer);
     border-radius: 6px;
     text-align: center;
     padding: 0 6px 8px;
@@ -196,26 +199,26 @@
   /* Bande grise du nom — identique à la feuille officielle */
   .ability-box .name {
     font-family: 'Roboto Condensed', 'Arial Narrow', sans-serif;
-    font-size: 9px; letter-spacing: 1.5px;
+    font-size: 12px; letter-spacing: 1.5px;
     color: var(--text); text-transform: uppercase; font-weight: 700;
     background: var(--ab-band);
     padding: 4px 4px 3px;
     margin: 0 -6px 6px;
     display: block;
-    border-bottom: 1px solid #bbb;
+    border-bottom: 2px solid #bbb;
   }
   /* Grand score */
   .ability-box .score-input {
-    font-size: 30px; font-weight: 700; text-align: center;
+    font-size: 33px; font-weight: 700; text-align: center;
     width: 100%; background: transparent; border: none;
     color: var(--text); padding: 4px 0 2px;
     font-family: 'Roboto Condensed', sans-serif;
   }
   /* Cercle modificateur */
   .ability-box .modifier {
-    font-size: 15px; font-weight: 700;
+    font-size: 18px; font-weight: 700;
     background: #fff;
-    border: 2px solid var(--frame-outer);
+    border: 3px solid var(--frame-outer);
     border-radius: 50%; width: 42px; height: 42px;
     display: flex; align-items: center; justify-content: center;
     margin: 4px auto 4px;
@@ -224,20 +227,20 @@
   }
 
   /* ════════════════════ COMPÉTENCES DANS CASE CARACT. ════════════════════ */
-  .ability-skills { border-top: 1px solid #ddd; margin-top: 4px; padding-top: 4px; }
+  .ability-skills { border-top: 2px solid #ddd; margin-top: 4px; padding-top: 4px; }
   .ability-skill-row {
     display: flex; align-items: center; gap: 3px; padding: 2px 0;
-    border-bottom: 1px solid rgba(0,0,0,0.05);
+    border-bottom: 2px solid rgba(0,0,0,0.05);
   }
   .ability-skill-row:last-child { border-bottom: none; }
   .sk-dot {
     width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
-    background: transparent; border: 1.5px solid #888;
+    background: transparent; border: 2.5px solid #888;
   }
   .sk-dot.prof   { background: var(--text);  border-color: var(--text); }
   .sk-dot.expert { background: var(--red);   border-color: var(--red); }
-  .sk-val  { min-width: 22px; text-align: right; font-weight: 700; font-size: 10px; color: #333; }
-  .sk-name { flex: 1; font-size: 10px; color: var(--text); }
+  .sk-val  { min-width: 22px; text-align: right; font-weight: 700; font-size: 13px; color: #333; }
+  .sk-name { flex: 1; font-size: 13px; color: var(--text); }
 
   /* ════════════════════ CA — BOUCLIER ════════════════════ */
   .stat-shield-wrap { filter: drop-shadow(0 2px 3px rgba(0,0,0,0.3)); }
@@ -252,51 +255,51 @@
   /* ════════════════════ BULLES STATS CLÉS ════════════════════ */
   .stat-bubble {
     background: #fff;
-    border: 1.5px solid var(--frame-outer);
+    border: 2.5px solid var(--frame-outer);
     border-radius: 5px; text-align: center; padding: 10px;
     box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--frame-inner);
     margin: 3px;
   }
   .stat-bubble .val {
-    font-size: 26px; font-weight: 700; color: var(--text);
+    font-size: 29px; font-weight: 700; color: var(--text);
     font-family: 'Roboto Condensed', sans-serif;
   }
   .stat-bubble .lbl {
     font-family: 'Roboto Condensed', 'Arial Narrow', sans-serif;
-    font-size: 8px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1.5px;
+    font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1.5px;
   }
 
   /* ════════════════════ JETS / COMPÉTENCES — lignes à cocher ════════════════════ */
   .check-row {
     display: flex; align-items: center; gap: 7px;
-    padding: 3px 0; border-bottom: 1px solid rgba(0,0,0,0.07);
-    font-size: 12px; color: var(--text);
+    padding: 3px 0; border-bottom: 2px solid rgba(0,0,0,0.07);
+    font-size: 15px; color: var(--text);
   }
   .check-row:last-child { border-bottom: none; }
   /* Cercles officiels D&D */
   .check-row input[type=checkbox] {
     appearance: none; -webkit-appearance: none;
     width: 12px; height: 12px; border-radius: 50%;
-    border: 1.5px solid #555;
+    border: 2.5px solid #555;
     cursor: pointer; flex-shrink: 0;
     background: transparent; transition: background .12s;
   }
   .check-row input[type=checkbox]:checked { background: var(--text); border-color: var(--text); }
-  .check-row .bonus { min-width: 28px; text-align: right; font-weight: 700; font-size: 12px; }
+  .check-row .bonus { min-width: 28px; text-align: right; font-weight: 700; font-size: 15px; }
   .check-row .sname { flex: 1; }
-  .check-row .attr  { font-size: 9px; color: var(--text-light); min-width: 28px; }
+  .check-row .attr  { font-size: 12px; color: var(--text-light); min-width: 28px; }
 
   /* ════════════════════ INDICATEUR DE MAÎTRISE ════════════════════ */
   .prof-dot {
     width: 9px; height: 9px; border-radius: 50%;
-    background: transparent; border: 1.5px solid #666; flex-shrink: 0;
+    background: transparent; border: 2.5px solid #666; flex-shrink: 0;
   }
   .prof-dot.prof   { background: var(--text); border-color: var(--text); }
   .prof-dot.half   { background: #888; border-color: #555; }
   .prof-dot.expert { background: var(--red); border-color: var(--red); }
 
   /* ════════════════════ BARRE DE PV ════════════════════ */
-  .hp-bar-wrap { background: #e8e8e8; border: 1px solid #bbb; border-radius: 3px; height: 6px; overflow: hidden; margin-top: 5px; }
+  .hp-bar-wrap { background: #e8e8e8; border: 2px solid #bbb; border-radius: 3px; height: 6px; overflow: hidden; margin-top: 5px; }
   .hp-bar { height: 100%; background: linear-gradient(90deg, #a30000, #1a6620); border-radius: 3px; transition: width .3s; }
 
   /* ════════════════════ JETS DE MORT ════════════════════ */
@@ -304,24 +307,24 @@
   .ds-group { display: flex; gap: 4px; }
   .ds-dot {
     width: 18px; height: 18px; border-radius: 50%;
-    border: 2px solid #555; cursor: pointer; transition: background .15s;
+    border: 3px solid #555; cursor: pointer; transition: background .15s;
     background: transparent;
   }
   .ds-dot.success.filled { background: var(--green); border-color: var(--green); }
   .ds-dot.fail.filled    { background: var(--red);   border-color: var(--red); }
 
   /* ════════════════════ TABLE ATTAQUES ════════════════════ */
-  .attacks-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .attacks-table { width: 100%; border-collapse: collapse; font-size: 15px; }
   .attacks-table th {
     text-align: left; padding: 5px 6px;
     font-family: 'Roboto Condensed', sans-serif;
-    font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase;
+    font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase;
     font-weight: 700; color: var(--text);
-    border-bottom: 2px solid var(--text);
+    border-bottom: 3px solid var(--text);
     background: transparent;
   }
-  .attacks-table td { padding: 4px 5px; border-bottom: 1px solid rgba(0,0,0,0.08); }
-  .attacks-table input { background: transparent; border: none; color: var(--text); font-size: 12px; padding: 0; font-family: inherit; width: 100%; }
+  .attacks-table td { padding: 4px 5px; border-bottom: 2px solid rgba(0,0,0,0.08); }
+  .attacks-table input { background: transparent; border: none; color: var(--text); font-size: 15px; padding: 0; font-family: inherit; width: 100%; }
   .attacks-table tr:hover td { background: rgba(0,0,0,0.03); }
 
   /* ════════════════════ EMPLACEMENTS DE SORTS ════════════════════ */
@@ -329,20 +332,20 @@
   @media(max-width:600px) { .spell-slots-grid { grid-template-columns: 1fr 1fr; } }
   .slot-box {
     background: #fff;
-    border: 1.5px solid var(--frame-outer);
+    border: 2.5px solid var(--frame-outer);
     border-radius: 4px; padding: 8px; text-align: center;
     box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--frame-inner);
     margin: 3px;
   }
   .slot-box .slot-level {
     font-family: 'Roboto Condensed', sans-serif;
-    font-size: 9px; color: var(--text-dim); text-transform: uppercase;
+    font-size: 12px; color: var(--text-dim); text-transform: uppercase;
     letter-spacing: 1px; margin-bottom: 5px; font-weight: 700;
   }
   .slot-pips { display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; }
   .slot-pip {
     width: 14px; height: 14px; border-radius: 50%;
-    border: 1.5px solid #555; background: transparent;
+    border: 2.5px solid #555; background: transparent;
     cursor: pointer; transition: background .12s;
   }
   .slot-pip.used { background: var(--text); border-color: var(--text); }
@@ -350,13 +353,13 @@
   /* ════════════════════ LISTE DE SORTS ════════════════════ */
   .spell-row {
     display: flex; align-items: center; gap: 7px;
-    padding: 3px 0; border-bottom: 1px solid rgba(0,0,0,0.06);
-    font-size: 12px; color: var(--text);
+    padding: 3px 0; border-bottom: 2px solid rgba(0,0,0,0.06);
+    font-size: 15px; color: var(--text);
   }
   .spell-row input[type=checkbox] {
     appearance: none; -webkit-appearance: none;
     width: 12px; height: 12px; border-radius: 50%;
-    border: 1.5px solid #555;
+    border: 2.5px solid #555;
     cursor: pointer; flex-shrink: 0;
     background: transparent; transition: background .12s;
   }
@@ -366,9 +369,9 @@
   .dice-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
   .die-btn {
     background: #fff;
-    border: 2px solid var(--frame-outer);
+    border: 3px solid var(--frame-outer);
     color: var(--text); border-radius: 5px; padding: 10px 14px;
-    font-size: 13px; cursor: pointer;
+    font-size: 16px; cursor: pointer;
     font-family: 'Roboto Condensed', sans-serif; font-weight: 700;
     transition: all .12s; min-width: 60px; text-align: center; letter-spacing: 1px;
     box-shadow: 0 0 0 1.5px #fff, 0 0 0 3px var(--frame-inner);
@@ -376,32 +379,32 @@
   .die-btn:hover { border-color: var(--red); color: var(--red); transform: translateY(-1px); }
   .die-btn:active { transform: translateY(0); }
   #roll-result {
-    font-size: 56px; font-weight: 700; text-align: center;
+    font-size: 59px; font-weight: 700; text-align: center;
     color: var(--red); padding: 16px;
     font-family: 'Roboto Condensed', sans-serif;
     animation: pop .2s ease-out;
   }
   @keyframes pop { 0%{transform:scale(.7)} 70%{transform:scale(1.1)} 100%{transform:scale(1)} }
-  #roll-history { max-height: 200px; overflow-y: auto; font-size: 12px; color: var(--text-dim); }
-  .roll-entry { padding: 3px 0; border-bottom: 1px solid rgba(0,0,0,0.06); }
+  #roll-history { max-height: 200px; overflow-y: auto; font-size: 15px; color: var(--text-dim); }
+  .roll-entry { padding: 3px 0; border-bottom: 2px solid rgba(0,0,0,0.06); }
 
   /* ════════════════════ BOUTONS ════════════════════ */
   .btn {
-    background: var(--red); border: 1px solid #3a0d0d; color: #ffffff;
+    background: var(--red); border: 2px solid #3a0d0d; color: #ffffff;
     border-radius: 3px; padding: 7px 14px; cursor: pointer;
-    font-family: 'Roboto Condensed', sans-serif; font-size: 12px;
+    font-family: 'Roboto Condensed', sans-serif; font-size: 15px;
     letter-spacing: 1px; font-weight: 700; transition: background .12s;
   }
   .btn:hover { background: #7a2020; }
-  .btn-gold { background: transparent; border: 1.5px solid #666; color: var(--text); }
+  .btn-gold { background: transparent; border: 2.5px solid #666; color: var(--text); }
   .btn-gold:hover { background: #f5f5f5; }
-  .btn-sm { padding: 3px 9px; font-size: 11px; }
+  .btn-sm { padding: 3px 9px; font-size: 14px; }
 
   /* ════════════════════ INSPIRATION ════════════════════ */
   #inspiration-btn {
     width: 44px; height: 44px; border-radius: 50%;
-    border: 2px solid var(--frame-outer);
-    background: #fff; cursor: pointer; font-size: 18px; transition: all .15s;
+    border: 3px solid var(--frame-outer);
+    background: #fff; cursor: pointer; font-size: 21px; transition: all .15s;
     box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--frame-inner);
   }
   #inspiration-btn.active {
@@ -415,28 +418,28 @@
   .coin-box { text-align: center; }
   .coin-box .coin-lbl {
     font-family: 'Roboto Condensed', sans-serif;
-    font-size: 9px; color: var(--text-dim); margin-bottom: 3px;
+    font-size: 12px; color: var(--text-dim); margin-bottom: 3px;
     letter-spacing: 1px; text-transform: uppercase; font-weight: 700;
   }
-  .coin-box .coin-icon { font-size: 14px; }
+  .coin-box .coin-icon { font-size: 17px; }
 
   /* ════════════════════ ÉPUISEMENT ════════════════════ */
   .exhaustion-pips { display: flex; gap: 5px; flex-wrap: wrap; }
   .ex-pip {
     width: 26px; height: 26px; border-radius: 50%;
-    border: 2px solid #555; cursor: pointer;
+    border: 3px solid #555; cursor: pointer;
     display: flex; align-items: center; justify-content: center;
-    font-size: 11px; transition: all .12s; background: transparent;
+    font-size: 14px; transition: all .12s; background: transparent;
     font-family: 'Roboto Condensed', sans-serif; font-weight: 700;
   }
   .ex-pip.active { border-color: var(--red); background: rgba(88,24,13,0.08); color: var(--red); }
 
   /* ════════════════════ MODIFICATEUR DE LANCER ════════════════════ */
   .roll-mod-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 12px; }
-  .roll-mod-row label { color: var(--text-dim); font-size: 12px; text-transform: none; letter-spacing: 0; font-family: inherit; font-weight: normal; }
+  .roll-mod-row label { color: var(--text-dim); font-size: 15px; text-transform: none; letter-spacing: 0; font-family: inherit; font-weight: normal; }
   .adv-btn {
-    padding: 4px 12px; border-radius: 3px; border: 1.5px solid;
-    cursor: pointer; font-size: 11px; font-family: 'Roboto Condensed', sans-serif;
+    padding: 4px 12px; border-radius: 3px; border: 2.5px solid;
+    cursor: pointer; font-size: 14px; font-family: 'Roboto Condensed', sans-serif;
     background: transparent; letter-spacing: 1px; font-weight: 700; transition: all .12s;
   }
   .adv-btn.adv      { border-color: var(--green); color: var(--green); }
@@ -610,7 +613,7 @@
       </select>
     </div>
     <div>
-      <label>Sous-classe <span id="subclass-level-hint" style="font-size:10px;color:var(--text-dim);">(niv. 3)</span></label>
+      <label>Sous-classe <span id="subclass-level-hint" style="font-size: 13px;color:var(--text-dim);">(niv. 3)</span></label>
       <select id="char-subclass" onchange="onSubclassChange()" disabled style="opacity:.5;">
         <option value="">— Choisir une classe d'abord —</option>
       </select>
@@ -705,7 +708,7 @@
           </div>
         </div>
         <div class="row">
-          <label style="font-size:13px;">Inspiration :</label>
+          <label style="font-size: 16px;">Inspiration :</label>
           <button id="inspiration-btn" onclick="toggleInspiration()" title="Cliquer pour activer/désactiver">☆</button>
         </div>
       </div>
@@ -747,11 +750,11 @@
         <div class="panel-title">Jets de mort</div>
         <div class="death-saves">
           <div>
-            <div style="font-size:12px;color:var(--green);margin-bottom:4px;">Succès</div>
+            <div style="font-size: 15px;color:var(--green);margin-bottom:4px;">Succès</div>
             <div class="ds-group" id="ds-success"></div>
           </div>
           <div>
-            <div style="font-size:12px;color:var(--accent);margin-bottom:4px;">Échecs</div>
+            <div style="font-size: 15px;color:var(--accent);margin-bottom:4px;">Échecs</div>
             <div class="ds-group" id="ds-fail"></div>
           </div>
         </div>
@@ -770,7 +773,7 @@
 
       <div class="panel" id="class-info-box" style="display:none;">
         <div class="panel-title" id="class-info-title">Classe</div>
-        <div id="class-info-body" style="font-size:13px;line-height:1.7;"></div>
+        <div id="class-info-body" style="font-size: 16px;line-height:1.7;"></div>
         <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap;">
           <button class="btn btn-gold btn-sm" onclick="applyClassSaves()">✔ Jets de sauvegarde</button>
           <button class="btn btn-gold btn-sm" onclick="applyClassSpellAbility()">✔ Caract. de sort</button>
@@ -779,7 +782,7 @@
 
       <div class="panel" id="species-info-box" style="display:none;">
         <div class="panel-title" id="species-info-title">Espèce</div>
-        <div id="species-info-body" style="font-size:13px;line-height:1.7;"></div>
+        <div id="species-info-body" style="font-size: 16px;line-height:1.7;"></div>
         <div style="margin-top:10px;">
           <button class="btn btn-gold btn-sm" onclick="applySpeciesSpeed()">✔ Appliquer la vitesse</button>
         </div>
@@ -787,7 +790,7 @@
 
       <div class="panel" id="background-info-box" style="display:none;">
         <div class="panel-title" id="background-info-title">Historique</div>
-        <div id="background-info-body" style="font-size:13px;line-height:1.7;"></div>
+        <div id="background-info-body" style="font-size: 16px;line-height:1.7;"></div>
         <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap;">
           <button class="btn btn-gold btn-sm" onclick="applyBackgroundBonuses()">✔ Appliquer les bonus</button>
           <button class="btn btn-gold btn-sm" onclick="applyBackgroundSkills()">✔ Cocher compétences</button>
@@ -800,7 +803,7 @@
   <!-- Attaques résumé -->
   <div class="panel section-gap">
     <div class="panel-title">Attaques
-      <button class="btn btn-sm no-print" onclick="addAttack()" style="float:right;background:var(--panel2);border:1px solid var(--red);color:var(--red);font-size:11px;padding:2px 8px;">+ Vide</button>
+      <button class="btn btn-sm no-print" onclick="addAttack()" style="float:right;background:var(--panel2);border:1px solid var(--red);color:var(--red);font-size: 14px;padding:2px 8px;">+ Vide</button>
     </div>
     <table class="atk-mini-table">
       <thead>
@@ -813,7 +816,7 @@
       </thead>
       <tbody id="attacks-body-mini"></tbody>
     </table>
-    <div id="attacks-mini-empty" style="color:var(--text-dim);font-size:13px;padding:10px 0;">Aucune attaque — ajoutez des armes depuis l'onglet <strong>Combat</strong> ou cliquez <strong>+ Vide</strong>.</div>
+    <div id="attacks-mini-empty" style="color:var(--text-dim);font-size: 16px;padding:10px 0;">Aucune attaque — ajoutez des armes depuis l'onglet <strong>Combat</strong> ou cliquez <strong>+ Vide</strong>.</div>
   </div>
 
   <!-- Jets de sauvegarde -->
@@ -863,7 +866,7 @@
       </div>
       <button class="btn btn-gold" onclick="addLanguage()" style="white-space:nowrap;align-self:flex-end;">+ Ajouter</button>
     </div>
-    <div id="lang-picker-info" class="picker-info" style="margin-top:6px;font-size:12px;color:var(--text-dim);min-height:16px;"></div>
+    <div id="lang-picker-info" class="picker-info" style="margin-top:6px;font-size: 15px;color:var(--text-dim);min-height:16px;"></div>
     <div class="lang-tags" id="languages-list"></div>
   </div>
 
@@ -936,7 +939,7 @@
       </div>
       <button class="btn btn-gold" onclick="addAttackFromPicker()" style="white-space:nowrap;">+ Ajouter</button>
     </div>
-    <div id="weapon-picker-info" class="picker-info" style="margin-top:8px;font-size:12px;color:var(--text-dim);min-height:18px;"></div>
+    <div id="weapon-picker-info" class="picker-info" style="margin-top:8px;font-size: 15px;color:var(--text-dim);min-height:18px;"></div>
   </div>
 
   <div class="panel section-gap">
@@ -1020,7 +1023,7 @@
       </div>
       <button class="btn btn-gold" onclick="addSpellFromPicker()" style="white-space:nowrap;align-self:flex-end;">+ Ajouter</button>
     </div>
-    <div id="spell-picker-info" class="picker-info" style="margin-top:8px;font-size:12px;color:var(--text-dim);min-height:18px;"></div>
+    <div id="spell-picker-info" class="picker-info" style="margin-top:8px;font-size: 15px;color:var(--text-dim);min-height:18px;"></div>
   </div>
 
   <!-- Liste des sorts du personnage -->
@@ -1029,7 +1032,7 @@
       Mes sorts
       <button class="btn btn-gold btn-sm" style="float:right;" onclick="addSpell()">+ Vide</button>
     </div>
-    <div style="display:grid;grid-template-columns:36px 1fr 90px 1fr 36px;gap:4px;font-size:10px;color:var(--red);padding:4px 0;letter-spacing:1px;text-transform:uppercase;border-bottom:1px solid var(--border);margin-bottom:4px;">
+    <div style="display:grid;grid-template-columns:36px 1fr 90px 1fr 36px;gap:4px;font-size: 13px;color:var(--red);padding:4px 0;letter-spacing:1px;text-transform:uppercase;border-bottom:1px solid var(--border);margin-bottom:4px;">
       <span>Prép.</span><span>Nom</span><span>Niveau</span><span>École / Notes</span><span></span>
     </div>
     <div id="spells-list"></div>
@@ -1043,10 +1046,10 @@
 <div id="weapon-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9999;align-items:center;justify-content:center;padding:20px;">
   <div style="background:#fff;border:1.5px solid var(--border-dark);border-top:4px solid var(--red);border-radius:3px;max-width:480px;width:100%;padding:24px;position:relative;box-shadow:0 8px 32px rgba(0,0,0,0.25);">
     <button onclick="document.getElementById('weapon-modal').style.display='none'"
-      style="position:absolute;top:10px;right:12px;background:none;border:none;color:var(--text-dim);font-size:20px;cursor:pointer;line-height:1;">✕</button>
-    <div style="font-family:'Roboto Condensed',sans-serif;font-size:18px;font-weight:700;color:var(--red);margin-bottom:4px;text-transform:uppercase;letter-spacing:1px;" id="weapon-modal-title"></div>
-    <div style="margin-bottom:12px;font-size:12px;color:var(--text-dim);border-bottom:1px solid var(--border);padding-bottom:10px;" id="weapon-modal-meta"></div>
-    <div id="weapon-modal-body" style="font-size:13px;color:var(--text);line-height:1.6;"></div>
+      style="position:absolute;top:10px;right:12px;background:none;border:none;color:var(--text-dim);font-size: 23px;cursor:pointer;line-height:1;">✕</button>
+    <div style="font-family:'Roboto Condensed',sans-serif;font-size: 21px;font-weight:700;color:var(--red);margin-bottom:4px;text-transform:uppercase;letter-spacing:1px;" id="weapon-modal-title"></div>
+    <div style="margin-bottom:12px;font-size: 15px;color:var(--text-dim);border-bottom:1px solid var(--border);padding-bottom:10px;" id="weapon-modal-meta"></div>
+    <div id="weapon-modal-body" style="font-size: 16px;color:var(--text);line-height:1.6;"></div>
   </div>
 </div>
 
@@ -1054,10 +1057,10 @@
 <div id="spell-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9999;align-items:center;justify-content:center;padding:20px;">
   <div style="background:#fff;border:1.5px solid var(--border-dark);border-top:4px solid var(--red);border-radius:3px;max-width:560px;width:100%;padding:24px;position:relative;max-height:90vh;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.25);">
     <button onclick="document.getElementById('spell-modal').style.display='none'"
-      style="position:absolute;top:10px;right:12px;background:none;border:none;color:var(--text-dim);font-size:20px;cursor:pointer;line-height:1;">✕</button>
-    <div style="font-family:'Roboto Condensed',sans-serif;font-size:18px;font-weight:700;color:var(--red);margin-bottom:4px;text-transform:uppercase;letter-spacing:1px;" id="spell-modal-title"></div>
-    <div style="margin-bottom:12px;font-size:12px;color:var(--text-dim);border-bottom:1px solid var(--border);padding-bottom:10px;" id="spell-modal-meta"></div>
-    <div id="spell-modal-desc" style="font-size:13px;color:var(--text);line-height:1.7;"></div>
+      style="position:absolute;top:10px;right:12px;background:none;border:none;color:var(--text-dim);font-size: 23px;cursor:pointer;line-height:1;">✕</button>
+    <div style="font-family:'Roboto Condensed',sans-serif;font-size: 21px;font-weight:700;color:var(--red);margin-bottom:4px;text-transform:uppercase;letter-spacing:1px;" id="spell-modal-title"></div>
+    <div style="margin-bottom:12px;font-size: 15px;color:var(--text-dim);border-bottom:1px solid var(--border);padding-bottom:10px;" id="spell-modal-meta"></div>
+    <div id="spell-modal-desc" style="font-size: 16px;color:var(--text);line-height:1.7;"></div>
   </div>
 </div>
 
@@ -1098,7 +1101,7 @@
       <button class="btn btn-gold" onclick="addMagicItemToInventory()" style="white-space:nowrap;align-self:flex-end;">+ Inventaire</button>
       <button class="btn" onclick="addMagicItemAsAttack()" style="white-space:nowrap;align-self:flex-end;background:var(--green);">⚔ Attaque</button>
     </div>
-    <div id="magic-picker-info" class="picker-info" style="margin-top:8px;font-size:12px;color:var(--text-dim);min-height:18px;"></div>
+    <div id="magic-picker-info" class="picker-info" style="margin-top:8px;font-size: 15px;color:var(--text-dim);min-height:18px;"></div>
   </div>
 
   <div class="panel section-gap">
@@ -1157,7 +1160,7 @@
       </div>
       <button class="btn btn-gold" onclick="addEquipmentItem()" style="white-space:nowrap;align-self:flex-end;">+ Inventaire</button>
     </div>
-    <div id="equip-picker-info" class="picker-info" style="margin-top:8px;font-size:12px;color:var(--text-dim);min-height:18px;"></div>
+    <div id="equip-picker-info" class="picker-info" style="margin-top:8px;font-size: 15px;color:var(--text-dim);min-height:18px;"></div>
   </div>
 
   <div class="panel section-gap">
@@ -1165,11 +1168,11 @@
       Équipement & Objets
       <button class="btn btn-gold btn-sm" style="float:right;" onclick="addItem()">+ Ajouter</button>
     </div>
-    <div style="display:grid;grid-template-columns:40px 1fr 80px 80px 1fr 40px;gap:4px;font-size:10px;color:var(--red);padding:4px 0;letter-spacing:1px;text-transform:uppercase;">
+    <div style="display:grid;grid-template-columns:40px 1fr 80px 80px 1fr 40px;gap:4px;font-size: 13px;color:var(--red);padding:4px 0;letter-spacing:1px;text-transform:uppercase;">
       <span>Éq.</span><span>Nom</span><span>Quantité</span><span>Poids</span><span>Notes</span><span></span>
     </div>
     <div id="items-list"></div>
-    <div style="margin-top:8px;font-size:13px;color:var(--text-dim);">
+    <div style="margin-top:8px;font-size: 16px;color:var(--text-dim);">
       Poids total : <span id="total-weight" style="color:var(--red);">0</span> kg
     </div>
   </div>
@@ -1244,13 +1247,13 @@
       </div>
       <button class="btn btn-gold" onclick="addFeat()" style="white-space:nowrap;align-self:flex-end;">+ Ajouter</button>
     </div>
-    <div id="feat-picker-info" class="picker-info" style="margin-top:8px;font-size:12px;color:var(--text-dim);min-height:18px;"></div>
+    <div id="feat-picker-info" class="picker-info" style="margin-top:8px;font-size: 15px;color:var(--text-dim);min-height:18px;"></div>
   </div>
 
   <div class="panel section-gap">
     <div class="panel-title">
       Dons acquis
-      <span id="feats-count" style="font-size:12px;font-weight:normal;color:var(--text-dim);margin-left:8px;"></span>
+      <span id="feats-count" style="font-size: 15px;font-weight:normal;color:var(--text-dim);margin-left:8px;"></span>
     </div>
     <div id="feats-list"></div>
   </div>
@@ -1288,7 +1291,7 @@
         <button class="die-btn" onclick="rollDie(100)">d100</button>
       </div>
       <div id="roll-result">—</div>
-      <div style="font-size:13px;color:var(--text-dim);text-align:center;margin-bottom:8px;" id="roll-detail"></div>
+      <div style="font-size: 16px;color:var(--text-dim);text-align:center;margin-bottom:8px;" id="roll-detail"></div>
       <button class="btn btn-gold btn-sm" onclick="clearRollHistory()">Effacer historique</button>
     </div>
     <div class="panel">
@@ -3004,7 +3007,7 @@ function buildSpellSlots() {
       <div class="slot-level">Niveau ${lvl}</div>
       <div style="display:flex;gap:4px;justify-content:center;margin-bottom:6px;">
         <input type="number" id="slot-max-${lvl}" value="0" min="0" max="9" style="width:40px;text-align:center;" oninput="updateSlotPips(${lvl})">
-        <span style="color:var(--text-dim);font-size:12px;line-height:28px;">max</span>
+        <span style="color:var(--text-dim);font-size: 15px;line-height:28px;">max</span>
       </div>
       <div class="slot-pips" id="slot-pips-${lvl}"></div>
     `;
@@ -3222,9 +3225,9 @@ function renderClassInfoBody(cls, sub) {
     ? `<span style="color:var(--red);">Incantation :</span> ${cls.spellAbility}<br>` : '';
   const subStr = sub
     ? `<div style="margin-top:10px;padding-top:8px;border-top:1px solid var(--border);">
-         <span style="color:var(--accent);font-size:11px;letter-spacing:1px;text-transform:uppercase;">Sous-classe</span><br>
+         <span style="color:var(--accent);font-size: 14px;letter-spacing:1px;text-transform:uppercase;">Sous-classe</span><br>
          <strong style="color:var(--text);">${sub.name}</strong><br>
-         <span style="color:var(--text-dim);font-size:12px;">${sub.desc}</span>
+         <span style="color:var(--text-dim);font-size: 15px;">${sub.desc}</span>
        </div>` : '';
 
   document.getElementById('class-info-body').innerHTML = `
@@ -3233,7 +3236,7 @@ function renderClassInfoBody(cls, sub) {
     ${spellStr}
     <span style="color:var(--red);">Armures :</span> ${cls.armor}<br>
     <span style="color:var(--red);">Armes :</span> ${cls.weapons}<br>
-    <span style="color:var(--text-dim);font-size:12px;margin-top:4px;display:block;">${cls.desc}</span>
+    <span style="color:var(--text-dim);font-size: 15px;margin-top:4px;display:block;">${cls.desc}</span>
     ${subStr}
   `;
 }
@@ -3270,7 +3273,7 @@ function onSpeciesChange() {
     <span style="color:var(--red);">Taille :</span> ${sp.size} &bull;
     <span style="color:var(--red);">Vitesse :</span> ${sp.speed} m<br>
     ${dvStr}
-    <span style="color:var(--text-dim);font-size:12px;margin-top:4px;display:block;">${sp.traits}</span>
+    <span style="color:var(--text-dim);font-size: 15px;margin-top:4px;display:block;">${sp.traits}</span>
   `;
   box.style.display = 'block';
   refreshInfoPanel();
@@ -3305,7 +3308,7 @@ function onBackgroundChange() {
     <span style="color:var(--red);">Compétences :</span> ${skillLabels}<br>
     <span style="color:var(--red);">Don :</span> ${bg.feat}<br>
     <span style="color:var(--red);">Outil :</span> ${bg.tool}<br>
-    <span style="color:var(--text-dim);font-size:12px;margin-top:4px;display:block;">${bg.desc}</span>
+    <span style="color:var(--text-dim);font-size: 15px;margin-top:4px;display:block;">${bg.desc}</span>
   `;
   box.style.display = 'block';
   refreshInfoPanel();
@@ -3389,16 +3392,16 @@ function updateWeaponPickerInfo() {
   const lastVal = sel.length ? sel[sel.length-1].value : '';
   const w = WEAPONS_DB.find(x => x.name === lastVal);
   if (!w) { info.innerHTML = sel.length > 1 ? `<span style="color:var(--gold);">${sel.length} armes sélectionnées</span>` : ''; return; }
-  const badge = sel.length > 1 ? `<span style="margin-left:8px;background:var(--gold);color:#1c1c1c;font-size:10px;padding:1px 5px;border-radius:3px;">${sel.length} sélectionnées</span>` : '';
+  const badge = sel.length > 1 ? `<span style="margin-left:8px;background:var(--gold);color:#1c1c1c;font-size: 13px;padding:1px 5px;border-radius:3px;">${sel.length} sélectionnées</span>` : '';
   const catLabel  = w.cat  === 'simple' ? 'Simple'    : 'Guerre';
   const typeLabel = w.type === 'melee'  ? 'Corps à corps' : 'Distance';
   info.innerHTML = `
     <span style="color:var(--red);font-weight:bold;">${w.name}</span>${badge}
     <span style="color:var(--text-dim);"> — ${catLabel} · ${typeLabel}</span><br>
-    <span style="color:var(--text);font-size:12px;">
+    <span style="color:var(--text);font-size: 15px;">
       <b>${w.damage} ${w.damageType}</b> &bull; Portée : ${w.range} &bull; ${w.properties}
     </span><br>
-    <span style="color:var(--ink-light);font-size:12px;">${w.desc}</span>
+    <span style="color:var(--ink-light);font-size: 15px;">${w.desc}</span>
   `;
 }
 
@@ -3470,9 +3473,9 @@ function showWeaponModal(name) {
     `${catLabel} · ${typeLabel} · <span style="color:var(--text-dim);">${w.stat}</span>`;
   document.getElementById('weapon-modal-body').innerHTML = `
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
-      <div><span style="color:var(--red);font-size:11px;letter-spacing:1px;text-transform:uppercase;">Dégâts</span><br>${w.damage} ${w.damageType}</div>
-      <div><span style="color:var(--red);font-size:11px;letter-spacing:1px;text-transform:uppercase;">Portée</span><br>${w.range}</div>
-      <div style="grid-column:1/-1;"><span style="color:var(--red);font-size:11px;letter-spacing:1px;text-transform:uppercase;">Propriétés</span><br>${w.properties}</div>
+      <div><span style="color:var(--red);font-size: 14px;letter-spacing:1px;text-transform:uppercase;">Dégâts</span><br>${w.damage} ${w.damageType}</div>
+      <div><span style="color:var(--red);font-size: 14px;letter-spacing:1px;text-transform:uppercase;">Portée</span><br>${w.range}</div>
+      <div style="grid-column:1/-1;"><span style="color:var(--red);font-size: 14px;letter-spacing:1px;text-transform:uppercase;">Propriétés</span><br>${w.properties}</div>
     </div>
     <div style="line-height:1.7;color:var(--text);">${w.desc}</div>
   `;
@@ -3501,7 +3504,7 @@ function renderAttacks() {
       <td><input type="text" id="atk-bonus-${atk.id}" value="${atk.bonus||''}" placeholder="+5" style="max-width:70px;" oninput="saveAttack('${atk.id}')"></td>
       <td><input type="text" id="atk-dmg-${atk.id}" value="${atk.dmg||''}" placeholder="1d8+3 tranchant" oninput="saveAttack('${atk.id}')"></td>
       <td><input type="text" id="atk-range-${atk.id}" value="${atk.range||''}" placeholder="1,5 m" style="max-width:70px;" oninput="saveAttack('${atk.id}')"></td>
-      <td><select id="atk-magic-${atk.id}" onchange="saveAttack('${atk.id}')" title="Bonus magique" style="padding:3px 2px;max-width:50px;font-size:11px;"><option value="0" ${!atk.magicBonus?'selected':''}>—</option><option value="1" ${atk.magicBonus==1?'selected':''}>+1</option><option value="2" ${atk.magicBonus==2?'selected':''}>+2</option><option value="3" ${atk.magicBonus==3?'selected':''}>+3</option></select></td>
+      <td><select id="atk-magic-${atk.id}" onchange="saveAttack('${atk.id}')" title="Bonus magique" style="padding:3px 2px;max-width:50px;font-size: 14px;"><option value="0" ${!atk.magicBonus?'selected':''}>—</option><option value="1" ${atk.magicBonus==1?'selected':''}>+1</option><option value="2" ${atk.magicBonus==2?'selected':''}>+2</option><option value="3" ${atk.magicBonus==3?'selected':''}>+3</option></select></td>
       <td><input type="text" id="atk-notes-${atk.id}" value="${atk.notes||''}" placeholder="Propriétés…" oninput="saveAttack('${atk.id}')"></td>
       <td style="white-space:nowrap;">
         <button class="btn btn-sm" title="Détails" style="background:var(--panel2);border:1px solid var(--red);color:var(--red);padding:2px 5px;margin-right:2px;" onclick="showWeaponModal(document.getElementById('atk-name-${atk.id}').value)">?</button>
@@ -3519,12 +3522,12 @@ function renderAttacks() {
     state.attacks.forEach(atk => {
       const tr = document.createElement('tr');
       tr.innerHTML = `
-        <td><input type="text" value="${atk.name||''}" placeholder="Nom" style="font-size:12px;width:100%;" oninput="syncAtk('${atk.id}','name',this.value)"></td>
-        <td><input type="text" value="${atk.bonus||''}" placeholder="+5" style="font-size:12px;max-width:65px;" oninput="syncAtk('${atk.id}','bonus',this.value)"></td>
-        <td><input type="text" value="${atk.dmg||''}" placeholder="1d8+3" style="font-size:12px;width:100%;" oninput="syncAtk('${atk.id}','dmg',this.value)"></td>
+        <td><input type="text" value="${atk.name||''}" placeholder="Nom" style="font-size: 15px;width:100%;" oninput="syncAtk('${atk.id}','name',this.value)"></td>
+        <td><input type="text" value="${atk.bonus||''}" placeholder="+5" style="font-size: 15px;max-width:65px;" oninput="syncAtk('${atk.id}','bonus',this.value)"></td>
+        <td><input type="text" value="${atk.dmg||''}" placeholder="1d8+3" style="font-size: 15px;width:100%;" oninput="syncAtk('${atk.id}','dmg',this.value)"></td>
         <td style="text-align:center;">
-          <button class="btn btn-sm" title="Détails" style="background:var(--panel2);border:1px solid var(--red);color:var(--red);padding:1px 4px;font-size:11px;" onclick="showWeaponModal(state.attacks.find(a=>a.id==='${atk.id}')?.name||'')">?</button>
-          <button class="btn btn-sm" style="background:var(--accent);padding:1px 5px;font-size:11px;" onclick="removeAttack('${atk.id}')">✕</button>
+          <button class="btn btn-sm" title="Détails" style="background:var(--panel2);border:1px solid var(--red);color:var(--red);padding:1px 4px;font-size: 14px;" onclick="showWeaponModal(state.attacks.find(a=>a.id==='${atk.id}')?.name||'')">?</button>
+          <button class="btn btn-sm" style="background:var(--accent);padding:1px 5px;font-size: 14px;" onclick="removeAttack('${atk.id}')">✕</button>
         </td>
       `;
       mini.appendChild(tr);
@@ -3649,12 +3652,12 @@ function updateSpellPickerInfo() {
   if (!sp) { info.innerHTML = sel.length > 1 ? `<span style="color:var(--gold);">${sel.length} sorts sélectionnés</span>` : ''; return; }
   const lvl   = sp.level === 0 ? 'Tour de magie' : `Niveau ${sp.level}`;
   const desc  = SPELL_DESC[sp.name] || '';
-  const badge = sel.length > 1 ? `<span style="margin-left:8px;background:var(--gold);color:#1c1c1c;font-size:10px;padding:1px 5px;border-radius:3px;">${sel.length} sélectionnés</span>` : '';
+  const badge = sel.length > 1 ? `<span style="margin-left:8px;background:var(--gold);color:#1c1c1c;font-size: 13px;padding:1px 5px;border-radius:3px;">${sel.length} sélectionnés</span>` : '';
   info.innerHTML = `
     <span style="color:var(--red);font-weight:bold;">${sp.name}</span>${badge}
     <span style="color:var(--text-dim);"> — ${lvl} · ${sp.school}</span><br>
-    <span style="color:var(--ink-light);font-size:12px;">${sp.classes}</span>
-    ${desc ? `<br><span style="color:var(--text);font-size:12px;line-height:1.6;">${desc}</span>` : ''}
+    <span style="color:var(--ink-light);font-size: 15px;">${sp.classes}</span>
+    ${desc ? `<br><span style="color:var(--text);font-size: 15px;line-height:1.6;">${desc}</span>` : ''}
   `;
 }
 
@@ -3666,11 +3669,11 @@ function showSpellModal(name) {
   const classes = sp ? sp.classes : '';
   document.getElementById('spell-modal-title').textContent = name;
   document.getElementById('spell-modal-meta').innerHTML =
-    `${lvl} · ${school}<br><span style="color:var(--text-dim);font-size:12px;">${classes}</span>`;
+    `${lvl} · ${school}<br><span style="color:var(--text-dim);font-size: 15px;">${classes}</span>`;
   document.getElementById('spell-modal-desc').innerHTML =
     desc.split(' | ').map((part, i) => {
       const labels = ['Incantation','Portée','Durée','Effet'];
-      if (i < 3) return `<div style="margin-bottom:4px;"><span style="color:var(--red);font-size:11px;letter-spacing:1px;text-transform:uppercase;">${labels[i]}</span> <span style="color:var(--text);">${part}</span></div>`;
+      if (i < 3) return `<div style="margin-bottom:4px;"><span style="color:var(--red);font-size: 14px;letter-spacing:1px;text-transform:uppercase;">${labels[i]}</span> <span style="color:var(--text);">${part}</span></div>`;
       return `<div style="margin-top:10px;line-height:1.7;color:var(--text);">${part}</div>`;
     }).join('');
   document.getElementById('spell-modal').style.display = 'flex';
@@ -3717,7 +3720,7 @@ function renderSpells() {
         ${[1,2,3,4,5,6,7,8,9].map(l=>`<option value="${l}" ${sp.level==l?'selected':''}>${l}</option>`).join('')}
       </select>
       <input type="text" id="sp-notes-${sp.id}" value="${sp.notes||''}" placeholder="École, classes…" oninput="saveSpell('${sp.id}')">
-      <button class="btn btn-sm" title="Description" style="background:var(--panel2);border:1px solid var(--purple);color:var(--purple);padding:2px 4px;font-size:14px;" onclick="showSpellModal(document.getElementById('sp-name-${sp.id}').value)">?</button>
+      <button class="btn btn-sm" title="Description" style="background:var(--panel2);border:1px solid var(--purple);color:var(--purple);padding:2px 4px;font-size: 17px;" onclick="showSpellModal(document.getElementById('sp-name-${sp.id}').value)">?</button>
       <button class="btn btn-sm" style="background:var(--accent);padding:2px 6px;" onclick="removeSpell('${sp.id}')">✕</button>
     `;
     list.appendChild(row);
@@ -3786,7 +3789,7 @@ function rollDie(sides) {
 function renderRollHistory() {
   const el = document.getElementById('roll-history');
   el.innerHTML = state.rollHistory.map(r =>
-    `<div class="roll-entry"><span style="color:var(--text-dim);">${r.time}</span> — <strong>${r.dice}</strong> → <span style="color:var(--red);">${r.result}</span> <span style="color:var(--text-dim);font-size:11px;">${r.detail}</span></div>`
+    `<div class="roll-entry"><span style="color:var(--text-dim);">${r.time}</span> — <strong>${r.dice}</strong> → <span style="color:var(--red);">${r.result}</span> <span style="color:var(--text-dim);font-size: 14px;">${r.detail}</span></div>`
   ).join('');
 }
 
@@ -3938,7 +3941,7 @@ function updateMagicPickerInfo() {
   const lastVal = sel.length ? sel[sel.length-1].value : '';
   const item   = MAGIC_ITEMS_DB.find(i => i.name === lastVal);
   if (!item) { info.innerHTML = sel.length > 1 ? `<span style="color:var(--gold);">${sel.length} objets sélectionnés</span>` : ''; return; }
-  const badge = sel.length > 1 ? `<span style="margin-left:8px;background:var(--gold);color:#1c1c1c;font-size:10px;padding:1px 5px;border-radius:3px;">${sel.length} sélectionnés</span>` : '';
+  const badge = sel.length > 1 ? `<span style="margin-left:8px;background:var(--gold);color:#1c1c1c;font-size: 13px;padding:1px 5px;border-radius:3px;">${sel.length} sélectionnés</span>` : '';
   const att = item.attunement ? '<span style="color:var(--purple);">◆ Harmonisation requise</span> · ' : '';
   const wb  = item.weaponBonus > 0 ? `<span style="color:var(--gold);font-weight:bold;">+${item.weaponBonus} attaque/dégâts</span> · ` : '';
   const ac  = item.acBonus    > 0 ? `<span style="color:var(--blue);font-weight:bold;">+${item.acBonus} CA</span> · ` : '';
@@ -3981,7 +3984,7 @@ function updateEquipPickerInfo() {
   const lastVal = sel.length ? sel[sel.length-1].value : '';
   const item   = EQUIPMENT_DB.find(e => e.name === lastVal);
   if (!item) { info.innerHTML = sel.length > 1 ? `<span style="color:var(--gold);">${sel.length} objets sélectionnés</span>` : ''; return; }
-  const badge = sel.length > 1 ? ` <span style="background:var(--gold);color:#1c1c1c;font-size:10px;padding:1px 5px;border-radius:3px;">${sel.length} sélectionnés</span>` : '';
+  const badge = sel.length > 1 ? ` <span style="background:var(--gold);color:#1c1c1c;font-size: 13px;padding:1px 5px;border-radius:3px;">${sel.length} sélectionnés</span>` : '';
   info.innerHTML = `<span style="color:var(--red);font-weight:bold;">${item.name}</span>${badge} · <span style="color:var(--gold);">${item.cost}</span> · ${item.weight > 0 ? item.weight+' kg · ' : ''}${item.desc}`;
 }
 
@@ -4024,7 +4027,7 @@ function updateFeatPickerInfo() {
   const catColors = { origine:'var(--green)', général:'var(--red)', épique:'var(--gold)' };
   const col    = catColors[feat.cat] || 'var(--text)';
   const prereq = feat.prereq !== 'Aucun' ? `<span style="color:var(--text-dim);"> · Prérequis : ${feat.prereq}</span>` : '';
-  const badge  = sel.length > 1 ? `<span style="margin-left:8px;background:var(--gold);color:#1c1c1c;font-size:10px;padding:1px 5px;border-radius:3px;">${sel.length} sélectionnés</span>` : '';
+  const badge  = sel.length > 1 ? `<span style="margin-left:8px;background:var(--gold);color:#1c1c1c;font-size: 13px;padding:1px 5px;border-radius:3px;">${sel.length} sélectionnés</span>` : '';
   info.innerHTML = `<span style="color:${col};font-weight:bold;">${feat.name}</span>${prereq}${badge}<br><span style="color:var(--text);">${feat.desc}</span>`;
 }
 
@@ -4057,7 +4060,7 @@ function renderFeats() {
   const count = document.getElementById('feats-count');
   if (count) count.textContent = state.feats.length ? `(${state.feats.length} don${state.feats.length>1?'s':''})` : '';
   if (!state.feats.length) {
-    list.innerHTML = '<div style="color:var(--text-dim);font-size:13px;padding:8px 0;">Aucun don acquis. Utilisez le sélecteur ci-dessus pour en ajouter.</div>';
+    list.innerHTML = '<div style="color:var(--text-dim);font-size: 16px;padding:8px 0;">Aucun don acquis. Utilisez le sélecteur ci-dessus pour en ajouter.</div>';
     return;
   }
   const catColors = { origine:'var(--green)', général:'var(--red)', épique:'var(--gold)' };
@@ -4066,18 +4069,18 @@ function renderFeats() {
     const col = catColors[f.cat] || 'var(--red)';
     const lbl = catLabels[f.cat] || f.cat;
     const prereqHtml = f.prereq && f.prereq !== 'Aucun'
-      ? `<span style="font-size:11px;color:var(--text-dim);margin-left:8px;">Prérequis : ${f.prereq}</span>` : '';
+      ? `<span style="font-size: 14px;color:var(--text-dim);margin-left:8px;">Prérequis : ${f.prereq}</span>` : '';
     return `<div style="border:1px solid var(--border);border-radius:6px;padding:10px 12px;margin-bottom:8px;background:var(--panel);">
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-        <span style="background:${col};color:#fff;font-size:10px;padding:1px 6px;border-radius:3px;text-transform:uppercase;letter-spacing:1px;">${lbl}</span>
-        <strong style="font-size:14px;">${f.name}</strong>
+        <span style="background:${col};color:#fff;font-size: 13px;padding:1px 6px;border-radius:3px;text-transform:uppercase;letter-spacing:1px;">${lbl}</span>
+        <strong style="font-size: 17px;">${f.name}</strong>
         ${prereqHtml}
         <button class="btn btn-sm" style="margin-left:auto;background:var(--accent);padding:2px 8px;" onclick="removeFeat('${f.id}')">✕</button>
       </div>
-      <div style="font-size:12px;color:var(--text-dim);line-height:1.6;">${f.desc}</div>
+      <div style="font-size: 15px;color:var(--text-dim);line-height:1.6;">${f.desc}</div>
       <div style="margin-top:6px;">
         <input type="text" value="${f.notes||''}" placeholder="Notes personnelles…"
-          style="width:100%;font-size:12px;padding:4px 6px;"
+          style="width:100%;font-size: 15px;padding:4px 6px;"
           oninput="saveFeatNotes('${f.id}',this.value)">
       </div>
     </div>`;
@@ -4139,7 +4142,7 @@ function updateLangPickerInfo() {
   const lastVal = sel.length ? sel[sel.length-1].value : '';
   const lang = LANGUAGES_DB.find(l => l.name === lastVal);
   if (!lang) { info.innerHTML = sel.length > 1 ? `<span style="color:var(--gold);">${sel.length} langues sélectionnées</span>` : ''; return; }
-  const badge = sel.length > 1 ? `<span style="margin-left:8px;background:var(--gold);color:#1c1c1c;font-size:10px;padding:1px 5px;border-radius:3px;">${sel.length} sélectionnées</span>` : '';
+  const badge = sel.length > 1 ? `<span style="margin-left:8px;background:var(--gold);color:#1c1c1c;font-size: 13px;padding:1px 5px;border-radius:3px;">${sel.length} sélectionnées</span>` : '';
   info.innerHTML = `<strong>${lang.name}</strong>${badge} — Écriture : ${lang.script} — ${lang.desc}`;
 }
 
@@ -4168,7 +4171,7 @@ function renderLanguages() {
   const el = document.getElementById('languages-list');
   if (!el) return;
   if (!state.languages.length) {
-    el.innerHTML = '<span style="font-size:12px;color:var(--text-dim);">Aucune langue ajoutée.</span>';
+    el.innerHTML = '<span style="font-size: 15px;color:var(--text-dim);">Aucune langue ajoutée.</span>';
     return;
   }
   const catColor = { standard:'#1a3d6b', exotique:'#5a1a6b', rare:'#c9a840', 'secrète':'#58180d' };
