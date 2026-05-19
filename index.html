@@ -778,6 +778,25 @@
     </div>
   </div>
 
+  <!-- Attaques résumé -->
+  <div class="panel section-gap">
+    <div class="panel-title">Attaques
+      <button class="btn btn-sm no-print" onclick="addAttack()" style="float:right;background:var(--panel2);border:1px solid var(--red);color:var(--red);font-size:11px;padding:2px 8px;">+ Vide</button>
+    </div>
+    <table class="atk-mini-table">
+      <thead>
+        <tr>
+          <th style="width:36%">Nom</th>
+          <th style="width:14%">Bonus att.</th>
+          <th>Dégâts / Type</th>
+          <th style="width:50px;"></th>
+        </tr>
+      </thead>
+      <tbody id="attacks-body-mini"></tbody>
+    </table>
+    <div id="attacks-mini-empty" style="color:var(--text-dim);font-size:13px;padding:10px 0;">Aucune attaque — ajoutez des armes depuis l'onglet <strong>Combat</strong> ou cliquez <strong>+ Vide</strong>.</div>
+  </div>
+
   <!-- Jets de sauvegarde -->
   <div class="grid-2 section-gap">
     <div class="panel">
@@ -828,25 +847,6 @@
     </div>
     <div id="lang-picker-info" style="margin-top:6px;font-size:12px;color:var(--text-dim);min-height:16px;"></div>
     <div class="lang-tags" id="languages-list"></div>
-  </div>
-
-  <!-- Attaques résumé -->
-  <div class="panel section-gap">
-    <div class="panel-title">Attaques
-      <button class="btn btn-sm no-print" onclick="addAttack()" style="float:right;background:var(--panel2);border:1px solid var(--red);color:var(--red);font-size:11px;padding:2px 8px;">+ Vide</button>
-    </div>
-    <table class="atk-mini-table">
-      <thead>
-        <tr>
-          <th style="width:36%">Nom</th>
-          <th style="width:14%">Bonus att.</th>
-          <th>Dégâts / Type</th>
-          <th style="width:50px;"></th>
-        </tr>
-      </thead>
-      <tbody id="attacks-body-mini"></tbody>
-    </table>
-    <div id="attacks-mini-empty" style="color:var(--text-dim);font-size:13px;padding:10px 0;">Aucune attaque — ajoutez des armes depuis l'onglet <strong>Combat</strong> ou cliquez <strong>+ Vide</strong>.</div>
   </div>
 
 </div>
