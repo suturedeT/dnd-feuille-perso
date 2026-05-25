@@ -771,7 +771,6 @@ body.print-measuring .slot-box     { width: 13px !important; height: 13px !impor
   <div class="tab" onclick="showTab('inventaire')">Inventaire</div>
   <div class="tab" onclick="showTab('historique')">Historique</div>
   <div class="tab" onclick="showTab('dons')">Dons</div>
-  <div class="tab" onclick="showTab('traits')">Traits</div>
   <div class="tab" onclick="showTab('des')">Dés</div>
 </div>
 
@@ -1021,6 +1020,37 @@ body.print-measuring .slot-box     { width: 13px !important; height: 13px !impor
     </div>
 
 
+
+
+    <!-- Maîtrises & Langues -->
+        <div class="panel section-gap">
+          <div class="panel-title">Maîtrises</div>
+          <textarea id="proficiencies" placeholder="Armures, armes, outils maîtrisés…" style="min-height:70px;" oninput="autoSave()"></textarea>
+        </div>
+
+        <!-- Langues -->
+        <div class="panel">
+          <div class="panel-title">Langues connues</div>
+          <div class="no-print" style="display:flex;flex-wrap:wrap;gap:6px;align-items:flex-end;">
+            <div class="field" style="min-width:110px;">
+              <label>Catégorie</label>
+              <select id="filter-lang-cat" onchange="filterLanguagePicker()">
+                <option value="">Toutes</option>
+                <option value="standard">Standard</option>
+                <option value="exotique">Exotique</option>
+                <option value="rare">Rare</option>
+                <option value="secrète">Secrète</option>
+              </select>
+            </div>
+            <div class="field picker-ui" style="flex:2;min-width:160px;">
+              <label>Langue</label>
+              <div class="cb-picker" id="lang-picker" style="max-height:50px;"></div>
+            </div>
+            <button class="btn btn-gold" onclick="addLanguage()" style="white-space:nowrap;align-self:flex-end;">+ Ajouter</button>
+          </div>
+          <div id="lang-picker-info" class="picker-info" style="margin-top:4px;min-height:14px;"></div>
+          <div class="lang-tags" id="languages-list"></div>
+        </div>
 
   </div><!-- fin colonne centre -->
 </div><!-- fin grid 3 colonnes -->
@@ -1299,6 +1329,40 @@ body.print-measuring .slot-box     { width: 13px !important; height: 13px !impor
 
 <!-- ════════════ PAGE : HISTORIQUE ════════════ -->
 <div class="page" id="page-historique">
+  <!-- ═══ TRAITS DE PERSONNALITÉ ═══ -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:6px;">
+    <div class="panel">
+      <div class="panel-title">Traits de personnalité</div>
+      <textarea id="personality" placeholder="Comment votre personnage se comporte-t-il ?" style="min-height:70px;" oninput="autoSave()"></textarea>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Idéaux</div>
+      <textarea id="ideals" placeholder="Ce en quoi croit votre personnage…" style="min-height:70px;" oninput="autoSave()"></textarea>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Liens</div>
+      <textarea id="bonds" placeholder="Ce qui l'attache au monde…" style="min-height:70px;" oninput="autoSave()"></textarea>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Défauts</div>
+      <textarea id="flaws" placeholder="Faiblesses et vices…" style="min-height:70px;" oninput="autoSave()"></textarea>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Capacités &amp; Traits</div>
+      <textarea id="features" placeholder="Capacités de classe, de race, traits d'historique…" style="min-height:70px;" oninput="autoSave()"></textarea>
+    </div>
+    <div class="panel section-gap">
+      <div class="panel-title">Monnaie</div>
+      <div class="currency-grid">
+        <div class="coin-box"><div class="coin-lbl">PC</div><div class="coin-icon">🟫</div><input type="number" id="coin-cp" placeholder="0" min="0" oninput="autoSave()"></div>
+        <div class="coin-box"><div class="coin-lbl">PA</div><div class="coin-icon">⬜</div><input type="number" id="coin-sp" placeholder="0" min="0" oninput="autoSave()"></div>
+        <div class="coin-box"><div class="coin-lbl">PE</div><div class="coin-icon">🟡</div><input type="number" id="coin-ep" placeholder="0" min="0" oninput="autoSave()"></div>
+        <div class="coin-box"><div class="coin-lbl">PO</div><div class="coin-icon">🟡</div><input type="number" id="coin-gp" placeholder="0" min="0" oninput="autoSave()"></div>
+        <div class="coin-box"><div class="coin-lbl">PP</div><div class="coin-icon">💎</div><input type="number" id="coin-pp" placeholder="0" min="0" oninput="autoSave()"></div>
+      </div>
+    </div>
+  </div>
+
   <div class="panel section-gap">
     <div class="panel-title">Apparence physique</div>
     <div class="grid-3">
@@ -1329,7 +1393,7 @@ body.print-measuring .slot-box     { width: 13px !important; height: 13px !impor
     </div>
   </div>
   <div style="font-size:11px;color:var(--text-dim);margin-top:4px;font-family:'Cinzel',serif;letter-spacing:1px;">
-    ↖ Les Traits de personnalité, Idéaux, Liens et Défauts se trouvent dans l'onglet <strong>Principal</strong>.
+    ↖ Les Maîtrises et Langues connues se trouvent dans l'onglet <strong>Principal</strong>.
   </div>
 </div>
 
@@ -1366,92 +1430,6 @@ body.print-measuring .slot-box     { width: 13px !important; height: 13px !impor
     <textarea id="feats-notes" placeholder="Points de chance restants, charges utilisées…" style="min-height:100px;" oninput="autoSave()"></textarea>
   </div>
 </div>
-
-<!-- ════════════ PAGE : DÉS ════════════ -->
-<!-- ═══ PAGE TRAITS DE PERSONNALITÉ ═══ -->
-<div class="page" id="page-traits">
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;align-items:start;">
-
-    <!-- Colonne gauche -->
-    <div style="display:flex;flex-direction:column;gap:6px;">
-
-    <div class="panel">
-      <div class="panel-title">Traits de personnalité</div>
-      <textarea id="personality" placeholder="Comment votre personnage se comporte-t-il ?" style="min-height:70px;" oninput="autoSave()"></textarea>
-    </div>
-
-    <div class="panel">
-      <div class="panel-title">Liens</div>
-      <textarea id="bonds" placeholder="Ce qui l'attache au monde…" style="min-height:60px;" oninput="autoSave()"></textarea>
-    </div>
-
-    <div class="panel">
-      <div class="panel-title">Défauts</div>
-      <textarea id="flaws" placeholder="Faiblesses et vices…" style="min-height:60px;" oninput="autoSave()"></textarea>
-    </div>
-
-    <!-- Monnaie -->
-        <div class="panel section-gap">
-          <div class="panel-title">Monnaie</div>
-          <div class="currency-grid">
-            <div class="coin-box"><div class="coin-lbl">PC</div><div class="coin-icon">🟫</div><input type="number" id="coin-cp" placeholder="0" min="0" oninput="autoSave()"></div>
-            <div class="coin-box"><div class="coin-lbl">PA</div><div class="coin-icon">⬜</div><input type="number" id="coin-sp" placeholder="0" min="0" oninput="autoSave()"></div>
-            <div class="coin-box"><div class="coin-lbl">PE</div><div class="coin-icon">🟡</div><input type="number" id="coin-ep" placeholder="0" min="0" oninput="autoSave()"></div>
-            <div class="coin-box"><div class="coin-lbl">PO</div><div class="coin-icon">🟡</div><input type="number" id="coin-gp" placeholder="0" min="0" oninput="autoSave()"></div>
-            <div class="coin-box"><div class="coin-lbl">PP</div><div class="coin-icon">💎</div><input type="number" id="coin-pp" placeholder="0" min="0" oninput="autoSave()"></div>
-          </div>
-        </div>
-
-    </div><!-- fin colonne gauche -->
-
-    <!-- Colonne droite -->
-    <div style="display:flex;flex-direction:column;gap:6px;">
-
-    <div class="panel">
-      <div class="panel-title">Idéaux</div>
-      <textarea id="ideals" placeholder="Ce en quoi croit votre personnage…" style="min-height:60px;" oninput="autoSave()"></textarea>
-    </div>
-
-    <div class="panel" style="flex:1;">
-      <div class="panel-title">Capacités &amp; Traits</div>
-      <textarea id="features" placeholder="Capacités de classe, de race, traits d'historique…" style="min-height:180px;" oninput="autoSave()"></textarea>
-    </div>
-
-    <!-- Maîtrises & Langues -->
-        <div class="panel section-gap">
-          <div class="panel-title">Maîtrises</div>
-          <textarea id="proficiencies" placeholder="Armures, armes, outils maîtrisés…" style="min-height:70px;" oninput="autoSave()"></textarea>
-        </div>
-    
-        <!-- Langues -->
-        <div class="panel">
-          <div class="panel-title">Langues connues</div>
-          <div class="no-print" style="display:flex;flex-wrap:wrap;gap:6px;align-items:flex-end;">
-            <div class="field" style="min-width:110px;">
-              <label>Catégorie</label>
-              <select id="filter-lang-cat" onchange="filterLanguagePicker()">
-                <option value="">Toutes</option>
-                <option value="standard">Standard</option>
-                <option value="exotique">Exotique</option>
-                <option value="rare">Rare</option>
-                <option value="secrète">Secrète</option>
-              </select>
-            </div>
-            <div class="field picker-ui" style="flex:2;min-width:160px;">
-              <label>Langue</label>
-              <div class="cb-picker" id="lang-picker" style="max-height:50px;"></div>
-            </div>
-            <button class="btn btn-gold" onclick="addLanguage()" style="white-space:nowrap;align-self:flex-end;">+ Ajouter</button>
-          </div>
-          <div id="lang-picker-info" class="picker-info" style="margin-top:4px;min-height:14px;"></div>
-          <div class="lang-tags" id="languages-list"></div>
-        </div>
-
-    </div><!-- fin colonne droite -->
-
-  </div><!-- fin grille 2 colonnes -->
-
-</div><!-- fin page-traits -->
 
 <div class="page" id="page-des">
   <div class="grid-2">
