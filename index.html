@@ -581,64 +581,127 @@ body.pre-print-measure .roll-mod-row { display: none !important; }
   margin: 8mm;
 }
 
+/* ── Mode mesure : CSS print appliqué en écran pour calibrer le zoom ── */
+body.print-measuring .page.print-active {
+  display: block !important;
+  padding: 4px !important;
+  box-sizing: border-box !important;
+}
+body.print-measuring .panel         { padding: 2px 4px !important; margin: 1px !important; }
+body.print-measuring .panel-title   { font-size: 7px !important; padding: 1px 3px !important; }
+body.print-measuring textarea       { max-height: 65px !important; min-height: 0 !important; font-size: 8px !important; overflow: hidden !important; }
+body.print-measuring input,
+body.print-measuring select         { font-size: 8px !important; }
+body.print-measuring label          { font-size: 7px !important; }
+body.print-measuring .grid-2,
+body.print-measuring .grid-3        { gap: 2px !important; }
+body.print-measuring .section-gap  { margin-bottom: 2px !important; }
+body.print-measuring .stat-bubble  { width: 44px !important; height: 44px !important; }
+body.print-measuring #abilities-grid { gap: 2px !important; }
+body.print-measuring #abilities-grid .ability-box { padding: 0 2px 3px !important; margin: 0 !important; }
+body.print-measuring #abilities-grid .ability-box .score-input { font-size: 22px !important; }
+body.print-measuring #abilities-grid .ability-box .modifier    { width: 26px !important; height: 26px !important; }
+body.print-measuring .slot-box     { width: 13px !important; height: 13px !important; }
+
 @media print {
   * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
 
-  /* Éléments masqués à l'impression */
+  /* Éléments masqués */
   header, .tabs, .modal, #dice-roller-wrap,
   button.btn, .btn-sm, .adv-btn, .roll-mod-row,
   .cb-picker, .picker-ui, .picker-info, .no-print { display: none !important; }
-
-  /* Onglet Dés : jamais imprimé */
   #page-des { display: none !important; }
 
-  /* Chaque onglet = une page A4 via classe print-active */
+  /* Chaque onglet = une page A4 */
   .page { display: none !important; }
   .page.print-active {
     display: block !important;
     page-break-after: always;
     break-after: always;
-    padding: 2px !important;
+    padding: 4px !important;
     background: #fff !important;
-    width: 100% !important;
     box-sizing: border-box !important;
     overflow: visible !important;
   }
 
+  /* ── Réduction générale ── */
   .panel {
     background: #fff !important;
-    border: 2px solid #333 !important;
+    border: 1.5px solid #333 !important;
     box-shadow: none !important;
-    padding: 4px 6px !important;
-    margin: 2px !important;
+    padding: 2px 4px !important;
+    margin: 1px !important;
   }
-  .panel-title { font-size: 8px !important; }
-  .section-gap { margin-bottom: 3px !important; }
-  .grid-2 { gap: 3px !important; }
-  .grid-3 { gap: 3px !important; }
+  .panel-title {
+    font-size: 7px !important;
+    padding: 1px 3px !important;
+    margin: 0 -4px 3px !important;
+    letter-spacing: 0.3px !important;
+  }
+  textarea {
+    max-height: 65px !important;
+    min-height: 0 !important;
+    font-size: 8px !important;
+    overflow: hidden !important;
+    resize: none !important;
+  }
+  input, select { font-size: 8px !important; }
+  label { font-size: 7px !important; }
+  .grid-2, .grid-3 { gap: 2px !important; }
+  .section-gap { margin-bottom: 2px !important; }
 
-  /* Ability boxes : couleurs explicites pour l'impression */
+  /* ── Caractéristiques ── */
   .ability-box {
     background: #fff !important;
-    border: 2px solid #333 !important;
+    border: 1.5px solid #333 !important;
     box-shadow: none !important;
+    padding: 0 2px 3px !important;
   }
   .ability-box .name {
     background: #e8e4d8 !important;
     color: #1a1008 !important;
+    font-size: 7px !important;
+    padding: 1px 2px !important;
+    margin: 0 -2px 2px !important;
     border-bottom: 1px solid #999 !important;
   }
-  .ability-box .score-input { color: #000 !important; }
+  .ability-box .score-input { font-size: 22px !important; padding: 0 !important; color: #000 !important; }
   .ability-box .modifier {
-    border: 2px solid #333 !important;
-    box-shadow: none !important;
-    color: #000 !important;
+    width: 26px !important; height: 26px !important;
+    font-size: 11px !important;
+    border: 1.5px solid #333 !important;
+    box-shadow: none !important; color: #000 !important;
+    margin: 1px auto !important;
   }
-  #abilities-grid .ability-box { margin: 1px !important; }
+  #abilities-grid { gap: 2px !important; }
+  #abilities-grid .ability-box { margin: 0 !important; }
 
-  .stat-bubble { border: 1.5px solid #333 !important; box-shadow: none !important; }
-  .slot-box { border: 1px solid #555 !important; box-shadow: none !important; }
-  .coin-box { border: 1px solid #333 !important; box-shadow: none !important; }
+  /* ── Stat bubbles ── */
+  .stat-bubble {
+    width: 44px !important; height: 44px !important;
+    border: 1.5px solid #333 !important;
+    box-shadow: none !important;
+  }
+
+  /* ── Slots / monnaie ── */
+  .slot-box  { width: 13px !important; height: 13px !important; border: 1px solid #555 !important; box-shadow: none !important; }
+  .coin-box  { border: 1px solid #333 !important; box-shadow: none !important; }
+
+  /* ── Bandeau Personnage ── */
+  .char-banner { border-bottom: 2px solid #333 !important; }
+  .banner-row  { gap: 2px 6px !important; }
+  .banner-field label  { font-size: 6px !important; }
+  .banner-field input,
+  .banner-field select { font-size: 9px !important; }
+
+  /* ── Compétences ── */
+  .skill-row { padding: 1px 0 !important; font-size: 8px !important; }
+
+  /* ── Sorts ── */
+  .spell-row  { font-size: 8px !important; padding: 1px 0 !important; }
+
+  /* ── Attaques ── */
+  .attack-row td, .attack-row input { font-size: 8px !important; }
 }
 
   /* ── CARACTÉRISTIQUES – Colonne gauche ── */
@@ -667,7 +730,7 @@ body.pre-print-measure .roll-mod-row { display: none !important; }
     font-size: 14px;
     margin: 2px auto 2px;
   }
-  /* Masquer les skills dans la colonne gauche (accessibles via onglet Compétences) */
+  /* Masquer les skills dans la colonne gauche */
   #abilities-grid .ability-skills {
     display: none;
   }
@@ -708,6 +771,7 @@ body.pre-print-measure .roll-mod-row { display: none !important; }
   <div class="tab" onclick="showTab('inventaire')">Inventaire</div>
   <div class="tab" onclick="showTab('historique')">Historique</div>
   <div class="tab" onclick="showTab('dons')">Dons</div>
+  <div class="tab" onclick="showTab('traits')">Traits</div>
   <div class="tab" onclick="showTab('des')">Dés</div>
 </div>
 
@@ -786,7 +850,7 @@ body.pre-print-measure .roll-mod-row { display: none !important; }
   </div>
 </div>
 
-<div style="display:grid;grid-template-columns:115px 1fr 230px;gap:6px;align-items:start;">
+<div style="display:grid;grid-template-columns:115px 1fr;gap:6px;align-items:start;">
 
   <!-- COLONNE GAUCHE : Caractéristiques -->
   <div>
@@ -956,108 +1020,9 @@ body.pre-print-measure .roll-mod-row { display: none !important; }
       <div id="attacks-mini-empty" style="color:var(--text-dim);font-size:12px;padding:6px 0;">Aucune attaque — onglet <strong>Combat</strong> ou cliquez <strong>+ Vide</strong>.</div>
     </div>
 
-    <!-- Monnaie -->
-    <div class="panel section-gap">
-      <div class="panel-title">Monnaie</div>
-      <div class="currency-grid">
-        <div class="coin-box"><div class="coin-lbl">PC</div><div class="coin-icon">🟫</div><input type="number" id="coin-cp" placeholder="0" min="0" oninput="autoSave()"></div>
-        <div class="coin-box"><div class="coin-lbl">PA</div><div class="coin-icon">⬜</div><input type="number" id="coin-sp" placeholder="0" min="0" oninput="autoSave()"></div>
-        <div class="coin-box"><div class="coin-lbl">PE</div><div class="coin-icon">🟡</div><input type="number" id="coin-ep" placeholder="0" min="0" oninput="autoSave()"></div>
-        <div class="coin-box"><div class="coin-lbl">PO</div><div class="coin-icon">🟡</div><input type="number" id="coin-gp" placeholder="0" min="0" oninput="autoSave()"></div>
-        <div class="coin-box"><div class="coin-lbl">PP</div><div class="coin-icon">💎</div><input type="number" id="coin-pp" placeholder="0" min="0" oninput="autoSave()"></div>
-      </div>
-    </div>
 
-    <!-- Maîtrises & Langues -->
-    <div class="panel section-gap">
-      <div class="panel-title">Maîtrises</div>
-      <textarea id="proficiencies" placeholder="Armures, armes, outils maîtrisés…" style="min-height:70px;" oninput="autoSave()"></textarea>
-    </div>
-
-    <!-- Langues -->
-    <div class="panel">
-      <div class="panel-title">Langues connues</div>
-      <div class="no-print" style="display:flex;flex-wrap:wrap;gap:6px;align-items:flex-end;">
-        <div class="field" style="min-width:110px;">
-          <label>Catégorie</label>
-          <select id="filter-lang-cat" onchange="filterLanguagePicker()">
-            <option value="">Toutes</option>
-            <option value="standard">Standard</option>
-            <option value="exotique">Exotique</option>
-            <option value="rare">Rare</option>
-            <option value="secrète">Secrète</option>
-          </select>
-        </div>
-        <div class="field picker-ui" style="flex:2;min-width:160px;">
-          <label>Langue</label>
-          <div class="cb-picker" id="lang-picker" style="max-height:50px;"></div>
-        </div>
-        <button class="btn btn-gold" onclick="addLanguage()" style="white-space:nowrap;align-self:flex-end;">+ Ajouter</button>
-      </div>
-      <div id="lang-picker-info" class="picker-info" style="margin-top:4px;min-height:14px;"></div>
-      <div class="lang-tags" id="languages-list"></div>
-    </div>
 
   </div><!-- fin colonne centre -->
-
-  <!-- COLONNE DROITE : Traits de personnalité + Capacités -->
-  <div style="display:flex;flex-direction:column;gap:6px;">
-
-    <div class="panel">
-      <div class="panel-title">Traits de personnalité</div>
-      <textarea id="personality" placeholder="Comment votre personnage se comporte-t-il ?" style="min-height:70px;" oninput="autoSave()"></textarea>
-    </div>
-
-    <div class="panel">
-      <div class="panel-title">Idéaux</div>
-      <textarea id="ideals" placeholder="Ce en quoi croit votre personnage…" style="min-height:60px;" oninput="autoSave()"></textarea>
-    </div>
-
-    <div class="panel">
-      <div class="panel-title">Liens</div>
-      <textarea id="bonds" placeholder="Ce qui l'attache au monde…" style="min-height:60px;" oninput="autoSave()"></textarea>
-    </div>
-
-    <div class="panel">
-      <div class="panel-title">Défauts</div>
-      <textarea id="flaws" placeholder="Faiblesses et vices…" style="min-height:60px;" oninput="autoSave()"></textarea>
-    </div>
-
-    <div class="panel" style="flex:1;">
-      <div class="panel-title">Capacités &amp; Traits</div>
-      <textarea id="features" placeholder="Capacités de classe, de race, traits d'historique…" style="min-height:180px;" oninput="autoSave()"></textarea>
-    </div>
-
-    <!-- Panneau info classe/espèce/historique -->
-    <div id="char-info-panel" style="display:none;">
-      <div style="display:flex;flex-direction:column;gap:6px;">
-        <div class="panel" id="class-info-box" style="display:none;">
-          <div class="panel-title" id="class-info-title">Classe</div>
-          <div id="class-info-body" style="font-size:12px;line-height:1.6;"></div>
-          <div style="margin-top:8px;display:flex;gap:5px;flex-wrap:wrap;">
-            <button class="btn btn-gold btn-sm" onclick="applyClassSaves()">✔ Jets de sauvegarde</button>
-            <button class="btn btn-gold btn-sm" onclick="applyClassSpellAbility()">✔ Caract. de sort</button>
-          </div>
-        </div>
-        <div class="panel" id="species-info-box" style="display:none;">
-          <div class="panel-title" id="species-info-title">Espèce</div>
-          <div id="species-info-body" style="font-size:12px;line-height:1.6;"></div>
-          <div style="margin-top:8px;">
-            <button class="btn btn-gold btn-sm" onclick="applySpeciesSpeed()">✔ Appliquer la vitesse</button>
-          </div>
-        </div>
-        <div class="panel" id="background-info-box" style="display:none;">
-          <div class="panel-title" id="background-info-title">Historique</div>
-          <div id="background-info-body" style="font-size:12px;line-height:1.6;"></div>
-          <div style="margin-top:8px;display:flex;gap:5px;flex-wrap:wrap;">
-            <button class="btn btn-gold btn-sm" onclick="applyBackgroundBonuses()">✔ Appliquer les bonus</button>
-            <button class="btn btn-gold btn-sm" onclick="applyBackgroundSkills()">✔ Cocher compétences</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div><!-- fin colonne droite -->
 </div><!-- fin grid 3 colonnes -->
 </div><!-- fin page-principal -->
 
@@ -1403,6 +1368,91 @@ body.pre-print-measure .roll-mod-row { display: none !important; }
 </div>
 
 <!-- ════════════ PAGE : DÉS ════════════ -->
+<!-- ═══ PAGE TRAITS DE PERSONNALITÉ ═══ -->
+<div class="page" id="page-traits">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;align-items:start;">
+
+    <!-- Colonne gauche -->
+    <div style="display:flex;flex-direction:column;gap:6px;">
+
+    <div class="panel">
+      <div class="panel-title">Traits de personnalité</div>
+      <textarea id="personality" placeholder="Comment votre personnage se comporte-t-il ?" style="min-height:70px;" oninput="autoSave()"></textarea>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">Liens</div>
+      <textarea id="bonds" placeholder="Ce qui l'attache au monde…" style="min-height:60px;" oninput="autoSave()"></textarea>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">Défauts</div>
+      <textarea id="flaws" placeholder="Faiblesses et vices…" style="min-height:60px;" oninput="autoSave()"></textarea>
+    </div>
+
+    <!-- Monnaie -->
+        <div class="panel section-gap">
+          <div class="panel-title">Monnaie</div>
+          <div class="currency-grid">
+            <div class="coin-box"><div class="coin-lbl">PC</div><div class="coin-icon">🟫</div><input type="number" id="coin-cp" placeholder="0" min="0" oninput="autoSave()"></div>
+            <div class="coin-box"><div class="coin-lbl">PA</div><div class="coin-icon">⬜</div><input type="number" id="coin-sp" placeholder="0" min="0" oninput="autoSave()"></div>
+            <div class="coin-box"><div class="coin-lbl">PE</div><div class="coin-icon">🟡</div><input type="number" id="coin-ep" placeholder="0" min="0" oninput="autoSave()"></div>
+            <div class="coin-box"><div class="coin-lbl">PO</div><div class="coin-icon">🟡</div><input type="number" id="coin-gp" placeholder="0" min="0" oninput="autoSave()"></div>
+            <div class="coin-box"><div class="coin-lbl">PP</div><div class="coin-icon">💎</div><input type="number" id="coin-pp" placeholder="0" min="0" oninput="autoSave()"></div>
+          </div>
+        </div>
+
+    </div><!-- fin colonne gauche -->
+
+    <!-- Colonne droite -->
+    <div style="display:flex;flex-direction:column;gap:6px;">
+
+    <div class="panel">
+      <div class="panel-title">Idéaux</div>
+      <textarea id="ideals" placeholder="Ce en quoi croit votre personnage…" style="min-height:60px;" oninput="autoSave()"></textarea>
+    </div>
+
+    <div class="panel" style="flex:1;">
+      <div class="panel-title">Capacités &amp; Traits</div>
+      <textarea id="features" placeholder="Capacités de classe, de race, traits d'historique…" style="min-height:180px;" oninput="autoSave()"></textarea>
+    </div>
+
+    <!-- Maîtrises & Langues -->
+        <div class="panel section-gap">
+          <div class="panel-title">Maîtrises</div>
+          <textarea id="proficiencies" placeholder="Armures, armes, outils maîtrisés…" style="min-height:70px;" oninput="autoSave()"></textarea>
+        </div>
+    
+        <!-- Langues -->
+        <div class="panel">
+          <div class="panel-title">Langues connues</div>
+          <div class="no-print" style="display:flex;flex-wrap:wrap;gap:6px;align-items:flex-end;">
+            <div class="field" style="min-width:110px;">
+              <label>Catégorie</label>
+              <select id="filter-lang-cat" onchange="filterLanguagePicker()">
+                <option value="">Toutes</option>
+                <option value="standard">Standard</option>
+                <option value="exotique">Exotique</option>
+                <option value="rare">Rare</option>
+                <option value="secrète">Secrète</option>
+              </select>
+            </div>
+            <div class="field picker-ui" style="flex:2;min-width:160px;">
+              <label>Langue</label>
+              <div class="cb-picker" id="lang-picker" style="max-height:50px;"></div>
+            </div>
+            <button class="btn btn-gold" onclick="addLanguage()" style="white-space:nowrap;align-self:flex-end;">+ Ajouter</button>
+          </div>
+          <div id="lang-picker-info" class="picker-info" style="margin-top:4px;min-height:14px;"></div>
+          <div class="lang-tags" id="languages-list"></div>
+        </div>
+
+    </div><!-- fin colonne droite -->
+
+  </div><!-- fin grille 2 colonnes -->
+
+</div><!-- fin page-traits -->
+
 <div class="page" id="page-des">
   <div class="grid-2">
     <div class="panel">
@@ -4332,20 +4382,43 @@ function renderLanguages() {
 function printSheet() {
   const allPages = Array.from(document.querySelectorAll('.page'));
   const pages = allPages.filter(p => p.id !== 'page-des');
-  const saved = allPages.map(p => ({ display: p.style.display, classes: [...p.classList] }));
+  const saved = allPages.map(p => ({
+    display: p.style.display,
+    zoom: p.style.zoom || '',
+    classes: [...p.classList]
+  }));
 
-  allPages.forEach(p => { p.style.display = 'none'; p.classList.remove('print-active'); });
+  // 1 — Préparer les pages
+  allPages.forEach(p => { p.style.display = 'none'; p.style.zoom = ''; p.classList.remove('print-active'); });
   pages.forEach(p => { p.style.display = 'block'; p.classList.add('print-active'); });
 
-  window.addEventListener('afterprint', () => {
-    allPages.forEach((p, i) => {
-      p.style.display = saved[i].display;
-      p.classList.remove('print-active');
-      if (saved[i].classes.includes('active')) p.classList.add('active');
-    });
-  }, { once: true });
+  // 2 — Activer le CSS de mesure (même réductions qu'en impression)
+  document.body.classList.add('print-measuring');
 
-  window.print();
+  // 3 — Laisser le navigateur appliquer le layout compact, puis mesurer et zoomer
+  setTimeout(() => {
+    // A4 portrait, marges 8mm → hauteur utile ≈ 1040 px à 96 dpi
+    const A4_H = 1040;
+
+    pages.forEach(p => {
+      const h = p.scrollHeight;
+      if (h > A4_H) p.style.zoom = (A4_H / h).toFixed(4);
+    });
+
+    document.body.classList.remove('print-measuring');
+
+    // 4 — Restaurer après impression
+    window.addEventListener('afterprint', () => {
+      allPages.forEach((p, i) => {
+        p.style.display = saved[i].display;
+        p.style.zoom    = saved[i].zoom;
+        p.classList.remove('print-active');
+        if (saved[i].classes.includes('active')) p.classList.add('active');
+      });
+    }, { once: true });
+
+    window.print();
+  }, 350);
 }
 
 // ══════════════════════════════════════════
