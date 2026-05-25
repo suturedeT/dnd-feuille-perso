@@ -1638,7 +1638,7 @@ const BACKGROUNDS_DB = [
   { name:"Noble", abilityBonus:{INT:1, CHA:2}, skills:["history", "persuasion"], feat:"Doué", tool:"Boîte de jeux (au choix)", desc:"Vous avez grandi dans la noblesse, entouré d'opulence et d'intrigues politiques. Votre position vous donne accès aux cercles d'élite et aux ressources des grandes familles." },
   { name:"Sage", abilityBonus:{CON:1, INT:2}, skills:["arcana", "history"], feat:"Initié à la magie (Magicien)", tool:"Matériel de calligraphe", desc:"Vous avez consacré votre vie à l'étude et avez voyagé de bibliothèque en scriptorium pour accumuler le savoir. Vous savez où trouver des informations ésotériques et des textes rares." },
   { name:"Soldat", abilityBonus:{STR:2, CON:1}, skills:["athletics", "intimidation"], feat:"Sauvagerie martiale", tool:"Boîte de jeux (au choix)", desc:"Vous avez servi dans une armée organisée, apprenant à vous battre en formation et à obéir aux ordres. Votre discipline militaire vous est restée même après la démobilisation." },
-  { name:"Sorcier charlatant", abilityBonus:{INT:1, CHA:2}, skills:["deception", "sleight-of-hand"], feat:"Acteur", tool:"Accessoires de déguisement", desc:"Vous vendiez de faux charmes et des prédictions inventées aux crédules. Votre art du mensonge et de la mise en scène vous a rendu expert en manipulation des apparences." },
+  { name:"Voyageur", abilityBonus:{DEX:1, INT:1, WIS:2}, skills:["insight", "stealth"], feat:"Chanceux", tool:"Outils de voleur", desc:"Vous avez grandi dans la rue ou sur les routes, apprenant à vous débrouiller seul. Toujours en mouvement, vous savez trouver un abri, de la nourriture et des informations là où d'autres ne voient rien." },
 ];
 
 // ── Base de données des sorts D&D 2024 ──
@@ -3133,7 +3133,7 @@ function onClassChange() {
 
   // ── Mettre à jour le dropdown sous-classe ──
   const subSel = document.getElementById('char-subclass');
-  const subs   = val ? (SUBCLASSES_DB[val] || []) : [];
+  const subs   = val ? SUBCLASSES_DB.filter(s => s.class === val) : [];
   if (subs.length) {
     subSel.innerHTML = '<option value="">— Choisir une sous-classe —</option>' +
       subs.map(s => `<option value="${s.name}">${s.name}</option>`).join('');
@@ -3162,7 +3162,7 @@ function onSubclassChange() {
   const clsName = document.getElementById('char-class').value;
   const subName = document.getElementById('char-subclass').value;
   const cls = CLASSES_DB.find(c => c.name === clsName);
-  const sub = subName ? (SUBCLASSES_DB[clsName] || []).find(s => s.name === subName) : null;
+  const sub = subName ? SUBCLASSES_DB.filter(s => s.class === clsName).find(s => s.name === subName) : null;
   if (cls) renderClassInfoBody(cls, sub);
   autoSave();
 }
