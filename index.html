@@ -1022,6 +1022,35 @@ body.print-measuring .slot-box     { width: 13px !important; height: 13px !impor
 
 
 
+    <!-- Panneau info classe / espèce / historique -->
+    <div id="char-info-panel" style="display:none;" class="section-gap">
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div class="panel" id="class-info-box" style="display:none;">
+          <div class="panel-title" id="class-info-title">Classe</div>
+          <div id="class-info-body" style="font-size:12px;line-height:1.6;"></div>
+          <div style="margin-top:8px;display:flex;gap:5px;flex-wrap:wrap;">
+            <button class="btn btn-gold btn-sm" onclick="applyClassSaves()">✔ Jets de sauvegarde</button>
+            <button class="btn btn-gold btn-sm" onclick="applyClassSpellAbility()">✔ Caract. de sort</button>
+          </div>
+        </div>
+        <div class="panel" id="species-info-box" style="display:none;">
+          <div class="panel-title" id="species-info-title">Espèce</div>
+          <div id="species-info-body" style="font-size:12px;line-height:1.6;"></div>
+          <div style="margin-top:8px;">
+            <button class="btn btn-gold btn-sm" onclick="applySpeciesSpeed()">✔ Appliquer la vitesse</button>
+          </div>
+        </div>
+        <div class="panel" id="background-info-box" style="display:none;">
+          <div class="panel-title" id="background-info-title">Historique</div>
+          <div id="background-info-body" style="font-size:12px;line-height:1.6;"></div>
+          <div style="margin-top:8px;display:flex;gap:5px;flex-wrap:wrap;">
+            <button class="btn btn-gold btn-sm" onclick="applyBackgroundBonuses()">✔ Appliquer les bonus</button>
+            <button class="btn btn-gold btn-sm" onclick="applyBackgroundSkills()">✔ Cocher compétences</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Maîtrises & Langues -->
         <div class="panel section-gap">
           <div class="panel-title">Maîtrises</div>
