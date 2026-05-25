@@ -790,22 +790,12 @@ body.print-measuring .slot-box     { width: 13px !important; height: 13px !impor
       <label>Classe</label>
       <select id="char-class" onchange="onClassChange()">
         <option value="">— Choisir —</option>
-        <option>Barbare</option><option>Barde</option><option>Clerc</option>
-        <option>Druide</option><option>Guerrier</option><option>Moine</option>
-        <option>Occultiste</option><option>Paladin</option><option>Rôdeur</option>
-        <option>Roublard</option><option>Sorcier</option><option>Magicien</option>
       </select>
     </div>
     <div class="banner-field">
       <label>Historique</label>
       <select id="char-background" onchange="onBackgroundChange()">
         <option value="">— Choisir —</option>
-        <option>Acolyte</option><option>Artisan</option><option>Charlatan</option>
-        <option>Criminel</option><option>Artiste</option><option>Fermier</option>
-        <option>Garde</option><option>Guide</option><option>Ermite</option>
-        <option>Marchand</option><option>Noble</option><option>Sauvage</option>
-        <option>Érudit</option><option>Marin</option><option>Scribe</option>
-        <option>Soldat</option><option>Vagabond</option>
       </select>
     </div>
     <div class="banner-field">
@@ -818,13 +808,6 @@ body.print-measuring .slot-box     { width: 13px !important; height: 13px !impor
       <label>Espèce</label>
       <select id="char-species" onchange="onSpeciesChange()">
         <option value="">— Choisir —</option>
-        <option>Aasimar</option><option>Dragonide</option>
-        <option>Elfe (Haut)</option><option>Elfe (Bois)</option><option>Drow</option>
-        <option>Gnome (Forêt)</option><option>Gnome (Rocher)</option><option>Goliath</option>
-        <option>Demi-Elfe</option><option>Demi-Orc</option><option>Halfelin</option>
-        <option>Humain</option>
-        <option>Nain (Collines)</option><option>Nain (Montagne)</option>
-        <option>Orc</option><option>Tieffelin</option>
       </select>
     </div>
     <div class="banner-field">
@@ -2803,6 +2786,7 @@ let state = {
 //  INIT
 // ══════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
+  populateSelects();
   buildAbilities();
   buildSaves();
   buildSkills();
@@ -3238,6 +3222,18 @@ function applySpeciesSpeed() {
 }
 
 // ── Historique ──
+function populateSelects() {
+  const buildOptions = (sel, items, labelFn) => {
+    const cur = sel.value;
+    sel.innerHTML = '<option value="">— Choisir —</option>' +
+      items.map(x => { const l = labelFn(x); return `<option value="${l}">${l}</option>`; }).join('');
+    if (cur) sel.value = cur;
+  };
+  buildOptions(document.getElementById('char-class'),      CLASSES_DB,     c => c.name);
+  buildOptions(document.getElementById('char-background'), BACKGROUNDS_DB, b => b.name);
+  buildOptions(document.getElementById('char-species'),    SPECIES_DB,     s => s.name);
+}
+
 function onBackgroundChange() {
   const val = document.getElementById('char-background').value;
   const bg  = BACKGROUNDS_DB.find(b => b.name === val);
