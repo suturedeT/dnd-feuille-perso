@@ -500,6 +500,7 @@ textarea { resize: vertical; font-size: 16px; }
   padding: 2px; background: var(--panel-bg);
   font-size: 14px;
 }
+#magic-picker { max-height: 200px; min-height: 200px; }
 .cb-item { display: flex; align-items: flex-start; gap: 4px; padding: 1px 3px; cursor: pointer; font-size: 14px; line-height: 1.3; }
 .cb-item:hover { background: var(--ab-band); }
 .cb-item input[type=checkbox] { accent-color: var(--red); cursor: pointer; margin-top: 2px; flex-shrink: 0; }
@@ -1429,7 +1430,7 @@ body.print-measuring .slot-box     { width: 13px !important; height: 13px !impor
       <div class="field picker-ui" style="flex:2;min-width:200px;">
         <label>Objet magique</label>
         <input type="text" id="search-magic" placeholder="🔍 Rechercher…" oninput="filterMagicPicker()" style="width:100%;padding:3px 6px;background:var(--panel-bg);border:1px solid var(--border);color:var(--text);font-size:13px;border-radius:3px;margin-bottom:3px;box-sizing:border-box;">
-        <div class="cb-picker" id="magic-picker" style="max-height:200px;"></div>
+        <div class="cb-picker" id="magic-picker"></div>
       </div>
       <button class="btn btn-gold" onclick="addMagicItemToInventory()">+ Inventaire</button>
       <button class="btn" onclick="addMagicItemAsAttack()" style="background:var(--green);">⚔ Attaque</button>
