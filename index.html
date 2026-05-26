@@ -591,11 +591,7 @@ body.print-measuring .page.print-active {
   max-width: 718px !important;
   overflow: hidden !important;
 }
-/* Reset police de base pour mesure précise */
-body.print-measuring .page.print-active * { font-size: 12px !important; }
-body.print-measuring .page.print-active input,
-body.print-measuring .page.print-active select,
-body.print-measuring .page.print-active textarea { font-size: 12px !important; }
+/* Pas de reset global : tailles screen conservées pour mesure fidèle */
 body.print-measuring .panel         { padding: 2px 4px !important; margin: 1px !important; }
 body.print-measuring .panel-title   { font-size:10px !important; padding: 1px 3px !important; }
 body.print-measuring textarea       { max-height: 65px !important; min-height: 0 !important; font-size:16px !important; overflow: hidden !important; }
@@ -641,8 +637,7 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
     overflow: hidden !important;
     /* width et zoom contrôlés par JS — NE PAS ajouter width:100% ici */
   }
-  /* Reset police base — les surcharges spécifiques ci-dessous priment */
-  .page.print-active * { font-size: 12px !important; }
+  /* Pas de reset global : tailles screen conservées */
 
   /* ── Réduction générale ── */
   .panel {
@@ -4938,10 +4933,12 @@ function printSheet() {
       wrappers.push({ p, w });
     });
 
-    document.body.classList.remove('print-measuring');
+    // NE PAS retirer print-measuring ici — le contenu doit rester compact
+    // pendant window.print(), sinon les tailles changent et le scale est faux
 
     // 4 — Restaurer le DOM après impression
     window.addEventListener('afterprint', () => {
+      document.body.classList.remove('print-measuring'); // retiré ICI
       wrappers.forEach(({ p, w }) => {
         while (w.firstChild) p.insertBefore(w.firstChild, w);
         w.remove();
