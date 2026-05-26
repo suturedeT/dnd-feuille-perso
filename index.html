@@ -39,7 +39,6 @@ body {
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
-  overflow-x: auto;   /* scroll horizontal si fenêtre < 794px */
 }
 
 /* ════════ HEADER ════════ */
@@ -147,17 +146,7 @@ header h1 {
 .tab.active { color: #c8a84b; border-bottom-color: #c8a84b; }
 
 /* ════════ PAGE CONTAINER ════════ */
-.page {
-  display: none;
-  width: 794px;          /* A4 portrait à 96dpi */
-  height: 1122px;
-  box-sizing: border-box;
-  padding: 7px calc(7px + 10mm);
-  background: var(--page-bg);
-  overflow: hidden;
-  margin: 8px auto;
-  box-shadow: 0 2px 12px rgba(0,0,0,.5);
-}
+.page { display: none; padding: 7px; padding-left: calc(7px + 10mm); padding-right: calc(7px + 10mm); background: var(--page-bg); }
 .page.active { display: block; }
 
 /* ════════ PANEL (style ornement D&D double bordure) ════════ */
