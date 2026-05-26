@@ -610,7 +610,14 @@ body.print-measuring #abilities-grid { gap: 2px !important; }
 body.print-measuring #abilities-grid .ability-box { padding: 0 2px 3px !important; margin: 0 !important; }
 body.print-measuring #abilities-grid .ability-box .score-input { font-size:33px !important; }
 body.print-measuring #abilities-grid .ability-box .modifier    { width: 26px !important; height: 26px !important; }
-body.print-measuring .slot-box     { width: 13px !important; height: 13px !important; }
+body.print-measuring .slot-pip     { width: 10px !important; height: 10px !important; }
+body.print-measuring .slot-box     { padding: 2px !important; margin: 1px !important; }
+body.print-measuring .slot-level   { font-size: 8px !important; margin-bottom: 2px !important; }
+body.print-measuring .slot-pips    { gap: 2px !important; }
+body.print-measuring .sk-val       { font-size: 9px !important; min-width: 14px !important; }
+body.print-measuring .sk-name      { font-size: 9px !important; }
+body.print-measuring .sk-dot       { width: 5px !important; height: 5px !important; }
+body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !important; }
 
 @media print {
   * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
@@ -697,7 +704,23 @@ body.print-measuring .slot-box     { width: 13px !important; height: 13px !impor
   }
 
   /* ── Slots / monnaie ── */
-  .slot-box  { width: 13px !important; height: 13px !important; border: 2px solid #555 !important; box-shadow: none !important; }
+  /* Emplacements de sorts */
+  .slot-pip  { width: 10px !important; height: 10px !important; border: 2px solid #555 !important; }
+  .slot-pip.used { background: #333 !important; border-color: #333 !important; }
+  .slot-box  { padding: 2px 3px !important; margin: 1px !important; box-shadow: none !important;
+               border: 1.5px solid #666 !important; border-radius: 2px !important; }
+  .slot-level { font-size: 8px !important; margin-bottom: 2px !important; }
+  .slot-pips  { gap: 2px !important; flex-wrap: wrap !important; }
+  /* Afficher input emplacements max en print */
+  .slot-box input[type=number] { font-size: 12px !important; width: 22px !important;
+                                  text-align: center !important; padding: 0 !important; }
+  .slot-box span { font-size: 9px !important; line-height: 1 !important; }
+  /* Skills dans ability boxes */
+  .ability-skills { display: block !important; border-top: 1px solid #ccc !important; margin-top: 2px !important; padding-top: 2px !important; }
+  .ability-skill-row { padding: 0 !important; gap: 2px !important; }
+  .sk-val  { font-size: 9px !important; min-width: 14px !important; }
+  .sk-name { font-size: 9px !important; }
+  .sk-dot  { width: 5px !important; height: 5px !important; border-width: 1.5px !important; }
   .coin-box  { border: 2px solid #333 !important; box-shadow: none !important; }
 
   /* ── Bandeau Personnage ── */
@@ -743,9 +766,9 @@ body.print-measuring .slot-box     { width: 13px !important; height: 13px !impor
     font-size:26px;
     margin: 2px auto 2px;
   }
-  /* Masquer les skills dans la colonne gauche */
+  /* Skills visibles dans la colonne des caractéristiques */
   #abilities-grid .ability-skills {
-    display: none;
+    display: block;
   }
 
 * { font-weight: 700 !important; }
