@@ -754,8 +754,11 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
   }
   #abilities-grid .ability-box .name {
     margin: 0 -6px 6px;
-    font-size:24px;
+    font-size:18px;
     padding: 5px 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   #abilities-grid .ability-box .score-input {
     font-size:63px;
@@ -3373,7 +3376,7 @@ function buildAbilities() {
           </div>`).join('')}
       </div>` : '';
     box.innerHTML = `
-      <div class="name">${a.short}</div>
+      <div class="name">${a.label}</div>
       <input type="number" class="score-input" id="score-${a.id}" value="10"
         oninput="updateAll()" min="1" max="30">
       <div class="modifier" id="mod-${a.id}">+0</div>
