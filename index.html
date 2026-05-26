@@ -1211,6 +1211,7 @@ body.print-measuring .slot-box     { width: 13px !important; height: 13px !impor
       </div>
       <div class="field picker-ui" style="flex:2;min-width:180px;">
         <label>Sort</label>
+        <input type="text" id="filter-search" placeholder="&#x1F50D; Rechercher..." oninput="filterSpellPicker()" style="width:100%;padding:3px 6px;background:var(--panel-bg);border:1px solid var(--border);color:var(--text);font-size:13px;border-radius:3px;margin-bottom:3px;">
         <div class="cb-picker" id="spell-picker"></div>
       </div>
       <button class="btn btn-gold" onclick="addSpellFromPicker()" style="align-self:flex-end;">+ Ajouter</button>
@@ -3918,11 +3919,14 @@ function buildSpellsDatalist() {
 function filterSpellPicker() {
   const cls   = document.getElementById('filter-class').value;
   const level = document.getElementById('filter-level').value;
+  const searchEl = document.getElementById('filter-search');
+  const search = searchEl ? searchEl.value.trim().toLowerCase() : '';
   const picker = document.getElementById('spell-picker');
   const filtered = SPELLS_DB.filter(s => {
     const matchClass = !cls || s.classes.includes(cls);
     const matchLevel = level === '' || s.level === parseInt(level);
-    return matchClass && matchLevel;
+    const matchSearch = !search || s.name.toLowerCase().includes(search) || s.school.toLowerCase().includes(search);
+    return matchClass && matchLevel && matchSearch;
   }).sort((a,b) => a.level - b.level || a.name.localeCompare(b.name));
   picker.innerHTML = filtered.map(s => {
     const lvlLabel = s.level === 0 ? 'Tour' : `Niv.${s.level}`;
