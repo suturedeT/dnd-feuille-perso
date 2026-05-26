@@ -605,7 +605,8 @@ body.print-measuring label          { font-size:10px !important; }
 body.print-measuring .grid-2,
 body.print-measuring .grid-3        { gap: 2px !important; }
 body.print-measuring .section-gap  { margin-bottom: 2px !important; }
-body.print-measuring .stat-bubble  { width: 44px !important; height: 44px !important; }
+body.print-measuring .stat-bubble  { min-width: 44px !important; height: auto !important; }
+body.print-measuring .stat-bubble .lbl { font-size: 9px !important; white-space: nowrap !important; }
 body.print-measuring #abilities-grid { gap: 2px !important; grid-template-columns: 1fr 1fr !important; display: grid !important; }
 body.print-measuring #abilities-grid .ability-box { padding: 0 2px 3px !important; margin: 0 !important; }
 body.print-measuring #abilities-grid .ability-box .score-input { font-size:33px !important; }
@@ -698,10 +699,11 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
 
   /* ── Stat bubbles ── */
   .stat-bubble {
-    width: 44px !important; height: 44px !important;
+    min-width: 44px !important; height: auto !important;
     border: 2.5px solid #333 !important;
     box-shadow: none !important;
   }
+  .stat-bubble .lbl { font-size: 9px !important; white-space: nowrap !important; }
 
   /* ── Slots / monnaie ── */
   /* Emplacements de sorts */
@@ -4900,7 +4902,7 @@ function printSheet() {
 
     pages.forEach(p => {
       const h = p.scrollHeight;
-      if (h > A4_H) p.style.zoom = (A4_H / h).toFixed(4);
+      p.style.zoom = (A4_H / h).toFixed(4); // toujours calibré pour remplir exactement A4
     });
 
     document.body.classList.remove('print-measuring');
