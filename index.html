@@ -901,102 +901,6 @@ body.print-measuring .slot-box     { width: 13px !important; height: 13px !impor
       </div>
     </div>
 
-    <!-- Armures et objets magiques équipés -->
-    <div class="panel section-gap" id="armor-equip-panel">
-      <div class="panel-title">Armures &amp; objets magiques équipés</div>
-
-      <!-- Ligne 1 : type d'armure + bouclier -->
-      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end;">
-        <div class="field" style="flex:2;min-width:180px;">
-          <label>Armure portée</label>
-          <select id="armor-type" onchange="calcAC()">
-            <option value="none">— Sans armure (10 + DEX)</option>
-            <optgroup label="Armure légère">
-              <option value="matelassee">Matelassée (11 + DEX)</option>
-              <option value="cuir">Cuir (11 + DEX)</option>
-              <option value="cuir-cloute">Cuir clouté (12 + DEX)</option>
-            </optgroup>
-            <optgroup label="Armure intermédiaire">
-              <option value="chemise-mailles">Chemise de mailles (13 + DEX max +2)</option>
-              <option value="ecailles">Écailles (14 + DEX max +2)</option>
-              <option value="cuirasse">Cuirasse (14 + DEX max +2)</option>
-              <option value="demi-plate">Demi-plate (15 + DEX max +2)</option>
-            </optgroup>
-            <optgroup label="Armure lourde">
-              <option value="anneaux">Anneaux (CA 14)</option>
-              <option value="mailles">Mailles (CA 16)</option>
-              <option value="broigne">Broigne (CA 17)</option>
-              <option value="plates">Plates (CA 18)</option>
-            </optgroup>
-            <optgroup label="Spéciale">
-              <option value="mage-armor">Armure du mage — sort (13 + DEX)</option>
-              <option value="natural">Armure naturelle (13 + DEX)</option>
-              <option value="barbare">Défense Barbare (10 + DEX + CON)</option>
-              <option value="moine">Défense Moine (10 + DEX + SAG)</option>
-            </optgroup>
-          </select>
-        </div>
-        <div class="field" style="min-width:80px;">
-          <label>Bouclier</label>
-          <label class="cb-item" style="margin-top:6px;"><input type="checkbox" id="armor-shield" onchange="calcAC()"> +2 CA</label>
-        </div>
-      </div>
-
-      <!-- Ligne 2 : bonus d'armure/bouclier magique -->
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;align-items:flex-end;">
-        <div class="field" style="min-width:145px;">
-          <label>Armure magique (+bonus)</label>
-          <select id="armor-magic-bonus" onchange="calcAC()">
-            <option value="0">— Aucun bonus</option>
-            <option value="1">+1 (peu courante)</option>
-            <option value="2">+2 (rare)</option>
-            <option value="3">+3 (très rare)</option>
-          </select>
-        </div>
-        <div class="field" style="min-width:145px;">
-          <label>Bouclier magique (+bonus)</label>
-          <select id="shield-magic-bonus" onchange="calcAC()">
-            <option value="0">— Aucun bonus</option>
-            <option value="1">+1 (peu courante)</option>
-            <option value="2">+2 (rare)</option>
-            <option value="3">+3 (très rare)</option>
-          </select>
-        </div>
-      </div>
-
-      <!-- Ligne 3 : objets magiques avec bonus CA -->
-      <div style="margin-top:8px;">
-        <div style="font-family:'Cinzel',serif;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--text-dim);margin-bottom:5px;">Objets magiques (bonus CA)</div>
-        <div style="display:flex;flex-wrap:wrap;gap:4px 16px;">
-          <label class="cb-item"><input type="checkbox" id="item-ring-prot"     onchange="calcAC()"> Anneau de protection <span style="color:var(--gold);">(+1)</span></label>
-          <label class="cb-item"><input type="checkbox" id="item-cloak-prot"    onchange="calcAC()"> Cape de protection <span style="color:var(--gold);">(+1)</span></label>
-          <label class="cb-item"><input type="checkbox" id="item-ioun-prot"     onchange="calcAC()"> Pierre Ioun de protection <span style="color:var(--gold);">(+1)</span></label>
-          <label class="cb-item"><input type="checkbox" id="item-bracers"       onchange="calcAC()"> Bracelets de défense <span style="color:var(--gold);">(+2, sans armure ni bouclier)</span></label>
-          <label class="cb-item"><input type="checkbox" id="item-robe-archmage" onchange="calcAC()"> Robe des archimages <span style="color:var(--gold);">(CA 15+DEX, sans armure)</span></label>
-        </div>
-      </div>
-
-      <!-- Ligne 4 : autres bonus + CA calculée -->
-      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;align-items:flex-end;">
-        <div class="field" style="min-width:150px;">
-          <label>Autres bonus (sorts, aptitudes…)</label>
-          <input type="number" id="armor-other-bonus" placeholder="0" oninput="calcAC()">
-        </div>
-
-        <!-- Résultat CA -->
-        <div style="flex:1;display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--ab-band);border:2px solid var(--border);border-radius:4px;min-width:200px;">
-          <div style="text-align:center;min-width:48px;">
-            <div style="font-family:'Cinzel',serif;font-size:8px;text-transform:uppercase;letter-spacing:1px;color:var(--text-dim);">CA calculée</div>
-            <div id="calc-ac-display" style="font-size:32px;font-weight:900;font-family:'Cinzel',serif;color:var(--text);line-height:1.1;">10</div>
-          </div>
-          <div style="flex:1;">
-            <div id="ac-breakdown" style="font-size:10px;color:var(--text-dim);font-style:italic;line-height:1.4;margin-bottom:5px;">—</div>
-            <button class="btn btn-sm" onclick="applyCalcAC()" style="width:100%;font-size:9px;padding:3px 6px;" title="Copier dans le champ CA">↑ Appliquer → champ CA</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- Points de vie -->
     <div class="panel section-gap">
       <div class="panel-title">Points de vie</div>
@@ -1352,6 +1256,103 @@ body.print-measuring .slot-box     { width: 13px !important; height: 13px !impor
 
 <!-- ════════════ PAGE : INVENTAIRE ════════════ -->
 <div class="page" id="page-inventaire">
+
+  <!-- Armures et objets magiques équipés -->
+  <div class="panel section-gap" id="armor-equip-panel">
+    <div class="panel-title">Armures &amp; objets magiques équipés</div>
+
+    <!-- Ligne 1 : type d'armure + bouclier -->
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end;">
+      <div class="field" style="flex:2;min-width:180px;">
+        <label>Armure portée</label>
+        <select id="armor-type" onchange="calcAC()">
+          <option value="none">— Sans armure (10 + DEX)</option>
+          <optgroup label="Armure légère">
+            <option value="matelassee">Matelassée (11 + DEX)</option>
+            <option value="cuir">Cuir (11 + DEX)</option>
+            <option value="cuir-cloute">Cuir clouté (12 + DEX)</option>
+          </optgroup>
+          <optgroup label="Armure intermédiaire">
+            <option value="chemise-mailles">Chemise de mailles (13 + DEX max +2)</option>
+            <option value="ecailles">Écailles (14 + DEX max +2)</option>
+            <option value="cuirasse">Cuirasse (14 + DEX max +2)</option>
+            <option value="demi-plate">Demi-plate (15 + DEX max +2)</option>
+          </optgroup>
+          <optgroup label="Armure lourde">
+            <option value="anneaux">Anneaux (CA 14)</option>
+            <option value="mailles">Mailles (CA 16)</option>
+            <option value="broigne">Broigne (CA 17)</option>
+            <option value="plates">Plates (CA 18)</option>
+          </optgroup>
+          <optgroup label="Spéciale">
+            <option value="mage-armor">Armure du mage — sort (13 + DEX)</option>
+            <option value="natural">Armure naturelle (13 + DEX)</option>
+            <option value="barbare">Défense Barbare (10 + DEX + CON)</option>
+            <option value="moine">Défense Moine (10 + DEX + SAG)</option>
+          </optgroup>
+        </select>
+      </div>
+      <div class="field" style="min-width:80px;">
+        <label>Bouclier</label>
+        <label class="cb-item" style="margin-top:6px;"><input type="checkbox" id="armor-shield" onchange="calcAC()"> +2 CA</label>
+      </div>
+    </div>
+
+    <!-- Ligne 2 : bonus d'armure/bouclier magique -->
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;align-items:flex-end;">
+      <div class="field" style="min-width:145px;">
+        <label>Armure magique (+bonus)</label>
+        <select id="armor-magic-bonus" onchange="calcAC()">
+          <option value="0">— Aucun bonus</option>
+          <option value="1">+1 (peu courante)</option>
+          <option value="2">+2 (rare)</option>
+          <option value="3">+3 (très rare)</option>
+        </select>
+      </div>
+      <div class="field" style="min-width:145px;">
+        <label>Bouclier magique (+bonus)</label>
+        <select id="shield-magic-bonus" onchange="calcAC()">
+          <option value="0">— Aucun bonus</option>
+          <option value="1">+1 (peu courante)</option>
+          <option value="2">+2 (rare)</option>
+          <option value="3">+3 (très rare)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Ligne 3 : objets magiques avec bonus CA -->
+    <div style="margin-top:8px;">
+      <div style="font-family:'Cinzel',serif;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--text-dim);margin-bottom:5px;">Objets magiques (bonus CA)</div>
+      <div style="display:flex;flex-wrap:wrap;gap:4px 16px;">
+        <label class="cb-item"><input type="checkbox" id="item-ring-prot"     onchange="calcAC()"> Anneau de protection <span style="color:var(--gold);">(+1)</span></label>
+        <label class="cb-item"><input type="checkbox" id="item-cloak-prot"    onchange="calcAC()"> Cape de protection <span style="color:var(--gold);">(+1)</span></label>
+        <label class="cb-item"><input type="checkbox" id="item-ioun-prot"     onchange="calcAC()"> Pierre Ioun de protection <span style="color:var(--gold);">(+1)</span></label>
+        <label class="cb-item"><input type="checkbox" id="item-bracers"       onchange="calcAC()"> Bracelets de défense <span style="color:var(--gold);">(+2, sans armure ni bouclier)</span></label>
+        <label class="cb-item"><input type="checkbox" id="item-robe-archmage" onchange="calcAC()"> Robe des archimages <span style="color:var(--gold);">(CA 15+DEX, sans armure)</span></label>
+      </div>
+    </div>
+
+    <!-- Ligne 4 : autres bonus + CA calculée -->
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;align-items:flex-end;">
+      <div class="field" style="min-width:150px;">
+        <label>Autres bonus (sorts, aptitudes…)</label>
+        <input type="number" id="armor-other-bonus" placeholder="0" oninput="calcAC()">
+      </div>
+
+      <!-- Résultat CA -->
+      <div style="flex:1;display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--ab-band);border:2px solid var(--border);border-radius:4px;min-width:200px;">
+        <div style="text-align:center;min-width:48px;">
+          <div style="font-family:'Cinzel',serif;font-size:8px;text-transform:uppercase;letter-spacing:1px;color:var(--text-dim);">CA calculée</div>
+          <div id="calc-ac-display" style="font-size:32px;font-weight:900;font-family:'Cinzel',serif;color:var(--text);line-height:1.1;">10</div>
+        </div>
+        <div style="flex:1;">
+          <div id="ac-breakdown" style="font-size:10px;color:var(--text-dim);font-style:italic;line-height:1.4;margin-bottom:5px;">—</div>
+          <button class="btn btn-sm" onclick="applyCalcAC()" style="width:100%;font-size:9px;padding:3px 6px;" title="Copier dans le champ CA">↑ Appliquer → champ CA</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="panel section-gap no-print">
     <div class="panel-title">Ajouter un objet magique</div>
     <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;">
