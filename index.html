@@ -32,7 +32,7 @@
   --page-bg:      #ffffff;
 }
 
-html { font-size: 13px; }
+html { font-size: 16px; }
 
 body {
   font-family: 'Crimson Text', 'Times New Roman', Georgia, serif;
@@ -58,7 +58,7 @@ header {
 
 header h1 {
   font-family: 'Cinzel', serif;
-  font-size: 18px;
+  font-size: 21px;
   font-weight: 900;
   letter-spacing: 4px;
   color: #c8a84b;
@@ -66,7 +66,7 @@ header h1 {
 }
 
 .edition {
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 2.5px;
   text-transform: uppercase;
   color: #888;
@@ -93,7 +93,7 @@ header h1 {
 }
 
 .banner-field label {
-  font-size: 7.5px;
+  font-size: 10.5px;
   letter-spacing: 1.5px;
   text-transform: uppercase;
   color: #555;
@@ -104,9 +104,9 @@ header h1 {
 .banner-field input,
 .banner-field select {
   border: none;
-  border-bottom: 1.5px solid var(--border);
+  border-bottom: 2.5px solid var(--border);
   background: transparent;
-  font-size: 13px;
+  font-size: 16px;
   font-family: 'Crimson Text', serif;
   font-weight: 600;
   color: var(--text);
@@ -125,13 +125,13 @@ header h1 {
   gap: 1px;
   padding: 0 10px;
   overflow-x: auto;
-  border-bottom: 2px solid var(--red);
+  border-bottom: 3px solid var(--red);
 }
 
 .tab {
   padding: 6px 14px;
   cursor: pointer;
-  font-size: 10px;
+  font-size: 13px;
   letter-spacing: 1.5px;
   text-transform: uppercase;
   color: #999;
@@ -152,11 +152,11 @@ header h1 {
 /* ════════ PANEL (style ornement D&D double bordure) ════════ */
 .panel {
   background: var(--panel-bg);
-  border: 2.5px solid var(--border);
+  border: 4px solid var(--border);
   box-shadow:
-    inset 0 0 0 1px var(--border),
-    inset 0 0 0 3px var(--panel-bg),
-    inset 0 0 0 4px rgba(0,0,0,0.3);
+    inset 0 0 0 2px var(--border),
+    inset 0 0 0 5px var(--panel-bg),
+    inset 0 0 0 6px rgba(0,0,0,0.3);
   padding: 7px 9px 9px;
   position: relative;
   border-radius: 1px;
@@ -166,12 +166,12 @@ header h1 {
 
 .panel-title {
   font-family: 'Cinzel', serif;
-  font-size: 9.5px;
+  font-size: 12.5px;
   font-weight: 700;
   letter-spacing: 1.5px;
   text-transform: uppercase;
   color: var(--red);
-  border-bottom: 1.5px solid var(--border);
+  border-bottom: 2.5px solid var(--border);
   padding-bottom: 3px;
   margin-bottom: 7px;
 }
@@ -180,12 +180,12 @@ header h1 {
 /* Le grid horizontal → maintenant vertical dans le col gauche */
 .ability-box {
   background: var(--panel-bg);
-  border: 2.5px solid var(--frame-outer);
+  border: 4px solid var(--frame-outer);
   border-radius: 5px;
   text-align: center;
   padding: 0 5px 6px;
   overflow: hidden;
-  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.4);
+  box-shadow: inset 0 0 0 2px rgba(0,0,0,0.4);
   margin-bottom: 4px;
 }
 
@@ -193,13 +193,13 @@ header h1 {
 
 .ability-box .name {
   font-family: 'Cinzel', serif;
-  font-size: 8px; letter-spacing: 1px;
+  font-size: 11px; letter-spacing: 1px;
   color: var(--text); text-transform: uppercase; font-weight: 700;
   background: var(--ab-band);
   padding: 3px 4px;
   margin: 0 -5px 5px;
   display: block;
-  border-bottom: 1.5px solid #aaa;
+  border-bottom: 2.5px solid #aaa;
 }
 
 .ability-box .score-input {
@@ -211,44 +211,44 @@ header h1 {
 }
 
 .ability-box .modifier {
-  font-size: 16px; font-weight: 700;
+  font-size: 19px; font-weight: 700;
   background: var(--panel-bg);
-  border: 2.5px solid var(--frame-outer);
+  border: 4px solid var(--frame-outer);
   border-radius: 50%; width: 38px; height: 38px;
   display: flex; align-items: center; justify-content: center;
   margin: 3px auto 3px;
   color: var(--text);
-  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.3);
+  box-shadow: inset 0 0 0 2px rgba(0,0,0,0.3);
 }
 
 /* Compétences liées (dans case caract.) */
 .ability-skills {
-  border-top: 1.5px solid #ccc;
+  border-top: 2.5px solid #ccc;
   margin-top: 3px;
   padding-top: 3px;
 }
 
 .ability-skill-row {
   display: flex; align-items: center; gap: 3px; padding: 1px 0;
-  border-bottom: 1px solid rgba(0,0,0,0.05);
+  border-bottom: 2px solid rgba(0,0,0,0.05);
 }
 .ability-skill-row:last-child { border-bottom: none; }
 
 .sk-dot {
   width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
-  background: transparent; border: 2px solid #888;
+  background: transparent; border: 3px solid #888;
 }
 .sk-dot.prof   { background: var(--text);  border-color: var(--text); }
 .sk-dot.expert { background: var(--red);   border-color: var(--red); }
-.sk-val  { min-width: 20px; text-align: right; font-weight: 700; font-size: 11px; color: #333; }
-.sk-name { flex: 1; font-size: 10px; color: var(--text); text-align: left; }
+.sk-val  { min-width: 20px; text-align: right; font-weight: 700; font-size: 14px; color: #333; }
+.sk-name { flex: 1; font-size: 13px; color: var(--text); text-align: left; }
 
 /* ════════ STATS CLÉS (Inspiration / Maîtrise / CA / Init / Vitesse) ════════ */
 .stat-bubble {
   background: var(--panel-bg);
-  border: 2.5px solid var(--frame-outer);
+  border: 4px solid var(--frame-outer);
   border-radius: 3px; text-align: center; padding: 6px 4px 4px;
-  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.3);
+  box-shadow: inset 0 0 0 2px rgba(0,0,0,0.3);
   margin: 2px;
 }
 
@@ -259,7 +259,7 @@ header h1 {
 
 .stat-bubble .lbl {
   font-family: 'Cinzel', serif;
-  font-size: 8px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px;
+  font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px;
   margin-top: 2px;
 }
 
@@ -283,7 +283,7 @@ header h1 {
   position: absolute;
   inset: 2px;
   clip-path: polygon(12% 0%, 88% 0%, 100% 16%, 100% 68%, 50% 100%, 0% 68%, 0% 16%);
-  border: 2px solid rgba(0,0,0,0.3);
+  border: 3px solid rgba(0,0,0,0.3);
 }
 
 .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
@@ -291,8 +291,8 @@ header h1 {
 /* ════════ JETS / COMPÉTENCES ════════ */
 .check-row {
   display: flex; align-items: center; gap: 5px;
-  padding: 2px 0; border-bottom: 1px solid rgba(0,0,0,0.06);
-  font-size: 12px; color: var(--text);
+  padding: 2px 0; border-bottom: 2px solid rgba(0,0,0,0.06);
+  font-size: 15px; color: var(--text);
 }
 .check-row:last-child { border-bottom: none; }
 
@@ -300,26 +300,26 @@ header h1 {
 .check-row input[type=checkbox] {
   appearance: none; -webkit-appearance: none;
   width: 11px; height: 11px; border-radius: 50%;
-  border: 2px solid #555;
+  border: 3px solid #555;
   cursor: pointer; flex-shrink: 0;
   background: transparent; transition: background .12s;
 }
 .check-row input[type=checkbox]:checked { background: var(--text); border-color: var(--text); }
-.check-row .bonus { min-width: 26px; text-align: right; font-weight: 700; font-size: 12px; }
-.check-row .sname { flex: 1; font-size: 11px; }
-.check-row .attr  { font-size: 10px; color: var(--text-light); min-width: 26px; }
+.check-row .bonus { min-width: 26px; text-align: right; font-weight: 700; font-size: 15px; }
+.check-row .sname { flex: 1; font-size: 14px; }
+.check-row .attr  { font-size: 13px; color: var(--text-light); min-width: 26px; }
 
 /* Indicateur de maîtrise */
 .prof-dot {
   width: 8px; height: 8px; border-radius: 50%;
-  background: transparent; border: 2px solid #666; flex-shrink: 0;
+  background: transparent; border: 3px solid #666; flex-shrink: 0;
 }
 .prof-dot.prof   { background: var(--text); border-color: var(--text); }
 .prof-dot.half   { background: #888; border-color: #555; }
 .prof-dot.expert { background: var(--red); border-color: var(--red); }
 
 /* ════════ POINTS DE VIE ════════ */
-.hp-bar-wrap { background: #e8e8e8; border: 1.5px solid #bbb; border-radius: 2px; height: 5px; overflow: hidden; margin-top: 4px; }
+.hp-bar-wrap { background: #e8e8e8; border: 2.5px solid #bbb; border-radius: 2px; height: 5px; overflow: hidden; margin-top: 4px; }
 .hp-bar { height: 100%; background: linear-gradient(90deg, #8b0000, #1a6620); border-radius: 2px; transition: width .3s; }
 
 /* ════════ JETS DE MORT ════════ */
@@ -327,29 +327,29 @@ header h1 {
 .ds-group { display: flex; gap: 4px; }
 .ds-dot {
   width: 16px; height: 16px; border-radius: 50%;
-  border: 2.5px solid #555; cursor: pointer; transition: background .15s;
+  border: 4px solid #555; cursor: pointer; transition: background .15s;
   background: transparent;
 }
 .ds-dot.success.filled { background: var(--green); border-color: var(--green); }
 .ds-dot.fail.filled    { background: var(--red);   border-color: var(--red); }
 
 /* ════════ TABLE ATTAQUES ════════ */
-.attacks-table { width: 100%; border-collapse: collapse; font-size: 12px; }
-.atk-mini-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.attacks-table { width: 100%; border-collapse: collapse; font-size: 15px; }
+.atk-mini-table { width: 100%; border-collapse: collapse; font-size: 15px; }
 .attacks-table th, .atk-mini-table th {
   text-align: left; padding: 3px 4px;
   font-family: 'Cinzel', serif;
-  font-size: 8px; letter-spacing: 1.5px; text-transform: uppercase;
+  font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
   font-weight: 700; color: var(--text);
-  border-bottom: 2px solid var(--text);
+  border-bottom: 3px solid var(--text);
   background: transparent;
 }
 .attacks-table td, .atk-mini-table td {
-  padding: 3px 4px; border-bottom: 1px solid rgba(0,0,0,0.07);
+  padding: 3px 4px; border-bottom: 2px solid rgba(0,0,0,0.07);
 }
 .attacks-table input, .atk-mini-table input {
   background: transparent; border: none; color: var(--text);
-  font-size: 12px; padding: 0; font-family: inherit; width: 100%;
+  font-size: 15px; padding: 0; font-family: inherit; width: 100%;
   outline: none;
 }
 
@@ -357,20 +357,20 @@ header h1 {
 .spell-slots-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; }
 .slot-box {
   background: var(--panel-bg);
-  border: 2px solid var(--frame-outer);
+  border: 3px solid var(--frame-outer);
   border-radius: 3px; padding: 6px; text-align: center;
-  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.25);
+  box-shadow: inset 0 0 0 2px rgba(0,0,0,0.25);
   margin: 2px;
 }
 .slot-box .slot-level {
   font-family: 'Cinzel', serif;
-  font-size: 9px; color: var(--text-dim); text-transform: uppercase;
+  font-size: 12px; color: var(--text-dim); text-transform: uppercase;
   letter-spacing: 1px; margin-bottom: 4px; font-weight: 700;
 }
 .slot-pips { display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; }
 .slot-pip {
   width: 12px; height: 12px; border-radius: 50%;
-  border: 2px solid #555; background: transparent;
+  border: 3px solid #555; background: transparent;
   cursor: pointer; transition: background .12s;
 }
 .slot-pip.used { background: var(--text); border-color: var(--text); }
@@ -378,13 +378,13 @@ header h1 {
 /* ════════ LISTE DE SORTS ════════ */
 .spell-row {
   display: flex; align-items: center; gap: 6px;
-  padding: 2px 0; border-bottom: 1px solid rgba(0,0,0,0.06);
-  font-size: 12px; color: var(--text);
+  padding: 2px 0; border-bottom: 2px solid rgba(0,0,0,0.06);
+  font-size: 15px; color: var(--text);
 }
 .spell-row input[type=checkbox] {
   appearance: none; -webkit-appearance: none;
   width: 11px; height: 11px; border-radius: 50%;
-  border: 2px solid #555;
+  border: 3px solid #555;
   cursor: pointer; flex-shrink: 0;
   background: transparent; transition: background .12s;
 }
@@ -394,12 +394,12 @@ header h1 {
 .dice-grid { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
 .die-btn {
   background: var(--panel-bg);
-  border: 2.5px solid var(--frame-outer);
+  border: 4px solid var(--frame-outer);
   color: var(--text); border-radius: 3px; padding: 8px 12px;
-  font-size: 15px; cursor: pointer;
+  font-size: 18px; cursor: pointer;
   font-family: 'Cinzel', serif; font-weight: 700;
   transition: all .12s; min-width: 54px; text-align: center; letter-spacing: 1px;
-  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.2);
+  box-shadow: inset 0 0 0 2px rgba(0,0,0,0.2);
 }
 .die-btn:hover { border-color: var(--red); color: var(--red); }
 
@@ -411,26 +411,26 @@ header h1 {
 }
 @keyframes pop { 0%{transform:scale(.7)} 70%{transform:scale(1.1)} 100%{transform:scale(1)} }
 #roll-history { max-height: 180px; overflow-y: auto; }
-.roll-entry { padding: 2px 0; border-bottom: 1px solid rgba(0,0,0,0.06); font-size: 12px; }
+.roll-entry { padding: 2px 0; border-bottom: 2px solid rgba(0,0,0,0.06); font-size: 15px; }
 
 /* ════════ BOUTONS ════════ */
 .btn {
-  background: var(--red); border: 1.5px solid #3a0d0d; color: #fff;
+  background: var(--red); border: 2.5px solid #3a0d0d; color: #fff;
   border-radius: 2px; padding: 5px 12px; cursor: pointer;
-  font-family: 'Cinzel', serif; font-size: 12px;
+  font-family: 'Cinzel', serif; font-size: 15px;
   letter-spacing: 1px; font-weight: 700; transition: background .12s;
 }
 .btn:hover { background: var(--red2); }
-.btn-gold { background: transparent; border: 1.5px solid var(--border-med); color: var(--text); }
+.btn-gold { background: transparent; border: 2.5px solid var(--border-med); color: var(--text); }
 .btn-gold:hover { background: var(--ab-band); }
-.btn-sm { padding: 2px 8px; font-size: 10px; }
+.btn-sm { padding: 2px 8px; font-size: 13px; }
 
 /* ════════ INSPIRATION ════════ */
 #inspiration-btn {
   width: 40px; height: 40px; border-radius: 50%;
-  border: 2.5px solid var(--frame-outer);
+  border: 4px solid var(--frame-outer);
   background: var(--panel-bg); cursor: pointer; font-size: 20px; transition: all .15s;
-  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.3);
+  box-shadow: inset 0 0 0 2px rgba(0,0,0,0.3);
 }
 #inspiration-btn.active { border-color: var(--red); color: var(--red); }
 
@@ -438,38 +438,38 @@ header h1 {
 .currency-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 6px; }
 .coin-box {
   text-align: center;
-  border: 2px solid var(--border);
-  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.25);
+  border: 3px solid var(--border);
+  box-shadow: inset 0 0 0 2px rgba(0,0,0,0.25);
   border-radius: 3px;
   padding: 4px 2px;
   background: var(--panel-bg);
 }
 .coin-box .coin-lbl {
   font-family: 'Cinzel', serif;
-  font-size: 9px; color: var(--text-dim); margin-bottom: 2px;
+  font-size: 12px; color: var(--text-dim); margin-bottom: 2px;
   letter-spacing: 1px; text-transform: uppercase; font-weight: 700;
 }
-.coin-box .coin-icon { font-size: 14px; }
-.coin-box input { width: 100%; text-align: center; border: none; border-top: 1px solid #ddd; background: transparent; font-size: 14px; font-family: 'Cinzel', serif; font-weight: 700; outline: none; margin-top: 2px; padding-top: 2px; }
+.coin-box .coin-icon { font-size: 17px; }
+.coin-box input { width: 100%; text-align: center; border: none; border-top: 2px solid #ddd; background: transparent; font-size: 17px; font-family: 'Cinzel', serif; font-weight: 700; outline: none; margin-top: 2px; padding-top: 2px; }
 
 /* ════════ ÉPUISEMENT ════════ */
 .exhaustion-pips { display: flex; gap: 4px; flex-wrap: wrap; }
 .ex-pip {
   width: 22px; height: 22px; border-radius: 50%;
-  border: 2px solid #555; cursor: pointer;
+  border: 3px solid #555; cursor: pointer;
   display: flex; align-items: center; justify-content: center;
-  font-size: 10px; font-weight: 700; font-family: 'Cinzel', serif;
+  font-size: 13px; font-weight: 700; font-family: 'Cinzel', serif;
   background: var(--panel-bg); transition: all .12s;
 }
 .ex-pip.active { border-color: var(--red); background: rgba(107,26,26,0.1); color: var(--red); }
 
 /* ════════ INPUTS ════════ */
 input[type=text], input[type=number], select, textarea {
-  border: 1px solid var(--border-light);
+  border: 2px solid var(--border-light);
   padding: 3px 5px;
   background: var(--panel-bg);
   font-family: 'Crimson Text', serif;
-  font-size: 13px;
+  font-size: 16px;
   color: var(--text);
   width: 100%;
   outline: none;
@@ -478,37 +478,37 @@ input[type=text], input[type=number], select, textarea {
 input[type=text]:focus, input[type=number]:focus, select:focus, textarea:focus {
   border-color: var(--red);
 }
-textarea { resize: vertical; font-size: 13px; }
+textarea { resize: vertical; font-size: 16px; }
 
 .field { display: flex; flex-direction: column; gap: 2px; }
-.field label { font-size: 8px; letter-spacing: 1px; text-transform: uppercase; color: var(--text-dim); font-family: 'Cinzel', serif; }
+.field label { font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: var(--text-dim); font-family: 'Cinzel', serif; }
 
 /* ════════ LANGUE TAGS ════════ */
 .lang-tags { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 4px; }
 .lang-tag {
   background: var(--border);
-  color: #fff; font-size: 10px;
+  color: #fff; font-size: 13px;
   padding: 1px 6px; border-radius: 2px;
   display: flex; align-items: center; gap: 3px;
 }
-.lang-tag button { background: none; border: none; color: #fff; cursor: pointer; font-size: 11px; padding: 0; line-height: 1; }
+.lang-tag button { background: none; border: none; color: #fff; cursor: pointer; font-size: 14px; padding: 0; line-height: 1; }
 
 /* ════════ CHECKBOX PICKERS ════════ */
 .cb-picker {
   max-height: 100px; overflow-y: auto;
-  border: 1.5px solid var(--border-light);
+  border: 2.5px solid var(--border-light);
   padding: 2px; background: var(--panel-bg);
-  font-size: 11px;
+  font-size: 14px;
 }
-.cb-item { display: flex; align-items: flex-start; gap: 4px; padding: 1px 3px; cursor: pointer; font-size: 11px; line-height: 1.3; }
+.cb-item { display: flex; align-items: flex-start; gap: 4px; padding: 1px 3px; cursor: pointer; font-size: 14px; line-height: 1.3; }
 .cb-item:hover { background: var(--ab-band); }
 .cb-item input[type=checkbox] { accent-color: var(--red); cursor: pointer; margin-top: 2px; flex-shrink: 0; }
 
-.picker-info { font-size: 11px; color: var(--text-dim); }
+.picker-info { font-size: 14px; color: var(--text-dim); }
 
 /* ════════ ROLL MOD ROW ════════ */
 .roll-mod-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 6px; }
-.adv-btn { border: 1.5px solid var(--border-med); background: var(--panel-bg); padding: 3px 7px; cursor: pointer; font-size: 11px; border-radius: 2px; font-family: 'Cinzel', serif; }
+.adv-btn { border: 2.5px solid var(--border-med); background: var(--panel-bg); padding: 3px 7px; cursor: pointer; font-size: 14px; border-radius: 2px; font-family: 'Cinzel', serif; }
 .adv-btn.sel { background: var(--border); color: #fff; }
 .adv-btn.adv { color: var(--green); }
 .adv-btn.dis { color: var(--red); }
@@ -524,8 +524,8 @@ textarea { resize: vertical; font-size: 13px; }
 .hp-adjust-row { display: flex; align-items: center; gap: 6px; margin-top: 6px; }
 
 /* ════════ ITEM ROW ════════ */
-.item-row { display: flex; align-items: center; gap: 5px; padding: 2px 0; border-bottom: 1px solid rgba(0,0,0,0.06); }
-.item-row input { background: transparent; border: none; font-size: 12px; padding: 0; font-family: inherit; outline: none; color: var(--text); }
+.item-row { display: flex; align-items: center; gap: 5px; padding: 2px 0; border-bottom: 2px solid rgba(0,0,0,0.06); }
+.item-row input { background: transparent; border: none; font-size: 15px; padding: 0; font-family: inherit; outline: none; color: var(--text); }
 
 /* ════════ MODAL ════════ */
 #weapon-modal, #spell-modal {
@@ -546,23 +546,23 @@ textarea { resize: vertical; font-size: 13px; }
 .layout-canvas .panel { position: absolute; box-sizing: border-box; overflow: hidden; }
 .panel-drag-handle {
   display: inline-block; cursor: grab; color: var(--red);
-  font-size: 18px; margin-right: 5px; vertical-align: middle;
+  font-size: 21px; margin-right: 5px; vertical-align: middle;
   user-select: none; line-height: 1;
 }
 .panel-drag-handle:active { cursor: grabbing; }
 .panel-resize-handle {
   position: absolute; bottom: 3px; right: 4px; width: 16px; height: 16px;
-  cursor: se-resize; color: var(--red); font-size: 13px; line-height: 16px;
+  cursor: se-resize; color: var(--red); font-size: 16px; line-height: 16px;
   text-align: right; user-select: none; z-index: 10;
 }
 .layout-editing { outline: 2px dashed var(--red) !important; outline-offset: 2px; }
 
 /* ════════ FEATS ════════ */
-.feat-card { border: 1.5px solid var(--border-light); border-radius: 2px; padding: 6px 8px; margin-bottom: 5px; background: var(--panel-bg); }
-.feat-card .feat-name { font-family: 'Cinzel', serif; font-size: 12px; font-weight: 700; color: var(--red); }
-.feat-card .feat-type { font-size: 10px; color: var(--text-dim); letter-spacing: 1px; }
-.feat-card .feat-desc { font-size: 12px; margin-top: 3px; line-height: 1.5; }
-#feats-count { font-size: 11px; font-weight: normal; color: var(--text-dim); margin-left: 6px; }
+.feat-card { border: 2.5px solid var(--border-light); border-radius: 2px; padding: 6px 8px; margin-bottom: 5px; background: var(--panel-bg); }
+.feat-card .feat-name { font-family: 'Cinzel', serif; font-size: 15px; font-weight: 700; color: var(--red); }
+.feat-card .feat-type { font-size: 13px; color: var(--text-dim); letter-spacing: 1px; }
+.feat-card .feat-desc { font-size: 15px; margin-top: 3px; line-height: 1.5; }
+#feats-count { font-size: 14px; font-weight: normal; color: var(--text-dim); margin-left: 6px; }
 
 /* ════════ PRE-PRINT MEASURE ════════ */
 body.pre-print-measure .no-print,
@@ -589,9 +589,9 @@ body.print-measuring .page.print-active {
 }
 body.print-measuring .panel         { padding: 2px 4px !important; margin: 1px !important; }
 body.print-measuring .panel-title   { font-size: 7px !important; padding: 1px 3px !important; }
-body.print-measuring textarea       { max-height: 65px !important; min-height: 0 !important; font-size: 8px !important; overflow: hidden !important; }
+body.print-measuring textarea       { max-height: 65px !important; min-height: 0 !important; font-size: 11px !important; overflow: hidden !important; }
 body.print-measuring input,
-body.print-measuring select         { font-size: 8px !important; }
+body.print-measuring select         { font-size: 11px !important; }
 body.print-measuring label          { font-size: 7px !important; }
 body.print-measuring .grid-2,
 body.print-measuring .grid-3        { gap: 2px !important; }
@@ -627,7 +627,7 @@ body.print-measuring .slot-box     { width: 13px !important; height: 13px !impor
   /* ── Réduction générale ── */
   .panel {
     background: #fff !important;
-    border: 1.5px solid #333 !important;
+    border: 2.5px solid #333 !important;
     box-shadow: none !important;
     padding: 2px 4px !important;
     margin: 1px !important;
@@ -641,11 +641,11 @@ body.print-measuring .slot-box     { width: 13px !important; height: 13px !impor
   textarea {
     max-height: 65px !important;
     min-height: 0 !important;
-    font-size: 8px !important;
+    font-size: 11px !important;
     overflow: hidden !important;
     resize: none !important;
   }
-  input, select { font-size: 8px !important; }
+  input, select { font-size: 11px !important; }
   label { font-size: 7px !important; }
   .grid-2, .grid-3 { gap: 2px !important; }
   .section-gap { margin-bottom: 2px !important; }
@@ -653,7 +653,7 @@ body.print-measuring .slot-box     { width: 13px !important; height: 13px !impor
   /* ── Caractéristiques ── */
   .ability-box {
     background: #fff !important;
-    border: 1.5px solid #333 !important;
+    border: 2.5px solid #333 !important;
     box-shadow: none !important;
     padding: 0 2px 3px !important;
   }
@@ -663,13 +663,13 @@ body.print-measuring .slot-box     { width: 13px !important; height: 13px !impor
     font-size: 7px !important;
     padding: 1px 2px !important;
     margin: 0 -2px 2px !important;
-    border-bottom: 1px solid #999 !important;
+    border-bottom: 2px solid #999 !important;
   }
   .ability-box .score-input { font-size: 22px !important; padding: 0 !important; color: #000 !important; }
   .ability-box .modifier {
     width: 26px !important; height: 26px !important;
-    font-size: 11px !important;
-    border: 1.5px solid #333 !important;
+    font-size: 14px !important;
+    border: 2.5px solid #333 !important;
     box-shadow: none !important; color: #000 !important;
     margin: 1px auto !important;
   }
@@ -679,29 +679,29 @@ body.print-measuring .slot-box     { width: 13px !important; height: 13px !impor
   /* ── Stat bubbles ── */
   .stat-bubble {
     width: 44px !important; height: 44px !important;
-    border: 1.5px solid #333 !important;
+    border: 2.5px solid #333 !important;
     box-shadow: none !important;
   }
 
   /* ── Slots / monnaie ── */
-  .slot-box  { width: 13px !important; height: 13px !important; border: 1px solid #555 !important; box-shadow: none !important; }
-  .coin-box  { border: 1px solid #333 !important; box-shadow: none !important; }
+  .slot-box  { width: 13px !important; height: 13px !important; border: 2px solid #555 !important; box-shadow: none !important; }
+  .coin-box  { border: 2px solid #333 !important; box-shadow: none !important; }
 
   /* ── Bandeau Personnage ── */
-  .char-banner { border-bottom: 2px solid #333 !important; }
+  .char-banner { border-bottom: 3px solid #333 !important; }
   .banner-row  { gap: 2px 6px !important; }
   .banner-field label  { font-size: 6px !important; }
   .banner-field input,
-  .banner-field select { font-size: 9px !important; }
+  .banner-field select { font-size: 12px !important; }
 
   /* ── Compétences ── */
-  .skill-row { padding: 1px 0 !important; font-size: 8px !important; }
+  .skill-row { padding: 1px 0 !important; font-size: 11px !important; }
 
   /* ── Sorts ── */
-  .spell-row  { font-size: 8px !important; padding: 1px 0 !important; }
+  .spell-row  { font-size: 11px !important; padding: 1px 0 !important; }
 
   /* ── Attaques ── */
-  .attack-row td, .attack-row input { font-size: 8px !important; }
+  .attack-row td, .attack-row input { font-size: 11px !important; }
 }
 
   /* ── CARACTÉRISTIQUES – Colonne gauche ── */
@@ -718,7 +718,7 @@ body.print-measuring .slot-box     { width: 13px !important; height: 13px !impor
   }
   #abilities-grid .ability-box .name {
     margin: 0 -4px 4px;
-    font-size: 8px;
+    font-size: 11px;
     padding: 3px 4px;
   }
   #abilities-grid .ability-box .score-input {
@@ -727,7 +727,7 @@ body.print-measuring .slot-box     { width: 13px !important; height: 13px !impor
   }
   #abilities-grid .ability-box .modifier {
     width: 34px; height: 34px;
-    font-size: 14px;
+    font-size: 17px;
     margin: 2px auto 2px;
   }
   /* Masquer les skills dans la colonne gauche */
