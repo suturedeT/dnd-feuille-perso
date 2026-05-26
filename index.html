@@ -606,7 +606,7 @@ body.print-measuring .grid-2,
 body.print-measuring .grid-3        { gap: 2px !important; }
 body.print-measuring .section-gap  { margin-bottom: 2px !important; }
 body.print-measuring .stat-bubble  { width: 44px !important; height: 44px !important; }
-body.print-measuring #abilities-grid { gap: 2px !important; }
+body.print-measuring #abilities-grid { gap: 2px !important; grid-template-columns: 1fr 1fr !important; display: grid !important; }
 body.print-measuring #abilities-grid .ability-box { padding: 0 2px 3px !important; margin: 0 !important; }
 body.print-measuring #abilities-grid .ability-box .score-input { font-size:33px !important; }
 body.print-measuring #abilities-grid .ability-box .modifier    { width: 26px !important; height: 26px !important; }
@@ -693,7 +693,7 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
     box-shadow: none !important; color: #000 !important;
     margin: 1px auto !important;
   }
-  #abilities-grid { gap: 2px !important; }
+  #abilities-grid { gap: 2px !important; grid-template-columns: 1fr 1fr !important; display: grid !important; }
   #abilities-grid .ability-box { margin: 0 !important; }
 
   /* ── Stat bubbles ── */
@@ -742,29 +742,29 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
 
   /* ── CARACTÉRISTIQUES – Colonne gauche ── */
   #abilities-grid {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 3px;
   }
   #abilities-grid .ability-box {
     width: 100%;
     box-sizing: border-box;
     margin-bottom: 0;
-    padding: 0 4px 5px;
+    padding: 0 6px 8px;
   }
   #abilities-grid .ability-box .name {
-    margin: 0 -4px 4px;
-    font-size:16px;
-    padding: 3px 4px;
+    margin: 0 -6px 6px;
+    font-size:24px;
+    padding: 5px 6px;
   }
   #abilities-grid .ability-box .score-input {
-    font-size:42px;
-    padding: 2px 0 1px;
+    font-size:63px;
+    padding: 3px 0 2px;
   }
   #abilities-grid .ability-box .modifier {
-    width: 34px; height: 34px;
-    font-size:26px;
-    margin: 2px auto 2px;
+    width: 51px; height: 51px;
+    font-size:39px;
+    margin: 3px auto 3px;
   }
   /* Skills visibles dans la colonne des caractéristiques */
   #abilities-grid .ability-skills {
@@ -957,7 +957,7 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
   </div>
 </div>
 
-<div style="display:grid;grid-template-columns:115px 1fr;gap:6px;align-items:start;">
+<div style="display:grid;grid-template-columns:260px 1fr;gap:6px;align-items:start;">
 
   <!-- COLONNE GAUCHE : Caractéristiques -->
   <div>
