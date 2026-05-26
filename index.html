@@ -1429,7 +1429,7 @@ body.print-measuring .slot-box     { width: 13px !important; height: 13px !impor
       <div class="field picker-ui" style="flex:2;min-width:200px;">
         <label>Objet magique</label>
         <input type="text" id="search-magic" placeholder="🔍 Rechercher…" oninput="filterMagicPicker()" style="width:100%;padding:3px 6px;background:var(--panel-bg);border:1px solid var(--border);color:var(--text);font-size:13px;border-radius:3px;margin-bottom:3px;box-sizing:border-box;">
-        <div class="cb-picker" id="magic-picker"></div>
+        <div class="cb-picker" id="magic-picker" style="max-height:200px;"></div>
       </div>
       <button class="btn btn-gold" onclick="addMagicItemToInventory()">+ Inventaire</button>
       <button class="btn" onclick="addMagicItemAsAttack()" style="background:var(--green);">⚔ Attaque</button>
