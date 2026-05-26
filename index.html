@@ -585,7 +585,7 @@ body.pre-print-measure .roll-mod-row { display: none !important; }
 /* ── Mode mesure : CSS print appliqué en écran pour calibrer le zoom ── */
 body.print-measuring .page.print-active {
   display: block !important;
-  padding: 4px !important;
+  padding: 4px calc(4px + 10mm) !important;
   box-sizing: border-box !important;
   width: 762px !important;
   max-width: 762px !important;
@@ -634,7 +634,7 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
     display: block !important;
     page-break-after: always;
     break-after: always;
-    padding: 4px !important;
+    padding: 4px calc(4px + 10mm) !important;
     background: #fff !important;
     box-sizing: border-box !important;
     overflow: hidden !important;
