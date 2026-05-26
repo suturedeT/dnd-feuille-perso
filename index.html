@@ -2872,8 +2872,13 @@ function showTab(id) {
   document.querySelectorAll('.tab').forEach((t,i) => t.classList.remove('active'));
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   event.currentTarget.classList.add('active');
-  document.getElementById('page-'+id).classList.add('active');
-  if (typeof Layout !== 'undefined') Layout.applyIfSaved(id);
+  const page = document.getElementById('page-'+id);
+  page.classList.add('active');
+  // Force le recalcul du layout CSS (grilles, flex) après display:none → block
+  void page.offsetHeight;
+  // applyIfSaved est volontairement retiré ici : les positions absolues sauvegardées
+  // ne s'appliquent que via le bouton "Disposition", jamais automatiquement,
+  // ce qui évite les chevauchements au retour sur l'onglet.
 }
 
 // ══════════════════════════════════════════
