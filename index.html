@@ -1117,6 +1117,7 @@ body.print-measuring .slot-box     { width: 13px !important; height: 13px !impor
         </div>
         <div class="field picker-ui" style="flex:2;min-width:180px;">
           <label>Arme</label>
+          <input type="text" id="search-weapon" placeholder="🔍 Rechercher…" oninput="filterWeaponPicker()" style="width:100%;padding:3px 6px;background:var(--panel-bg);border:1px solid var(--border);color:var(--text);font-size:13px;border-radius:3px;margin-bottom:3px;box-sizing:border-box;">
           <div class="cb-picker" id="weapon-picker"></div>
         </div>
         <div class="field" style="min-width:100px;">
@@ -1181,6 +1182,7 @@ body.print-measuring .slot-box     { width: 13px !important; height: 13px !impor
         </div>
         <div class="field picker-ui" style="flex:2;min-width:200px;">
           <label>Don</label>
+          <input type="text" id="search-feat" placeholder="🔍 Rechercher…" oninput="filterFeatPicker()" style="width:100%;padding:3px 6px;background:var(--panel-bg);border:1px solid var(--border);color:var(--text);font-size:13px;border-radius:3px;margin-bottom:3px;box-sizing:border-box;">
           <div class="cb-picker" id="feat-picker"></div>
         </div>
         <button class="btn btn-gold" onclick="addFeat()" style="align-self:flex-end;">+ Ajouter</button>
@@ -3900,13 +3902,14 @@ function setExhaustion(lvl) {
 // ══════════════════════════════════════════
 // ── Sélecteur d'armes ──
 function filterWeaponPicker() {
-  const cat  = document.getElementById('filter-weapon-cat').value;
-  const type = document.getElementById('filter-weapon-type').value;
+  const cat    = document.getElementById('filter-weapon-cat').value;
+  const type   = document.getElementById('filter-weapon-type').value;
+  const search = (document.getElementById('search-weapon').value || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
   const picker = document.getElementById('weapon-picker');
-  const filtered = WEAPONS_DB.filter(w =>
-    (!cat  || w.cat  === cat) &&
-    (!type || w.type === type)
-  ).sort((a,b) => a.name.localeCompare(b.name));
+  const filtered = WEAPONS_DB.filter(w => {
+    const matchSearch = !search || w.name.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').includes(search);
+    return (!cat || w.cat === cat) && (!type || w.type === type) && matchSearch;
+  }).sort((a,b) => a.name.localeCompare(b.name));
   picker.innerHTML = filtered.map(w => {
     const catLabel  = w.cat  === 'simple'  ? 'Simple'  : 'Guerre';
     const typeLabel = w.type === 'melee'   ? 'CàC'     : 'Distance';
@@ -4546,9 +4549,12 @@ function addEquipmentItem() {
 // ══════════════════════════════════════════
 function filterFeatPicker() {
   const cat    = document.getElementById('filter-feat-cat').value;
+  const search = (document.getElementById('search-feat').value || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
   const picker = document.getElementById('feat-picker');
-  const filtered = FEATS_DB.filter(f => !cat || f.cat === cat)
-    .sort((a,b) => a.name.localeCompare(b.name));
+  const filtered = FEATS_DB.filter(f => {
+    const matchSearch = !search || f.name.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').includes(search);
+    return (!cat || f.cat === cat) && matchSearch;
+  }).sort((a,b) => a.name.localeCompare(b.name));
   const catLabel = { origine:'Origine', général:'Général', 'style de combat':'Style de combat', 'faveur épique':'Faveur épique' };
   picker.innerHTML = filtered.map(f => `<label class="cb-item"><input type="checkbox" value="${f.name}" onchange="updateFeatPickerInfo()">[${catLabel[f.cat]||f.cat}] ${f.name}${f.prereq !== 'Aucun' ? ' — '+f.prereq : ''}</label>`).join('');
   updateFeatPickerInfo();
