@@ -1076,9 +1076,27 @@ body.print-measuring .slot-box     { width: 13px !important; height: 13px !impor
 <!-- ════════════ PAGE : COMBAT & DONS ════════════ -->
 <div class="page" id="page-combat">
 
-  <!-- ══ PICKERS (no-print) ══ -->
-  <div class="grid-2 no-print" style="margin-bottom:7px;">
+  <!-- ══ COMPÉTENCES ══ -->
+  <div class="grid-2" style="margin-bottom:7px;">
     <div class="panel">
+      <div class="panel-title">Compétences</div>
+      <div id="skills-list"></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:6px;">
+      <div class="panel">
+        <div class="panel-title">Maîtrises &amp; Notes</div>
+        <textarea id="comp-notes" placeholder="Notes sur les compétences, maîtrises d'outils, langues…" style="min-height:180px;" oninput="autoSave()"></textarea>
+      </div>
+      <div class="panel" style="flex:1;">
+        <div class="panel-title">Capacités de classe &amp; Traits détaillés</div>
+        <textarea id="class-traits" placeholder="Capacités de classe détaillées, traits raciaux, bonus d'historique…" style="min-height:180px;" oninput="autoSave()"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ COMBAT ══ -->
+  <div style="margin-bottom:7px;">
+    <div class="panel section-gap no-print">
       <div class="panel-title">Ajouter une arme depuis la liste</div>
       <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;">
         <div class="field" style="min-width:110px;">
@@ -1129,7 +1147,26 @@ body.print-measuring .slot-box     { width: 13px !important; height: 13px !impor
       </div>
       <div id="weapon-picker-info" class="picker-info" style="margin-top:6px;min-height:16px;"></div>
     </div>
-    <div class="panel">
+    <div class="panel section-gap" style="margin-top:6px;">
+      <div class="panel-title">Attaques
+        <button class="btn btn-gold btn-sm" style="float:right;" onclick="addAttack()">+ Vide</button>
+      </div>
+      <table class="attacks-table">
+        <thead>
+          <tr><th>Nom</th><th>Bonus d'attaque</th><th>Dégâts / Type</th><th>Portée</th><th>Mag.</th><th>Notes</th><th></th></tr>
+        </thead>
+        <tbody id="attacks-body"></tbody>
+      </table>
+    </div>
+    <div class="panel" style="margin-top:6px;">
+      <div class="panel-title">Notes de combat</div>
+      <textarea id="combat-notes" placeholder="Capacités spéciales, notes de combat, conditions…" style="min-height:120px;" oninput="autoSave()"></textarea>
+    </div>
+  </div>
+
+  <!-- ══ DONS ══ -->
+  <div>
+    <div class="panel section-gap no-print">
       <div class="panel-title">Ajouter un don</div>
       <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;">
         <div class="field" style="min-width:140px;">
@@ -1150,48 +1187,7 @@ body.print-measuring .slot-box     { width: 13px !important; height: 13px !impor
       </div>
       <div id="feat-picker-info" class="picker-info" style="margin-top:6px;min-height:16px;"></div>
     </div>
-  </div>
-
-  <!-- ══ COMPÉTENCES ══ -->
-  <div class="grid-2" style="margin-bottom:7px;">
-    <div class="panel">
-      <div class="panel-title">Compétences</div>
-      <div id="skills-list"></div>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:6px;">
-      <div class="panel">
-        <div class="panel-title">Maîtrises &amp; Notes</div>
-        <textarea id="comp-notes" placeholder="Notes sur les compétences, maîtrises d'outils, langues…" style="min-height:180px;" oninput="autoSave()"></textarea>
-      </div>
-      <div class="panel" style="flex:1;">
-        <div class="panel-title">Capacités de classe &amp; Traits détaillés</div>
-        <textarea id="class-traits" placeholder="Capacités de classe détaillées, traits raciaux, bonus d'historique…" style="min-height:180px;" oninput="autoSave()"></textarea>
-      </div>
-    </div>
-  </div>
-
-  <!-- ══ COMBAT ══ -->
-  <div style="margin-bottom:7px;">
-    <div class="panel section-gap">
-      <div class="panel-title">Attaques
-        <button class="btn btn-gold btn-sm" style="float:right;" onclick="addAttack()">+ Vide</button>
-      </div>
-      <table class="attacks-table">
-        <thead>
-          <tr><th>Nom</th><th>Bonus d'attaque</th><th>Dégâts / Type</th><th>Portée</th><th>Mag.</th><th>Notes</th><th></th></tr>
-        </thead>
-        <tbody id="attacks-body"></tbody>
-      </table>
-    </div>
-    <div class="panel" style="margin-top:6px;">
-      <div class="panel-title">Notes de combat</div>
-      <textarea id="combat-notes" placeholder="Capacités spéciales, notes de combat, conditions…" style="min-height:120px;" oninput="autoSave()"></textarea>
-    </div>
-  </div>
-
-  <!-- ══ DONS ══ -->
-  <div>
-    <div class="panel section-gap">
+    <div class="panel section-gap" style="margin-top:6px;">
       <div class="panel-title">Dons acquis
         <span id="feats-count"></span>
       </div>
