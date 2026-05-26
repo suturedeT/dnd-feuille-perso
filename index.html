@@ -159,7 +159,7 @@ header h1 {
     inset 0 0 0 6px rgba(0,0,0,0.3);
   padding: 7px 9px 9px;
   position: relative;
-  border-radius: 1px;
+  border-radius: 8px;
 }
 
 .panel + .panel { margin-top: 6px; }
@@ -740,6 +740,85 @@ body.print-measuring .slot-box     { width: 13px !important; height: 13px !impor
 </head>
 <body>
 
+<!-- ════════════ AUTH OVERLAY ════════════ -->
+<div id="auth-overlay" style="position:fixed;inset:0;z-index:99999;background:linear-gradient(135deg,#1a0a00 0%,#2d1200 40%,#1a0a00 100%);display:flex;align-items:center;justify-content:center;font-family:'Crimson Text',serif;">
+  <div style="background:#1e1208;border:3px solid #8b5e1a;border-radius:12px;padding:36px 40px;min-width:340px;max-width:400px;width:90%;box-shadow:0 0 40px rgba(139,94,26,.4);">
+    <div style="text-align:center;margin-bottom:24px;">
+      <div style="font-family:'Cinzel',serif;font-size:22px;color:#c8a84b;letter-spacing:2px;">⚔ D&amp;D 2024 FR</div>
+      <div style="font-size:13px;color:#7a6a50;margin-top:4px;">Feuille de Personnage</div>
+    </div>
+
+    <!-- LOGIN PANEL -->
+    <div id="auth-login-panel">
+      <div class="auth-field">
+        <label class="auth-label">Identifiant</label>
+        <input id="auth-username" type="text" placeholder="votre identifiant" class="auth-input" onkeydown="if(event.key==='Enter')document.getElementById('auth-password').focus()">
+      </div>
+      <div class="auth-field" style="margin-top:12px;">
+        <label class="auth-label">Mot de passe</label>
+        <input id="auth-password" type="password" placeholder="••••••••" class="auth-input" onkeydown="if(event.key==='Enter')authLogin()">
+      </div>
+      <div id="auth-error" style="color:#e05050;font-size:13px;min-height:18px;margin:10px 0 4px;"></div>
+      <button onclick="authLogin()" style="width:100%;padding:10px;background:#8b5e1a;border:1px solid #c8a84b;border-radius:6px;color:#f0e0c0;font-family:'Cinzel',serif;font-size:14px;cursor:pointer;margin-top:4px;">Se connecter</button>
+      <div style="text-align:center;margin-top:14px;">
+        <span style="color:#7a6a50;font-size:13px;">Pas encore de compte ? </span>
+        <a onclick="authShowRegister()" style="color:#c8a84b;cursor:pointer;font-size:13px;">Faire une demande</a>
+      </div>
+    </div>
+
+    <!-- REGISTER PANEL -->
+    <div id="auth-register-panel" style="display:none;">
+      <div style="font-family:'Cinzel',serif;color:#c8a84b;font-size:15px;margin-bottom:16px;text-align:center;">Demande de compte</div>
+      <div class="auth-field">
+        <label class="auth-label">Identifiant souhaité</label>
+        <input id="reg-username" type="text" placeholder="min. 3 caractères" class="auth-input">
+      </div>
+      <div class="auth-field" style="margin-top:12px;">
+        <label class="auth-label">Mot de passe</label>
+        <input id="reg-password" type="password" placeholder="••••••••" class="auth-input">
+      </div>
+      <div class="auth-field" style="margin-top:12px;">
+        <label class="auth-label">Confirmer le mot de passe</label>
+        <input id="reg-password2" type="password" placeholder="••••••••" class="auth-input" onkeydown="if(event.key==='Enter')authRegister()">
+      </div>
+      <div id="reg-message" style="font-size:13px;min-height:18px;margin:10px 0 4px;"></div>
+      <button onclick="authRegister()" style="width:100%;padding:10px;background:#2a4a1a;border:1px solid #4a8a2a;border-radius:6px;color:#c0e0a0;font-family:'Cinzel',serif;font-size:14px;cursor:pointer;margin-top:4px;">Envoyer la demande</button>
+      <div style="text-align:center;margin-top:14px;">
+        <a onclick="authShowLogin()" style="color:#7a6a50;cursor:pointer;font-size:13px;">← Retour à la connexion</a>
+      </div>
+    </div>
+
+    <!-- SETUP PANEL (premier lancement) -->
+    <div id="auth-setup-panel" style="display:none;">
+      <div style="font-family:'Cinzel',serif;color:#c8a84b;font-size:15px;margin-bottom:8px;text-align:center;">Configuration initiale</div>
+      <div style="color:#7a6a50;font-size:12px;text-align:center;margin-bottom:16px;">Créez le compte administrateur</div>
+      <div class="auth-field">
+        <label class="auth-label">Identifiant admin</label>
+        <input id="setup-username" type="text" placeholder="ex: admin" class="auth-input" value="admin">
+      </div>
+      <div class="auth-field" style="margin-top:12px;">
+        <label class="auth-label">Mot de passe</label>
+        <input id="setup-password" type="password" placeholder="••••••••" class="auth-input">
+      </div>
+      <div class="auth-field" style="margin-top:12px;">
+        <label class="auth-label">Confirmer</label>
+        <input id="setup-password2" type="password" placeholder="••••••••" class="auth-input" onkeydown="if(event.key==='Enter')authSetup()">
+      </div>
+      <div id="setup-message" style="color:#e05050;font-size:13px;min-height:18px;margin:10px 0 4px;"></div>
+      <button onclick="authSetup()" style="width:100%;padding:10px;background:#8b5e1a;border:1px solid #c8a84b;border-radius:6px;color:#f0e0c0;font-family:'Cinzel',serif;font-size:14px;cursor:pointer;margin-top:4px;">Créer le compte admin</button>
+    </div>
+  </div>
+</div>
+
+<style>
+.auth-input { width:100%;padding:8px 10px;background:#2a1a08;border:1px solid #5a3a10;border-radius:4px;color:#e8d8b0;font-family:'Crimson Text',serif;font-size:15px;outline:none;box-sizing:border-box; }
+.auth-input:focus { border-color:#c8a84b; }
+.auth-label { font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#7a6a50;display:block;margin-bottom:4px;font-family:'Cinzel',serif; }
+.auth-field {}
+</style>
+
+
+<div id="main-app" style="display:none;">
 <!-- Dragon overlay (gardé pour compatibilité JS) -->
 
 
@@ -752,6 +831,11 @@ body.print-measuring .slot-box     { width: 13px !important; height: 13px !impor
   <div>
     <h1>Donjons &amp; Dragons</h1>
     <div class="edition">Édition 2024 • Feuille de Personnage</div>
+  </div>
+  <div style="display:flex;gap:10px;align-items:center;" class="no-print">
+    <span id="user-display" style="color:#c8a84b;font-family:'Cinzel',serif;font-size:12px;letter-spacing:1px;">—</span>
+    <button id="admin-btn" onclick="showAdminPanel()" style="display:none;background:#3a2010;border:1px solid #8b5e1a;color:#c8a84b;font-size:11px;padding:3px 8px;border-radius:4px;cursor:pointer;font-family:'Cinzel',serif;">⚙ Admin</button>
+    <button onclick="authLogout()" style="background:transparent;border:1px solid rgba(255,255,255,.3);color:rgba(255,255,255,.6);font-size:11px;padding:3px 8px;border-radius:4px;cursor:pointer;">⬡ Déconnexion</button>
   </div>
   <div style="display:flex;gap:7px;" class="no-print">
     <button class="btn btn-sm" onclick="saveSheet()" style="background:#c8a84b;color:#111;border-color:#a07830;">Sauvegarder</button>
@@ -3214,8 +3298,7 @@ document.addEventListener('DOMContentLoaded', () => {
   addAttack(); addAttack(); addAttack();
   addItem(); addItem();
   addSpell(); addSpell(); addSpell();
-  loadSheet(true);
-  updateAll();
+  initAuth();
 });
 
 // ══════════════════════════════════════════
@@ -4351,7 +4434,8 @@ function autoSave() {
   clearTimeout(autoSaveTimer);
   autoSaveTimer = setTimeout(() => {
     try {
-      localStorage.setItem('dnd_sheet', JSON.stringify(collectFormData()));
+      const _saveKey = window.currentUser ? 'dnd_sheet_'+window.currentUser.username : 'dnd_sheet';
+      localStorage.setItem(_saveKey, JSON.stringify(collectFormData()));
     } catch(e) {}
   }, 800);
 }
@@ -4369,7 +4453,7 @@ function saveSheet() {
 function loadSheet(silent=false) {
   let raw;
   if (silent) {
-    try { raw = localStorage.getItem('dnd_sheet'); } catch(e){}
+    try { const _lk = window.currentUser ? 'dnd_sheet_'+window.currentUser.username : 'dnd_sheet'; raw = localStorage.getItem(_lk); } catch(e){}
     if (!raw) return;
     applyData(JSON.parse(raw));
     return;
@@ -4993,6 +5077,180 @@ const Layout = (() => {
   return { toggle, reset, applyIfSaved };
 })();
 
+
+// ══════════════════════════════════════════════════════════════════
+//  AUTHENTIFICATION
+// ══════════════════════════════════════════════════════════════════
+window.currentUser = null;
+
+async function _hashPwd(pwd) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pwd));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+function _getUsers()    { try { return JSON.parse(localStorage.getItem('dnd_auth_users')||'[]'); } catch(e){return[];} }
+function _saveUsers(u)  { localStorage.setItem('dnd_auth_users', JSON.stringify(u)); }
+function _getSession()  { return localStorage.getItem('dnd_auth_session'); }
+
+async function initAuth() {
+  const users = _getUsers();
+  if (users.length === 0) {
+    // Premier lancement : configurer le compte admin
+    _showPanel('auth-setup-panel');
+    document.getElementById('auth-overlay').style.display = 'flex';
+    return;
+  }
+  const session = _getSession();
+  if (session) {
+    const u = users.find(x => x.id === session && x.approved);
+    if (u) { window.currentUser = u; _showApp(); return; }
+  }
+  _showPanel('auth-login-panel');
+  document.getElementById('auth-overlay').style.display = 'flex';
+}
+
+function _showPanel(id) {
+  ['auth-login-panel','auth-register-panel','auth-setup-panel'].forEach(p => {
+    document.getElementById(p).style.display = p===id ? 'block' : 'none';
+  });
+}
+
+function _showApp() {
+  document.getElementById('auth-overlay').style.display = 'none';
+  document.getElementById('main-app').style.display = '';
+  document.getElementById('user-display').textContent = '👤 ' + window.currentUser.username;
+  if (window.currentUser.role === 'admin') document.getElementById('admin-btn').style.display = 'inline-block';
+  else document.getElementById('admin-btn').style.display = 'none';
+  loadSheet(true);
+  updateAll();
+}
+
+async function authLogin() {
+  const username = document.getElementById('auth-username').value.trim();
+  const password = document.getElementById('auth-password').value;
+  const err      = document.getElementById('auth-error');
+  err.textContent = '';
+  if (!username || !password) { err.textContent = 'Remplissez tous les champs.'; return; }
+  const hash  = await _hashPwd(password);
+  const users = _getUsers();
+  const user  = users.find(u => u.username === username && u.passwordHash === hash);
+  if (!user)          { err.textContent = 'Identifiant ou mot de passe incorrect.'; return; }
+  if (!user.approved) { err.textContent = 'Compte en attente de validation par l\'administrateur.'; return; }
+  window.currentUser = user;
+  localStorage.setItem('dnd_auth_session', user.id);
+  _showApp();
+}
+
+async function authRegister() {
+  const username  = document.getElementById('reg-username').value.trim();
+  const password  = document.getElementById('reg-password').value;
+  const password2 = document.getElementById('reg-password2').value;
+  const msg       = document.getElementById('reg-message');
+  msg.style.color = '#e05050'; msg.textContent = '';
+  if (!username || !password)       { msg.textContent = 'Remplissez tous les champs.'; return; }
+  if (username.length < 3)          { msg.textContent = 'Identifiant trop court (min. 3 caractères).'; return; }
+  if (password !== password2)       { msg.textContent = 'Les mots de passe ne correspondent pas.'; return; }
+  if (password.length < 6)          { msg.textContent = 'Mot de passe trop court (min. 6 caractères).'; return; }
+  const users = _getUsers();
+  if (users.find(u => u.username === username)) { msg.textContent = 'Cet identifiant est déjà pris.'; return; }
+  const hash = await _hashPwd(password);
+  users.push({ id:'user_'+Date.now(), username, passwordHash:hash, role:'user', approved:false,
+               requestDate: new Date().toLocaleDateString('fr-FR') });
+  _saveUsers(users);
+  msg.style.color = '#60c060';
+  msg.textContent = '✓ Demande envoyée ! L\'administrateur validera votre compte.';
+  setTimeout(authShowLogin, 3000);
+}
+
+async function authSetup() {
+  const username  = document.getElementById('setup-username').value.trim();
+  const password  = document.getElementById('setup-password').value;
+  const password2 = document.getElementById('setup-password2').value;
+  const msg       = document.getElementById('setup-message');
+  msg.textContent = '';
+  if (!username || !password)  { msg.textContent = 'Remplissez tous les champs.'; return; }
+  if (password !== password2)  { msg.textContent = 'Les mots de passe ne correspondent pas.'; return; }
+  if (password.length < 6)     { msg.textContent = 'Mot de passe trop court (min. 6 caractères).'; return; }
+  const hash = await _hashPwd(password);
+  _saveUsers([{ id:'admin', username, passwordHash:hash, role:'admin', approved:true }]);
+  window.currentUser = { id:'admin', username, role:'admin', approved:true };
+  localStorage.setItem('dnd_auth_session', 'admin');
+  _showApp();
+}
+
+function authShowRegister() { _showPanel('auth-register-panel'); document.getElementById('reg-message').textContent=''; }
+function authShowLogin()    { _showPanel('auth-login-panel');    document.getElementById('auth-error').textContent=''; }
+
+function authLogout() {
+  localStorage.removeItem('dnd_auth_session');
+  window.currentUser = null;
+  document.getElementById('main-app').style.display = 'none';
+  document.getElementById('auth-username').value = '';
+  document.getElementById('auth-password').value = '';
+  _showPanel('auth-login-panel');
+  document.getElementById('auth-error').textContent = '';
+  document.getElementById('auth-overlay').style.display = 'flex';
+}
+
+function showAdminPanel() {
+  if (!window.currentUser || window.currentUser.role !== 'admin') return;
+  const users   = _getUsers();
+  const pending = users.filter(u => !u.approved);
+  const active  = users.filter(u => u.approved && u.role !== 'admin');
+
+  const row = (u, actions) =>
+    `<div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid #3a2010;">
+      <span style="flex:1;color:#e8d8b0;">${u.username}
+        ${u.requestDate ? `<span style="color:#7a6a50;font-size:11px;"> · ${u.requestDate}</span>` : ''}
+      </span>${actions}</div>`;
+
+  const approveBtn = id => `<button onclick="adminApprove('${id}')" style="background:#2a4a1a;border:1px solid #4a8a2a;color:#c0e0a0;font-size:11px;padding:3px 9px;border-radius:4px;cursor:pointer;">✓ Approuver</button>`;
+  const rejectBtn  = id => `<button onclick="adminReject('${id}')"  style="background:#4a1010;border:1px solid #8a2020;color:#e0a0a0;font-size:11px;padding:3px 9px;border-radius:4px;cursor:pointer;">✗ Refuser</button>`;
+  const deleteBtn  = id => `<button onclick="adminDelete('${id}')"  style="background:#4a1010;border:1px solid #8a2020;color:#e0a0a0;font-size:11px;padding:3px 9px;border-radius:4px;cursor:pointer;">🗑 Supprimer</button>`;
+
+  const html =
+    `<div id="_admin_modal" style="position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:99998;display:flex;align-items:center;justify-content:center;" onclick="if(event.target===this)this.remove()">
+      <div style="background:#1e1208;border:2px solid #8b5e1a;border-radius:10px;padding:24px 28px;min-width:380px;max-width:500px;width:90%;max-height:80vh;overflow-y:auto;">
+        <div style="font-family:'Cinzel',serif;color:#c8a84b;font-size:18px;margin-bottom:18px;">⚙ Administration</div>
+
+        <div style="margin-bottom:18px;">
+          <div style="color:#c8a84b;font-size:13px;font-family:'Cinzel',serif;margin-bottom:8px;">En attente de validation (${pending.length})</div>
+          ${pending.length ? pending.map(u=>row(u, approveBtn(u.id)+' '+rejectBtn(u.id))).join('') : '<div style="color:#7a6a50;font-size:13px;">Aucune demande en attente.</div>'}
+        </div>
+
+        <div>
+          <div style="color:#c8a84b;font-size:13px;font-family:\'Cinzel\',serif;margin-bottom:8px;">Comptes actifs (${active.length})</div>
+          ${active.length ? active.map(u=>row(u, deleteBtn(u.id))).join('') : '<div style="color:#7a6a50;font-size:13px;">Aucun utilisateur.</div>'}
+        </div>
+
+        <button onclick="document.getElementById('_admin_modal').remove()" style="margin-top:18px;width:100%;padding:9px;background:#3a2010;border:1px solid #8b5e1a;border-radius:6px;color:#c8a84b;cursor:pointer;font-family:\'Cinzel\',serif;">Fermer</button>
+      </div>
+    </div>`;
+  document.body.insertAdjacentHTML('beforeend', html);
+}
+
+function _refreshAdmin() { document.getElementById('_admin_modal')?.remove(); showAdminPanel(); }
+
+function adminApprove(id) {
+  const users = _getUsers();
+  const u = users.find(x => x.id === id);
+  if (u) { u.approved = true; _saveUsers(users); }
+  _refreshAdmin();
+}
+function adminReject(id) {
+  const users = _getUsers(); const i = users.findIndex(x=>x.id===id);
+  if (i>=0) { users.splice(i,1); _saveUsers(users); }
+  _refreshAdmin();
+}
+function adminDelete(id) {
+  if (!confirm('Supprimer ce compte et sa feuille de personnage ?')) return;
+  const users = _getUsers(); const u = users.find(x=>x.id===id);
+  if (u) localStorage.removeItem('dnd_sheet_'+u.username);
+  const i = users.findIndex(x=>x.id===id);
+  if (i>=0) { users.splice(i,1); _saveUsers(users); }
+  _refreshAdmin();
+}
+
 </script>
+</div><!-- fin main-app -->
 </body>
 </html>
