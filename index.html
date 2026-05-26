@@ -579,16 +579,16 @@ body.pre-print-measure .roll-mod-row { display: none !important; }
 /* ════════ IMPRESSION ════════ */
 @page {
   size: A4 portrait;
-  margin: 8mm;
+  margin: 0;   /* marges via CSS padding uniquement */
 }
 
 /* ── Mode mesure : CSS print appliqué en écran pour calibrer le zoom ── */
 body.print-measuring .page.print-active {
   display: block !important;
-  padding: 4px calc(4px + 10mm) !important;
+  padding: 10mm !important;           /* 10mm = marges internes uniformes */
   box-sizing: border-box !important;
-  width: 762px !important;
-  max-width: 762px !important;
+  width: 794px !important;            /* A4 exact — @page margin:0 */
+  max-width: 794px !important;
   overflow: hidden !important;
 }
 /* Reset police de base pour mesure précise */
@@ -635,12 +635,11 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
     display: block !important;
     page-break-after: always;
     break-after: always;
-    padding: 4px calc(4px + 10mm) !important;
+    padding: 10mm !important;          /* identique au measuring */
     background: #fff !important;
     box-sizing: border-box !important;
     overflow: hidden !important;
-    width: 100% !important;
-    max-width: 100% !important;
+    /* width contrôlée par JS (compensée pour le zoom) */
   }
   /* Reset police base — les surcharges spécifiques ci-dessous priment */
   .page.print-active * { font-size: 12px !important; }
@@ -4894,15 +4893,18 @@ function printSheet() {
 
   // 3 — Laisser le navigateur appliquer le layout compact, puis mesurer et zoomer
   setTimeout(() => {
-    // A4 portrait, marges 8mm → hauteur utile ≈ 1040 px à 96 dpi
-    // A4 portrait, marges 8mm : 794×1122px à 96dpi → zone utile 762×1062px
-    const A4_H = 1062;
-    const A4_W = 762;
+    // A4 portrait @page margin:0 → 794×1122px à 96dpi
+    // padding 10mm CSS gère les marges internes
+    const A4_H = 1122;
+    const A4_W = 794;
     pages.forEach(p => { p.style.width = A4_W + 'px'; p.style.maxWidth = A4_W + 'px'; });
 
     pages.forEach(p => {
       const h = p.scrollHeight;
-      p.style.zoom = (A4_H / h).toFixed(4); // toujours calibré pour remplir exactement A4
+      const scale = A4_H / h;
+      p.style.zoom = scale.toFixed(4);                        // zoom pour remplir A4 en hauteur
+      p.style.width    = Math.round(A4_W / scale) + 'px';  // largeur compensée : zoom×w = A4_W
+      p.style.maxWidth = Math.round(A4_W / scale) + 'px';
     });
 
     document.body.classList.remove('print-measuring');
