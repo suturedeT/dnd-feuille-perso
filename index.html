@@ -4877,53 +4877,88 @@ function renderLanguages() {
 // ══════════════════════════════════════════
 function printSheet() {
   const allPages = Array.from(document.querySelectorAll('.page'));
-  const pages = allPages.filter(p => p.id !== 'page-des');
-  const saved = allPages.map(p => ({
-    display: p.style.display,
-    zoom: p.style.zoom || '',
-    classes: [...p.classList]
+  const pages    = allPages.filter(p => p.id !== 'page-des');
+  const saved    = allPages.map(p => ({
+    display  : p.style.display,
+    classes  : [...p.classList],
+    width    : p.style.width    || '',
+    maxWidth : p.style.maxWidth || '',
+    height   : p.style.height   || '',
+    overflow : p.style.overflow || '',
   }));
 
-  // 1 — Préparer les pages
-  allPages.forEach(p => { p.style.display = 'none'; p.style.zoom = ''; p.classList.remove('print-active'); });
-  pages.forEach(p => { p.style.display = 'block'; p.classList.add('print-active'); });
+  // 1 — Montrer toutes les pages à imprimer
+  allPages.forEach(p => {
+    p.style.display = 'none';
+    p.classList.remove('print-active');
+  });
+  pages.forEach(p => {
+    p.style.display = 'block';
+    p.classList.add('print-active');
+  });
 
-  // 2 — Activer le CSS de mesure (même réductions qu'en impression)
+  // 2 — CSS compact pour mesure précise
   document.body.classList.add('print-measuring');
 
-  // 3 — Laisser le navigateur appliquer le layout compact, puis mesurer et zoomer
   setTimeout(() => {
-    // @page margin:10mm → zone imprimable 718×1046px à 96dpi (794-76 × 1122-76)
-    // JS contrôle entièrement width + zoom — aucun override CSS de width
+    // @page margin:10mm → zone imprimable = 718 × 1046 px à 96 dpi
     const A4_H = 1046;
     const A4_W = 718;
-    pages.forEach(p => { p.style.width = A4_W + 'px'; p.style.maxWidth = A4_W + 'px'; });
-
     pages.forEach(p => {
-      const h = p.scrollHeight;
+      p.style.width    = A4_W + 'px';
+      p.style.maxWidth = A4_W + 'px';
+    });
+
+    // 3 — Pour chaque page : wrapper transform:scale() + hauteur A4 fixe
+    //     transform:scale() est fiable en impression, contrairement à zoom CSS
+    const wrappers = [];
+    pages.forEach(p => {
+      const h     = p.scrollHeight;
       const scale = A4_H / h;
-      // Largeur compensée : zoom × width = A4_W → Chrome ne peut pas auto-scale
-      p.style.zoom     = scale.toFixed(4);
-      p.style.width    = Math.round(A4_W / scale) + 'px';
-      p.style.maxWidth = Math.round(A4_W / scale) + 'px';
+
+      // Wrapper : dimensions pré-scale → visuellement A4_W × A4_H après scale
+      const w = document.createElement('div');
+      w.style.cssText = `
+        width            : ${Math.round(A4_W / scale)}px;
+        height           : ${h}px;
+        transform        : scale(${scale.toFixed(6)});
+        transform-origin : top left;
+        overflow         : visible;
+        position         : relative;
+      `.replace(/\s+/g, ' ');
+
+      // Déplacer tous les enfants dans le wrapper
+      while (p.firstChild) w.appendChild(p.firstChild);
+      p.appendChild(w);
+
+      // Page = exactement 1 feuille A4 (print-engine voit 1046px = 1 page)
+      p.style.height   = A4_H + 'px';
+      p.style.overflow = 'hidden';
+
+      wrappers.push({ p, w });
     });
 
     document.body.classList.remove('print-measuring');
 
-    // 4 — Restaurer après impression
+    // 4 — Restaurer le DOM après impression
     window.addEventListener('afterprint', () => {
+      wrappers.forEach(({ p, w }) => {
+        while (w.firstChild) p.insertBefore(w.firstChild, w);
+        w.remove();
+      });
       allPages.forEach((p, i) => {
-        p.style.display   = saved[i].display;
-        p.style.zoom      = saved[i].zoom;
-        p.style.width     = '';
-        p.style.maxWidth  = '';
+        p.style.display  = saved[i].display;
+        p.style.width    = saved[i].width;
+        p.style.maxWidth = saved[i].maxWidth;
+        p.style.height   = saved[i].height;
+        p.style.overflow = saved[i].overflow;
         p.classList.remove('print-active');
         if (saved[i].classes.includes('active')) p.classList.add('active');
       });
     }, { once: true });
 
     window.print();
-  }, 350);
+  }, 500);
 }
 
 // ══════════════════════════════════════════
