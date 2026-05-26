@@ -901,47 +901,57 @@ body.print-measuring .slot-box     { width: 13px !important; height: 13px !impor
       </div>
     </div>
 
-    <!-- Points de vie -->
-    <div class="panel section-gap">
-      <div class="panel-title">Points de vie</div>
-      <div class="grid-3">
-        <div>
-          <div style="font-family:'Cinzel',serif;font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text-dim);text-align:center;margin-bottom:2px;">Maximum</div>
-          <div style="border:2px solid var(--border);box-shadow:inset 0 0 0 1px rgba(0,0,0,0.25);padding:3px;text-align:center;background:var(--panel-bg);">
-            <input type="number" id="hp-max" placeholder="0" oninput="updateHP()" style="border:none;background:transparent;font-size:18px;font-family:'Cinzel',serif;font-weight:700;text-align:center;width:100%;outline:none;">
-          </div>
-        </div>
-        <div>
-          <div style="font-family:'Cinzel',serif;font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text-dim);text-align:center;margin-bottom:2px;">PV Actuels</div>
-          <div style="border:2px solid var(--border);box-shadow:inset 0 0 0 1px rgba(0,0,0,0.25);padding:3px;text-align:center;background:var(--panel-bg);">
-            <input type="number" id="hp-current" placeholder="0" oninput="updateHP()" style="border:none;background:transparent;font-size:18px;font-family:'Cinzel',serif;font-weight:700;text-align:center;width:100%;outline:none;">
-          </div>
-        </div>
-        <div>
-          <div style="font-family:'Cinzel',serif;font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text-dim);text-align:center;margin-bottom:2px;">Temporaires</div>
-          <div style="border:2px solid var(--border);box-shadow:inset 0 0 0 1px rgba(0,0,0,0.25);padding:3px;text-align:center;background:var(--panel-bg);">
-            <input type="number" id="hp-temp" placeholder="0" oninput="autoSave()" style="border:none;background:transparent;font-size:18px;font-family:'Cinzel',serif;font-weight:700;text-align:center;width:100%;outline:none;">
-          </div>
-        </div>
-      </div>
-      <div class="hp-bar-wrap"><div class="hp-bar" id="hp-bar"></div></div>
-      <div class="hp-adjust-row">
-        <button class="btn btn-sm" onclick="adjustHP(-1)" style="background:var(--accent);">− Dégâts</button>
-        <input type="number" id="hp-adjust" class="small-num" placeholder="0">
-        <button class="btn btn-sm" onclick="adjustHP(1)" style="background:var(--green);">+ Soins</button>
-      </div>
-    </div>
+    <!-- Points de vie + Dés de vie + Jets de mort (même ligne) -->
+    <div class="section-gap" style="display:flex;gap:6px;align-items:flex-start;flex-wrap:wrap;">
 
-    <!-- Dés de vie + Jets de mort -->
-    <div class="grid-2 section-gap">
-      <div class="panel">
-        <div class="panel-title">Dés de vie</div>
-        <div class="row">
-          <input type="text" id="hit-dice" placeholder="5d10" style="max-width:100px;" oninput="autoSave()">
-          <input type="number" id="hit-dice-used" placeholder="utilisés" style="max-width:75px;" oninput="autoSave()">
+      <!-- Points de vie -->
+      <div class="panel" style="flex:3;min-width:185px;">
+        <div class="panel-title">Points de vie</div>
+        <div class="grid-3">
+          <div>
+            <div style="font-family:'Cinzel',serif;font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text-dim);text-align:center;margin-bottom:2px;">Maximum</div>
+            <div style="border:2px solid var(--border);box-shadow:inset 0 0 0 1px rgba(0,0,0,0.25);padding:3px;text-align:center;background:var(--panel-bg);">
+              <input type="number" id="hp-max" placeholder="0" oninput="updateHP()" style="border:none;background:transparent;font-size:18px;font-family:'Cinzel',serif;font-weight:700;text-align:center;width:100%;outline:none;">
+            </div>
+          </div>
+          <div>
+            <div style="font-family:'Cinzel',serif;font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text-dim);text-align:center;margin-bottom:2px;">PV actuels</div>
+            <div style="border:2px solid var(--border);box-shadow:inset 0 0 0 1px rgba(0,0,0,0.25);padding:3px;text-align:center;background:var(--panel-bg);">
+              <input type="number" id="hp-current" placeholder="0" oninput="updateHP()" style="border:none;background:transparent;font-size:18px;font-family:'Cinzel',serif;font-weight:700;text-align:center;width:100%;outline:none;">
+            </div>
+          </div>
+          <div>
+            <div style="font-family:'Cinzel',serif;font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text-dim);text-align:center;margin-bottom:2px;">Temporaires</div>
+            <div style="border:2px solid var(--border);box-shadow:inset 0 0 0 1px rgba(0,0,0,0.25);padding:3px;text-align:center;background:var(--panel-bg);">
+              <input type="number" id="hp-temp" placeholder="0" oninput="autoSave()" style="border:none;background:transparent;font-size:18px;font-family:'Cinzel',serif;font-weight:700;text-align:center;width:100%;outline:none;">
+            </div>
+          </div>
+        </div>
+        <div class="hp-bar-wrap"><div class="hp-bar" id="hp-bar"></div></div>
+        <div class="hp-adjust-row">
+          <button class="btn btn-sm" onclick="adjustHP(-1)" style="background:var(--accent);">− Dégâts</button>
+          <input type="number" id="hp-adjust" class="small-num" placeholder="0">
+          <button class="btn btn-sm" onclick="adjustHP(1)" style="background:var(--green);">+ Soins</button>
         </div>
       </div>
-      <div class="panel">
+
+      <!-- Dés de vie -->
+      <div class="panel" style="flex:1;min-width:90px;">
+        <div class="panel-title">Dés de vie</div>
+        <div style="display:flex;flex-direction:column;gap:5px;margin-top:2px;">
+          <div class="field">
+            <label>Formule</label>
+            <input type="text" id="hit-dice" placeholder="5d10" oninput="autoSave()" style="max-width:100%;">
+          </div>
+          <div class="field">
+            <label>Utilisés</label>
+            <input type="number" id="hit-dice-used" placeholder="0" oninput="autoSave()" style="max-width:100%;">
+          </div>
+        </div>
+      </div>
+
+      <!-- Jets contre la mort -->
+      <div class="panel" style="flex:1.4;min-width:125px;">
         <div class="panel-title">Jets contre la mort</div>
         <div class="death-saves">
           <div>
@@ -958,6 +968,7 @@ body.print-measuring .slot-box     { width: 13px !important; height: 13px !impor
           <div class="exhaustion-pips" id="exhaustion-pips"></div>
         </div>
       </div>
+
     </div>
 
     <!-- Jets de sauvegarde -->
@@ -1040,28 +1051,13 @@ body.print-measuring .slot-box     { width: 13px !important; height: 13px !impor
           <textarea id="proficiencies" placeholder="Armures, armes, outils maîtrisés…" style="min-height:70px;" oninput="autoSave()"></textarea>
         </div>
 
-        <!-- Langues -->
+        <!-- Langues (résumé — gestion dans Historique) -->
         <div class="panel">
           <div class="panel-title">Langues connues</div>
-          <div class="no-print" style="display:flex;flex-wrap:wrap;gap:6px;align-items:flex-end;">
-            <div class="field" style="min-width:110px;">
-              <label>Catégorie</label>
-              <select id="filter-lang-cat" onchange="filterLanguagePicker()">
-                <option value="">Toutes</option>
-                <option value="standard">Standard</option>
-                <option value="exotique">Exotique</option>
-                <option value="rare">Rare</option>
-                <option value="secrète">Secrète</option>
-              </select>
-            </div>
-            <div class="field picker-ui" style="flex:2;min-width:160px;">
-              <label>Langue</label>
-              <div class="cb-picker" id="lang-picker" style="max-height:50px;"></div>
-            </div>
-            <button class="btn btn-gold" onclick="addLanguage()" style="white-space:nowrap;align-self:flex-end;">+ Ajouter</button>
+          <div class="lang-tags" id="languages-list-main" style="min-height:22px;"></div>
+          <div style="font-size:9px;font-style:italic;color:var(--text-dim);margin-top:5px;font-family:'Cinzel',serif;letter-spacing:.5px;">
+            → Ajouter / retirer dans l'onglet <strong>Historique</strong>
           </div>
-          <div id="lang-picker-info" class="picker-info" style="margin-top:4px;min-height:14px;"></div>
-          <div class="lang-tags" id="languages-list"></div>
         </div>
 
   </div><!-- fin colonne centre -->
@@ -1501,8 +1497,28 @@ body.print-measuring .slot-box     { width: 13px !important; height: 13px !impor
       </div>
     </div>
   </div>
-  <div style="font-size:11px;color:var(--text-dim);margin-top:4px;font-family:'Cinzel',serif;letter-spacing:1px;">
-    ↖ Les Maîtrises et Langues connues se trouvent dans l'onglet <strong>Principal</strong>.
+  <!-- Langues connues (panneau complet) -->
+  <div class="panel section-gap">
+    <div class="panel-title">Langues connues</div>
+    <div class="no-print" style="display:flex;flex-wrap:wrap;gap:6px;align-items:flex-end;">
+      <div class="field" style="min-width:110px;">
+        <label>Catégorie</label>
+        <select id="filter-lang-cat" onchange="filterLanguagePicker()">
+          <option value="">Toutes</option>
+          <option value="standard">Standard</option>
+          <option value="exotique">Exotique</option>
+          <option value="rare">Rare</option>
+          <option value="secrète">Secrète</option>
+        </select>
+      </div>
+      <div class="field picker-ui" style="flex:2;min-width:160px;">
+        <label>Langue</label>
+        <div class="cb-picker" id="lang-picker" style="max-height:60px;"></div>
+      </div>
+      <button class="btn btn-gold" onclick="addLanguage()" style="white-space:nowrap;align-self:flex-end;">+ Ajouter</button>
+    </div>
+    <div id="lang-picker-info" class="picker-info" style="margin-top:4px;min-height:14px;"></div>
+    <div class="lang-tags" id="languages-list"></div>
   </div>
 </div>
 
@@ -4237,21 +4253,40 @@ function removeLanguage(name) {
 }
 
 function renderLanguages() {
-  const el = document.getElementById('languages-list');
-  if (!el) return;
+  const el     = document.getElementById('languages-list');      // onglet Historique
+  const elMain = document.getElementById('languages-list-main'); // résumé Principal
+
+  const catColor = { standard:'#1a3d6b', exotique:'#5a1a6b', rare:'#c9a840', 'secrète':'#58180d' };
+
   if (!state.languages.length) {
-    el.innerHTML = '<span style="font-size: 15px;color:var(--text-dim);">Aucune langue ajoutée.</span>';
+    const empty = '<span style="font-size:13px;color:var(--text-dim);">Aucune langue.</span>';
+    if (el)     el.innerHTML     = empty;
+    if (elMain) elMain.innerHTML = empty;
     return;
   }
-  const catColor = { standard:'#1a3d6b', exotique:'#5a1a6b', rare:'#c9a840', 'secrète':'#58180d' };
-  el.innerHTML = state.languages.map(l => {
-    const color = catColor[l.cat] || '#555';
-    return `<span class="lang-tag">
-      <span class="cat" style="color:${color};">${l.cat}</span>
-      <span>${l.name}</span>
-      <button onclick="removeLanguage('${l.name.replace(/'/g,"\\'")}')">✕</button>
-    </span>`;
-  }).join('');
+
+  // Tags complets (avec bouton ✕) pour l'onglet Historique
+  if (el) {
+    el.innerHTML = state.languages.map(l => {
+      const color = catColor[l.cat] || '#555';
+      return `<span class="lang-tag">
+        <span class="cat" style="color:${color};">${l.cat}</span>
+        <span>${l.name}</span>
+        <button onclick="removeLanguage('${l.name.replace(/'/g,"\\'")}')">✕</button>
+      </span>`;
+    }).join('');
+  }
+
+  // Tags lecture seule (sans ✕) pour le résumé du Principal
+  if (elMain) {
+    elMain.innerHTML = state.languages.map(l => {
+      const color = catColor[l.cat] || '#555';
+      return `<span class="lang-tag" style="cursor:default;">
+        <span class="cat" style="color:${color};">${l.cat}</span>
+        <span>${l.name}</span>
+      </span>`;
+    }).join('');
+  }
 }
 
 // ══════════════════════════════════════════
