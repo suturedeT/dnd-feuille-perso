@@ -810,6 +810,12 @@ body.print-measuring .slot-box     { width: 13px !important; height: 13px !impor
         <option value="">— Choisir —</option>
       </select>
     </div>
+    <div class="banner-field" id="subspecies-field" style="display:none;">
+      <label>Sous-espèce</label>
+      <select id="char-subspecies" onchange="onSubspeciesChange()">
+        <option value="">— Choisir —</option>
+      </select>
+    </div>
     <div class="banner-field">
       <label>Alignement</label>
       <select id="char-alignment" onchange="autoSave()">
@@ -1710,16 +1716,80 @@ const SUBCLASSES_DB = [
 ];
 
 const SPECIES_DB = [
-  { name:"Aasimar", speed:9, size:"Moyen", darkvision:18, traits:"Résistance nécrotique et radiant. Mains guérisseuses (1×/repos long, soins = niveau de personnage en PV). Sort mineur Lumière. Niv.3 : Révélation céleste (action Bonus, dure 1 min) selon variante — Protecteur (ailes vol 9m + dégâts radiants bonus), Châtieur (ailes vol 9m + dégâts nécrotiques), Radieux (vitesse +3m + dégâts radiants de zone). " },
-  { name:"Drakéide", speed:9, size:"Moyen", darkvision:0, traits:"Ascendance draconique (choisir type : Noir/acide, Bleu/foudre, Laiton/feu, Bronze/foudre, Cuivre/acide, Or/feu, Vert/poison, Rouge/feu, Argent/froid, Blanc/froid). Résistance au type de dégâts. Souffle (remplace Attaque, cône 4,5m ou ligne 1,5×9m). Niv.5 : Souffle amélioré. Niv.11 : Vol draconique (action Bonus, 9m)." },
-  { name:"Elfe", speed:9, size:"Moyen", darkvision:18, traits:"Ascendance féerique (résistance au charme + téléportation 9m 1×/repos long dès niv.3). Sens aiguisés (maîtrise Perception). Transe (repos long en 4h, immunité au sommeil magique). Selon sous-espèce : Elfe des bois (vitesse 10,5m + se cacher en végétation légère), Drow (Lumières dansantes + Lueurs féeriques niv.3 + Ténèbres niv.5), Haut-elfe (sort mineur de Magicien)." },
-  { name:"Gnome", speed:7.5, size:"Petit", darkvision:18, traits:"Ruse gnome (Avantage aux JS INT, SAG, CHA contre magie). Selon sous-espèce : Gnome des forêts (Communication avec les petites bêtes + Illusion mineure innée), Gnome des roches (Maîtrise outils d'artisan, connaissance machines, +1 INT)." },
-  { name:"Goliath", speed:9, size:"Moyen", darkvision:0, traits:"Puissant athlète (Avantage Athlétisme, poids porté doublé). Endurance géante (réduire dégâts de 1d12+CON, 1×/repos court). Résistance au froid. Niv.3 : Grande forme selon variante — Croissance géante (Très Grand, PV temp, dégâts +1d4), Forme de pierre (résistance, lenteur), Tempête de géant (foudre/froid au contact)." },
-  { name:"Halfelin", speed:7.5, size:"Petit", darkvision:0, traits:"Bravoure (Avantage aux JS contre la Peur). Agilité halfeline (traverser l'espace d'une créature plus grande). Chance (relancer 1 natural aux jets d'attaque, de caractéristique ou de sauvegarde). Naturellement furtif (se cacher derrière une créature Moyenne ou plus grande)." },
-  { name:"Humain", speed:9, size:"Moyen", darkvision:0, traits:"Polyvalent (Inspiration héroïque 1×/repos long — relancer n'importe quel jet). Don supplémentaire : Doué au niveau 1. Maîtrise supplémentaire d'une compétence. Capacité adaptable (choisir un don Origine supplémentaire)." },
-  { name:"Nain", speed:7.5, size:"Moyen", darkvision:18, traits:"Résistance aux poisons (Avantage aux JS contre poison, résistance aux dégâts de poison). Ténacité naine (max PV +1 par niveau de personnage). Maîtrise d'outils d'artisan (choisir 1). Selon sous-espèce : Nain des collines (+1 SAG, +1 PV/niveau), Nain des montagnes (maîtrise armures légères et intermédiaires)." },
-  { name:"Orc", speed:9, size:"Moyen", darkvision:18, traits:"Agressivité (action Bonus : se déplacer jusqu'à sa vitesse vers une créature hostile visible). Endurance implacable (quand PV tombent à 0, tomber à 1 PV à la place 1×/repos long). Maîtrise Intimidation + une compétence au choix." },
-  { name:"Tieffelin", speed:9, size:"Moyen", darkvision:18, traits:"Résistance au feu. Héritage infernal (sorts innés selon lignage). Selon variante — Lignage d'Asmodée : Lumières dansantes niv.1, Sorts d'illusion/enchantement niv.3/5 ; Lignage de Méphisto : Flammes des enfers niv.3, Rayon ardent niv.5 ; Lignage de Zariel : Sort d'enchantement/combat niv.3/5." },
+  { name:"Aasimar", speed:9, size:"Moyen", darkvision:18,
+    traits:"Résistance nécrotique et radiant. Mains guérisseuses (1×/repos long, soins = niveau de personnage en PV). Sort mineur Lumière. Niv.3 : choisir une Révélation céleste.",
+    subspecies:[
+      { name:"Protecteur", traits:"Niv.3 — Ailes spectrales (action Bonus, vol 9m pendant 1 min, 1×/repos long). À chaque tour : une cible à portée subit des dégâts radiants supplémentaires = bonus de maîtrise." },
+      { name:"Châtieur", traits:"Niv.3 — Ailes spectrales sombres (action Bonus, vol 9m pendant 1 min, 1×/repos long). À chaque tour : une cible à portée subit des dégâts nécrotiques supplémentaires = bonus de maîtrise." },
+      { name:"Radieux", traits:"Niv.3 — Forme radieuse (action Bonus, 1 min, 1×/repos long) : vitesse +3m, luminosité 3m. À chaque tour : toutes créatures hostiles à 3m subissent des dégâts radiants = bonus de maîtrise." },
+    ]
+  },
+  { name:"Drakéide", speed:9, size:"Moyen", darkvision:0,
+    traits:"Résistance au type de dégâts de l'ascendance. Souffle (remplace Attaque, cône 4,5m ou ligne 1,5×9m). Niv.5 : Souffle amélioré (+1d10). Niv.11 : Vol draconique (action Bonus, 9m, 10 min, 1×/repos long).",
+    subspecies:[
+      { name:"Noir (acide)",    traits:"Ascendance draconique Noir. Dégâts : acide. Souffle : ligne 1,5×9m (JS DEX). Résistance à l'acide." },
+      { name:"Bleu (foudre)",   traits:"Ascendance draconique Bleu. Dégâts : foudre. Souffle : ligne 1,5×9m (JS DEX). Résistance à la foudre." },
+      { name:"Blanc (froid)",   traits:"Ascendance draconique Blanc. Dégâts : froid. Souffle : cône 4,5m (JS CON). Résistance au froid." },
+      { name:"Vert (poison)",   traits:"Ascendance draconique Vert. Dégâts : poison. Souffle : cône 4,5m (JS CON). Résistance au poison." },
+      { name:"Rouge (feu)",     traits:"Ascendance draconique Rouge. Dégâts : feu. Souffle : cône 4,5m (JS DEX). Résistance au feu." },
+      { name:"Or (feu)",        traits:"Ascendance draconique Or. Dégâts : feu. Souffle : cône 4,5m (JS DEX). Résistance au feu." },
+      { name:"Argent (froid)",  traits:"Ascendance draconique Argent. Dégâts : froid. Souffle : cône 4,5m (JS CON). Résistance au froid." },
+      { name:"Bronze (foudre)", traits:"Ascendance draconique Bronze. Dégâts : foudre. Souffle : ligne 1,5×9m (JS DEX). Résistance à la foudre." },
+      { name:"Cuivre (acide)",  traits:"Ascendance draconique Cuivre. Dégâts : acide. Souffle : ligne 1,5×9m (JS DEX). Résistance à l'acide." },
+      { name:"Laiton (feu)",    traits:"Ascendance draconique Laiton. Dégâts : feu. Souffle : ligne 1,5×9m (JS DEX). Résistance au feu." },
+    ]
+  },
+  { name:"Elfe", speed:9, size:"Moyen", darkvision:18,
+    traits:"Ascendance féerique (résistance au charme + téléportation 9m 1×/repos long dès niv.3). Sens aiguisés (maîtrise Perception). Transe (repos long en 4h, immunité au sommeil magique).",
+    subspecies:[
+      { name:"Haut-Elfe", traits:"Sort mineur de Magicien au choix (Charisme = caractéristique d'incantation). Langue supplémentaire. Vitesse 9m." },
+      { name:"Elfe des bois", traits:"Vitesse 10,5m. Peut tenter de se Cacher même en terrain naturel légèrement obscurci (végétation légère, pluie, neige, brume, feuillage)." },
+      { name:"Drow", traits:"Vision dans le noir 36m. Sorts innés (Charisme) : Lumières dansantes (cantrip), Lueurs féeriques (niv.3, 1×/repos long), Ténèbres (niv.5, 1×/repos long). Sensibilité solaire : Désavantage aux jets d'attaque et tests Perception basés sur la vue en plein soleil." },
+    ]
+  },
+  { name:"Gnome", speed:7.5, size:"Petit", darkvision:18,
+    traits:"Ruse gnome (Avantage aux JS INT, SAG, CHA contre magie). Vision dans le noir 18m.",
+    subspecies:[
+      { name:"Gnome des forêts", traits:"Communication avec les bêtes (petits animaux et insectes, parler simplement). Sort mineur Illusion mineure (Intelligence = caractéristique d'incantation)." },
+      { name:"Gnome des roches", traits:"Maîtrise d'un outil d'artisan au choix. Connaissance des machines (Avantage aux tests d'Intelligence pour identifier et réparer objets magiques, alchimiques ou technologiques)." },
+    ]
+  },
+  { name:"Goliath", speed:9, size:"Moyen", darkvision:0,
+    traits:"Puissant athlète (Avantage Athlétisme, poids porté ×2). Endurance géante (réduire dégâts de 1d12+CON, 1×/repos court). Résistance au froid. Niv.3 : choisir une Grande forme.",
+    subspecies:[
+      { name:"Croissance de géant des nuages", traits:"Niv.3 — Action Bonus : grandir (Très Grand, 1 min, 1×/repos long). Tant que grand : PV temporaires = CON au début de chaque tour, dégâts d'arme +1d4. Niv.5 : Vol lévitation (9m), niv.11 : Tempête de nuage (éclair ou tonnerre, zone 3m)." },
+      { name:"Forme de géant de pierre",       traits:"Niv.3 — Action Bonus : transformation pierreuse (1 min, 1×/repos long). Résistance à 2 types de dégâts (au choix). Vitesse réduite de 3m. Niv.5 : Peau de pierre (+1 CA), niv.11 : Éclat minéral (dégâts contondants, zone)." },
+      { name:"Tempête de géant des tempêtes",  traits:"Niv.3 — Action Bonus : forme de tempête (1 min, 1×/repos long). Résistance foudre et tonnerre. Dégâts de foudre ou froid au contact. Niv.5 : Foudre de tempête (ligne 1,5×9m), niv.11 : Vortex (zone de vent, repoussant)." },
+    ]
+  },
+  { name:"Halfelin", speed:7.5, size:"Petit", darkvision:0,
+    traits:"Bravoure (Avantage JS contre la Peur). Agilité halfeline (traverser l'espace d'une créature Moyenne ou plus grande). Chance (relancer un 1 naturel aux jets d'attaque, de caractéristique ou de sauvegarde). Naturellement furtif.",
+    subspecies:[
+      { name:"Pied-léger", traits:"Naturellement discret : peut tenter de se Cacher derrière une créature au moins d'une catégorie de taille supérieure." },
+      { name:"Robuste",    traits:"Résistance au poison. Avantage aux jets de sauvegarde contre le poison." },
+    ]
+  },
+  { name:"Humain", speed:9, size:"Moyen", darkvision:0,
+    traits:"Polyvalent (Inspiration héroïque 1×/repos long — relancer n'importe quel jet d20). Don Origine supplémentaire au niv.1. Maîtrise supplémentaire d'une compétence au choix."
+  },
+  { name:"Nain", speed:7.5, size:"Moyen", darkvision:18,
+    traits:"Résistance aux poisons (Avantage JS + résistance dégâts de poison). Ténacité naine (max PV +1 par niveau). Maîtrise d'un outil d'artisan (choisir 1). Maîtrise des armes naines (hache de bataille, hachette, marteau léger, marteau de guerre).",
+    subspecies:[
+      { name:"Nain des collines",    traits:"+1 en Sagesse. Points de vie maximum augmentés de 1 à chaque niveau de personnage (en plus du modificateur de Constitution)." },
+      { name:"Nain des montagnes",   traits:"Maîtrise des armures légères et intermédiaires." },
+    ]
+  },
+  { name:"Orc", speed:9, size:"Moyen", darkvision:18,
+    traits:"Agressivité (action Bonus : se déplacer jusqu'à sa vitesse vers une créature hostile visible). Endurance implacable (quand PV tombent à 0, tomber à 1 PV à la place 1×/repos long). Maîtrise Intimidation + une compétence au choix."
+  },
+  { name:"Tieffelin", speed:9, size:"Moyen", darkvision:18,
+    traits:"Résistance au feu. Vision dans le noir 18m. Sorts innés selon lignage (Charisme = caractéristique d'incantation).",
+    subspecies:[
+      { name:"Lignage d'Asmodée", traits:"Sorts : Lumières dansantes (cantrip), Faux amis (niv.3, 1×/repos long), Suggestion (niv.5, 1×/repos long)." },
+      { name:"Lignage de Méphisto", traits:"Sorts : Flamme sacrée (cantrip) remplacée par Mains brûlantes, Flammes des enfers (niv.3, 1×/repos long) — zone de feu, Rayon ardent (niv.5, 1×/repos long)." },
+      { name:"Lignage de Zariel", traits:"Sorts : Fléau (niv.3, 1×/repos long), Rayon brûlant ou Aide (niv.5, 1×/repos long). Résistance feu + dégâts feu bonus au corps-à-corps." },
+    ]
+  },
 ];
 
 // ── Historiques D&D 2024 ──
@@ -3051,11 +3121,19 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target === e.currentTarget) e.currentTarget.style.display = 'none';
   });
   // Re-déclencher les panneaux info après chargement
-  ['char-class','char-species','char-background'].forEach(id => {
+  ['char-class','char-species','char-subspecies','char-background'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.addEventListener('change', () => {
       if (id === 'char-class')      onClassChange();
-      if (id === 'char-species')    onSpeciesChange();
+      if (id === 'char-species') {
+        onSpeciesChange();
+        // Restaurer la sous-espèce sauvegardée
+        const savedSub = state[id] ? (state['char-subspecies'] || '') : '';
+        if (savedSub) {
+          const subSel = document.getElementById('char-subspecies');
+          if (subSel) { subSel.value = savedSub; onSubspeciesChange(); }
+        }
+      }
       if (id === 'char-background') onBackgroundChange();
     });
   });
@@ -3540,21 +3618,58 @@ function onSpeciesChange() {
   const val = document.getElementById('char-species').value;
   const sp  = SPECIES_DB.find(s => s.name === val);
   const box = document.getElementById('species-info-box');
-  if (!sp) { box.style.display = 'none'; refreshInfoPanel(); autoSave(); return; }
+  const subField = document.getElementById('subspecies-field');
+  const subSel   = document.getElementById('char-subspecies');
 
-  document.getElementById('species-info-title').textContent = sp.name;
+  // Gérer le menu sous-espèce
+  subSel.innerHTML = '<option value="">— Choisir —</option>';
+  if (sp && sp.subspecies && sp.subspecies.length) {
+    sp.subspecies.forEach(sub => {
+      const opt = document.createElement('option');
+      opt.value = sub.name;
+      opt.textContent = sub.name;
+      subSel.appendChild(opt);
+    });
+    subField.style.display = '';
+  } else {
+    subField.style.display = 'none';
+  }
+
+  if (!sp) { box.style.display = 'none'; refreshInfoPanel(); autoSave(); return; }
+  renderSpeciesInfo(sp, null);
+  refreshInfoPanel();
+  autoSave();
+}
+
+function onSubspeciesChange() {
+  const spVal  = document.getElementById('char-species').value;
+  const subVal = document.getElementById('char-subspecies').value;
+  const sp     = SPECIES_DB.find(s => s.name === spVal);
+  const sub    = sp && sp.subspecies ? sp.subspecies.find(s => s.name === subVal) : null;
+  renderSpeciesInfo(sp, sub);
+  refreshInfoPanel();
+  autoSave();
+}
+
+function renderSpeciesInfo(sp, sub) {
+  if (!sp) return;
+  const box = document.getElementById('species-info-box');
+  const title = sub ? sp.name + ' — ' + sub.name : sp.name;
+  document.getElementById('species-info-title').textContent = title;
 
   const dvStr = sp.darkvision > 0
     ? `<span style="color:var(--red);">Vision dans le noir :</span> ${sp.darkvision} m<br>` : '';
+  const subTraits = sub
+    ? `<span style="color:var(--accent);font-weight:600;font-size:13px;">▸ ${sub.name} :</span> `
+      + `<span style="color:var(--text-dim);font-size:15px;">${sub.traits}</span><br>` : '';
   document.getElementById('species-info-body').innerHTML = `
     <span style="color:var(--red);">Taille :</span> ${sp.size} &bull;
     <span style="color:var(--red);">Vitesse :</span> ${sp.speed} m<br>
     ${dvStr}
-    <span style="color:var(--text-dim);font-size: 15px;margin-top:4px;display:block;">${sp.traits}</span>
+    <span style="color:var(--text-dim);font-size:15px;margin-top:4px;display:block;">${sp.traits}</span>
+    ${sub ? '<hr style="border-color:var(--border);margin:4px 0">' + subTraits : ''}
   `;
   box.style.display = 'block';
-  refreshInfoPanel();
-  autoSave();
 }
 
 function applySpeciesSpeed() {
