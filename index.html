@@ -3723,18 +3723,15 @@ function addAttackFromPicker() {
   const w = WEAPONS_DB.find(x => x.name === wname);
   if (!w) return;
   const { bonus, dmgBonus } = calcWeaponBonus(w);
-  const id = Date.now()+'_'+Math.random();
-  // Apply magic bonus to attack bonus string
-  let atkBonus = bonus;
-  if (magicBonus > 0) {
-    const num = parseInt(bonus);
-    atkBonus = isNaN(num) ? bonus + '+' + magicBonus : (num >= 0 ? '+' : '') + (num + magicBonus);
-  }
-  // Apply magic bonus to damage string
-  let dmgStr = w.damage + (dmgBonus ? ' ' + dmgBonus : '') + ' ' + w.damageType;
-  if (magicBonus > 0) {
-    dmgStr = w.damage + (dmgBonus ? ' ' + dmgBonus : '') + ' +' + magicBonus + ' ' + w.damageType;
-  }
+  // Additionne bonus stat + bonus magique en un seul chiffre (toucher)
+  const baseAtk = parseInt(bonus) || 0;
+  const totalAtk = baseAtk + magicBonus;
+  const atkBonus = (totalAtk >= 0 ? '+' : '') + totalAtk;
+  // Additionne bonus stat + bonus magique en un seul chiffre (dégâts)
+  const baseDmg = parseInt(dmgBonus) || 0;
+  const totalDmg = baseDmg + magicBonus;
+  const dmgBonusStr = totalDmg > 0 ? '+' + totalDmg : totalDmg < 0 ? '' + totalDmg : '';
+  const dmgStr = w.damage + (dmgBonusStr ? ' ' + dmgBonusStr : '') + ' ' + w.damageType;
   const _id = Date.now()+'_'+Math.random();
   state.attacks.push({
     id: _id,
