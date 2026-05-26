@@ -1054,7 +1054,12 @@ body.print-measuring .slot-box     { width: 13px !important; height: 13px !impor
     <!-- Maîtrises & Langues -->
         <div class="panel section-gap">
           <div class="panel-title">Maîtrises</div>
-          <textarea id="proficiencies" placeholder="Armures, armes, outils maîtrisés…" style="min-height:70px;" oninput="autoSave()"></textarea>
+          <div id="proficiencies-auto" style="font-size:13px;line-height:1.6;min-height:40px;padding:4px 0 6px;">
+            <em style="color:var(--text-dim)">Choisissez une classe et/ou un historique</em>
+          </div>
+          <div style="border-top:1px solid var(--border-light);margin:5px 0 4px;"></div>
+          <div style="font-size:9px;font-style:italic;color:var(--text-dim);margin-bottom:3px;font-family:'Cinzel',serif;letter-spacing:.5px;">Notes supplémentaires</div>
+          <textarea id="proficiencies" placeholder="Langues supplémentaires, maîtrises de compétences spéciales…" style="min-height:40px;" oninput="autoSave()"></textarea>
         </div>
 
         <!-- Langues (résumé — gestion dans Historique) -->
@@ -1638,18 +1643,18 @@ const PROF_BY_LEVEL = [2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5,6,6,6,6];
 
 // ── Classes D&D 2024 ──
 const CLASSES_DB = [
-  { name:"Barbare", hitDie:"d12", saves:["STR", "CON"], spellAbility:null, primaryStat:"STR", armor:"Armures légères, armures intermédiaires, boucliers", weapons:"Armes simples, armes de guerre", subclasses:["Voie du Berserker", "Voie du Cœur Sauvage", "Voie du Monde-Arbre", "Voie du Zélote"], desc:"Fureur primitive et résistance physique. Entre en Rage (bonus dégâts FOR, résistance contondant/perforant/tranchant). Défense sans armure (CA = 10 + DEX + CON). Attaque supplémentaire niv. 5. Rage intransigeante niv. 7 (concentration maintenue). Ébranlement niv. 9 (réduire dégâts reçus). Rage destructrice niv. 11 (passer le max sur dés dégâts)." },
-  { name:"Barde", hitDie:"d8", saves:["DEX", "CHA"], spellAbility:"CHA", primaryStat:"CHA", armor:"Armures légères", weapons:"Armes simples, arbalètes à main, épées courtes, épées longues, rapières", subclasses:["Collège de la Danse", "Collège du Glamour", "Collège du Savoir", "Collège de la Valeur"], desc:"Magie des mots et de la musique. Inspiration bardique (d6→d12) distribuée aux alliés. Contre-charme niv. 6 (immunité charme/peur alliés). Maîtrise de sorts dans toute liste (Secrets magiques). Expertise (doublement de 2 compétences niv. 1, 2 autres niv. 3)." },
-  { name:"Clerc", hitDie:"d8", saves:["WIS", "CHA"], spellAbility:"WIS", primaryStat:"WIS", armor:"Armures légères, armures intermédiaires, boucliers", weapons:"Armes simples", subclasses:["Domaine de la Connaissance", "Domaine de la Guerre", "Domaine de la Lumière", "Domaine de la Nature", "Domaine de la Tempête", "Domaine de la Tromperie", "Domaine de la Vie", "Domaine de l'Ordre"], desc:"Serviteur divin canalisateur de magie sacrée. Prépare ses sorts (liste Clerc + Domaine). Canalisation divine (renvoi des morts-vivants, 2e effet selon domaine). Intervention divine niv. 10 (appel divin 1×/repos long). Sorts de domaine toujours préparés." },
-  { name:"Druide", hitDie:"d8", saves:["INT", "WIS"], spellAbility:"WIS", primaryStat:"WIS", armor:"Armures légères, armures intermédiaires, boucliers (non métalliques)", weapons:"Masses, bâtons, dagues, fléchettes, frondes, lances, épieux, arbalètes légères, arcs courts", subclasses:["Cercle de la Terre", "Cercle de la Lune", "Cercle de la Mer", "Cercle des Étoiles", "Cercle des Spores"], desc:"Gardien de la nature. Forme sauvage (action Bonus, transformation en bête selon niveau). Prépare ses sorts. Canalisation naturelle niv. 2. Sorts druidiques illimités niv. 5. Éternelle nature niv. 20 (immunité vieillesse)." },
-  { name:"Ensorceleur", hitDie:"d6", saves:["CON", "CHA"], spellAbility:"CHA", primaryStat:"CHA", armor:"Aucune", weapons:"Dagues, fléchettes, frondes, bâtons, arbalètes légères", subclasses:["Lignée Draconique", "Magie Sauvage", "Âme Divine", "Tempête Céleste"], desc:"Lanceur de sorts à magie innée. Points de Sorcellerie (Fontaine de magie, Métamagie). Convertit emplacements ↔ Points de Sorcellerie. Métamagie (modifier sorts : Distant, Étendu, Concentré, Twinned…). Récupération d'emplacement au repos court." },
-  { name:"Guerrier", hitDie:"d10", saves:["STR", "CON"], spellAbility:null, primaryStat:"STR", armor:"Toutes les armures, boucliers", weapons:"Armes simples, armes de guerre", subclasses:["Champion", "Maître de Bataille", "Chevalier Occulte", "Guerrier Psi"], desc:"Maître des armes. Second Souffle (1d10+niv PV, 1×/repos court). Sursaut d'activité (1-4 actions supplémentaires, récup. repos court). Style de combat. Attaque supplémentaire (niv. 5 : 2×, niv. 11 : 3×, niv. 20 : 4×). Riposte défensive niv. 9." },
-  { name:"Magicien", hitDie:"d6", saves:["INT", "WIS"], spellAbility:"INT", primaryStat:"INT", armor:"Aucune", weapons:"Dagues, fléchettes, frondes, bâtons, arbalètes légères", subclasses:["École de l'Abjuration", "École de la Divination", "École de l'Enchantement", "École de l'Évocation", "École de l'Illusion", "École de l'Invocation", "École de la Nécromancie", "École de la Transmutation", "Chantelame"], desc:"Érudit de la magie arcanique. Grimoire (6 sorts niv. 1 + 2 par niveau). Récupération arcanique (regain emplacements, repos court). Maîtrise des sorts (niv. 18, 2 sorts niv. 1 sans dépenser emplacement). Alter Ego niv. 20." },
-  { name:"Moine", hitDie:"d8", saves:["STR", "DEX"], spellAbility:null, primaryStat:"DEX", armor:"Aucune", weapons:"Armes simples, épées courtes", subclasses:["Voie de la Main Ouverte", "Voie de l'Ombre", "Voie des Éléments", "Voie de la Miséricorde"], desc:"Artiste martial canalisant le ki. Défense sans armure (CA = 10 + DEX + SAG). Attaque à mains nues (dé évolutif 1d4→1d10). Tempête de coups (action Bonus 2 attaques). Chute ralentie. Mouvement aérien niv. 9. Corps de diamant niv. 14." },
-  { name:"Occultiste", hitDie:"d8", saves:["WIS", "CHA"], spellAbility:"CHA", primaryStat:"CHA", armor:"Armures légères", weapons:"Armes simples", subclasses:["Patron Archifée", "Patron Céleste", "Patron Fiélon", "Patron Grand Ancien"], desc:"Lanceur de sorts lié à un patron surnaturel. Peu d'emplacements (récup. repos court). Invocations occultes (pouvoirs passifs/actifs personnalisables). Forme de pacte (arme, chaîne, tome, talisman). Sorts de pacte toujours préparés." },
-  { name:"Paladin", hitDie:"d10", saves:["WIS", "CHA"], spellAbility:"CHA", primaryStat:"STR", armor:"Toutes les armures, boucliers", weapons:"Armes simples, armes de guerre", subclasses:["Serment de Dévotion", "Serment des Anciens", "Serment de Gloire", "Serment de Vengeance"], desc:"Guerrier sacré. Imposition des mains (pool de PV niv×5). Châtiment divin (dégâts radiant bonus 1×/tour). Sorts divins (CHA). Aura de protection niv. 6 (+bonus CHA aux JS alliés 9m). Canal divin niv. 3 (2 options selon serment)." },
-  { name:"Rôdeur", hitDie:"d10", saves:["STR", "DEX"], spellAbility:"WIS", primaryStat:"DEX", armor:"Armures légères, armures intermédiaires, boucliers", weapons:"Armes simples, armes de guerre", subclasses:["Chasseur", "Maître des Bêtes", "Rôdeur des Ombres", "Voyageur Féerique"], desc:"Explorateur alliant combat et magie naturelle. Marque du chasseur (sort, cible marquée). Conscience des terrains niv. 1. Attaque supplémentaire niv. 5. Sens aiguisés niv. 6. Sorts préparés (liste Rôdeur, SAG)." },
-  { name:"Roublard", hitDie:"d8", saves:["DEX", "INT"], spellAbility:null, primaryStat:"DEX", armor:"Armures légères", weapons:"Armes simples, arbalètes à main, épées courtes, épées longues, rapières", subclasses:["Voleur", "Assassin", "Attaquant Arcanique", "Lame Psychique"], desc:"Spécialiste de la finesse et de la ruse. Attaque sournoise (1d6→10d6 selon niv., 1×/tour). Argot des voleurs. Action rusée (Foncer/Désengager/Se cacher en action Bonus). Esquive totale niv. 7. Esquive niv. 5. Fiabilité niv. 11." },
+  { name:"Barbare", hitDie:"d12", saves:["STR", "CON"], spellAbility:null, primaryStat:"STR", armor:"Armures légères, armures intermédiaires, boucliers", weapons:"Armes simples, armes de guerre", subclasses:["Voie du Berserker", "Voie du Cœur Sauvage", "Voie du Monde-Arbre", "Voie du Zélote"], tools:null, desc:"Fureur primitive et résistance physique. Entre en Rage (bonus dégâts FOR, résistance contondant/perforant/tranchant). Défense sans armure (CA = 10 + DEX + CON). Attaque supplémentaire niv. 5. Rage intransigeante niv. 7 (concentration maintenue). Ébranlement niv. 9 (réduire dégâts reçus). Rage destructrice niv. 11 (passer le max sur dés dégâts)." },
+  { name:"Barde", hitDie:"d8", saves:["DEX", "CHA"], spellAbility:"CHA", primaryStat:"CHA", armor:"Armures légères", weapons:"Armes simples, arbalètes à main, épées courtes, épées longues, rapières", subclasses:["Collège de la Danse", "Collège du Glamour", "Collège du Savoir", "Collège de la Valeur"], tools:"Trois instruments de musique (au choix)", desc:"Magie des mots et de la musique. Inspiration bardique (d6→d12) distribuée aux alliés. Contre-charme niv. 6 (immunité charme/peur alliés). Maîtrise de sorts dans toute liste (Secrets magiques). Expertise (doublement de 2 compétences niv. 1, 2 autres niv. 3)." },
+  { name:"Clerc", hitDie:"d8", saves:["WIS", "CHA"], spellAbility:"WIS", primaryStat:"WIS", armor:"Armures légères, armures intermédiaires, boucliers", weapons:"Armes simples", subclasses:["Domaine de la Connaissance", "Domaine de la Guerre", "Domaine de la Lumière", "Domaine de la Nature", "Domaine de la Tempête", "Domaine de la Tromperie", "Domaine de la Vie", "Domaine de l'Ordre"], tools:null, desc:"Serviteur divin canalisateur de magie sacrée. Prépare ses sorts (liste Clerc + Domaine). Canalisation divine (renvoi des morts-vivants, 2e effet selon domaine). Intervention divine niv. 10 (appel divin 1×/repos long). Sorts de domaine toujours préparés." },
+  { name:"Druide", hitDie:"d8", saves:["INT", "WIS"], spellAbility:"WIS", primaryStat:"WIS", armor:"Armures légères, armures intermédiaires, boucliers (non métalliques)", weapons:"Masses, bâtons, dagues, fléchettes, frondes, lances, épieux, arbalètes légères, arcs courts", subclasses:["Cercle de la Terre", "Cercle de la Lune", "Cercle de la Mer", "Cercle des Étoiles", "Cercle des Spores"], tools:"Outils d'herboriste", desc:"Gardien de la nature. Forme sauvage (action Bonus, transformation en bête selon niveau). Prépare ses sorts. Canalisation naturelle niv. 2. Sorts druidiques illimités niv. 5. Éternelle nature niv. 20 (immunité vieillesse)." },
+  { name:"Ensorceleur", hitDie:"d6", saves:["CON", "CHA"], spellAbility:"CHA", primaryStat:"CHA", armor:"Aucune", weapons:"Dagues, fléchettes, frondes, bâtons, arbalètes légères", subclasses:["Lignée Draconique", "Magie Sauvage", "Âme Divine", "Tempête Céleste"], tools:null, desc:"Lanceur de sorts à magie innée. Points de Sorcellerie (Fontaine de magie, Métamagie). Convertit emplacements ↔ Points de Sorcellerie. Métamagie (modifier sorts : Distant, Étendu, Concentré, Twinned…). Récupération d'emplacement au repos court." },
+  { name:"Guerrier", hitDie:"d10", saves:["STR", "CON"], spellAbility:null, primaryStat:"STR", armor:"Toutes les armures, boucliers", weapons:"Armes simples, armes de guerre", subclasses:["Champion", "Maître de Bataille", "Chevalier Occulte", "Guerrier Psi"], tools:null, desc:"Maître des armes. Second Souffle (1d10+niv PV, 1×/repos court). Sursaut d'activité (1-4 actions supplémentaires, récup. repos court). Style de combat. Attaque supplémentaire (niv. 5 : 2×, niv. 11 : 3×, niv. 20 : 4×). Riposte défensive niv. 9." },
+  { name:"Magicien", hitDie:"d6", saves:["INT", "WIS"], spellAbility:"INT", primaryStat:"INT", armor:"Aucune", weapons:"Dagues, fléchettes, frondes, bâtons, arbalètes légères", subclasses:["École de l'Abjuration", "École de la Divination", "École de l'Enchantement", "École de l'Évocation", "École de l'Illusion", "École de l'Invocation", "École de la Nécromancie", "École de la Transmutation", "Chantelame"], tools:null, desc:"Érudit de la magie arcanique. Grimoire (6 sorts niv. 1 + 2 par niveau). Récupération arcanique (regain emplacements, repos court). Maîtrise des sorts (niv. 18, 2 sorts niv. 1 sans dépenser emplacement). Alter Ego niv. 20." },
+  { name:"Moine", hitDie:"d8", saves:["STR", "DEX"], spellAbility:null, primaryStat:"DEX", armor:"Aucune", weapons:"Armes simples, épées courtes", subclasses:["Voie de la Main Ouverte", "Voie de l'Ombre", "Voie des Éléments", "Voie de la Miséricorde"], tools:"Outils d'artisan (au choix) ou instrument de musique", desc:"Artiste martial canalisant le ki. Défense sans armure (CA = 10 + DEX + SAG). Attaque à mains nues (dé évolutif 1d4→1d10). Tempête de coups (action Bonus 2 attaques). Chute ralentie. Mouvement aérien niv. 9. Corps de diamant niv. 14." },
+  { name:"Occultiste", hitDie:"d8", saves:["WIS", "CHA"], spellAbility:"CHA", primaryStat:"CHA", armor:"Armures légères", weapons:"Armes simples", subclasses:["Patron Archifée", "Patron Céleste", "Patron Fiélon", "Patron Grand Ancien"], tools:null, desc:"Lanceur de sorts lié à un patron surnaturel. Peu d'emplacements (récup. repos court). Invocations occultes (pouvoirs passifs/actifs personnalisables). Forme de pacte (arme, chaîne, tome, talisman). Sorts de pacte toujours préparés." },
+  { name:"Paladin", hitDie:"d10", saves:["WIS", "CHA"], spellAbility:"CHA", primaryStat:"STR", armor:"Toutes les armures, boucliers", weapons:"Armes simples, armes de guerre", subclasses:["Serment de Dévotion", "Serment des Anciens", "Serment de Gloire", "Serment de Vengeance"], tools:null, desc:"Guerrier sacré. Imposition des mains (pool de PV niv×5). Châtiment divin (dégâts radiant bonus 1×/tour). Sorts divins (CHA). Aura de protection niv. 6 (+bonus CHA aux JS alliés 9m). Canal divin niv. 3 (2 options selon serment)." },
+  { name:"Rôdeur", hitDie:"d10", saves:["STR", "DEX"], spellAbility:"WIS", primaryStat:"DEX", armor:"Armures légères, armures intermédiaires, boucliers", weapons:"Armes simples, armes de guerre", subclasses:["Chasseur", "Maître des Bêtes", "Rôdeur des Ombres", "Voyageur Féerique"], tools:null, desc:"Explorateur alliant combat et magie naturelle. Marque du chasseur (sort, cible marquée). Conscience des terrains niv. 1. Attaque supplémentaire niv. 5. Sens aiguisés niv. 6. Sorts préparés (liste Rôdeur, SAG)." },
+  { name:"Roublard", hitDie:"d8", saves:["DEX", "INT"], spellAbility:null, primaryStat:"DEX", armor:"Armures légères", weapons:"Armes simples, arbalètes à main, épées courtes, épées longues, rapières", subclasses:["Voleur", "Assassin", "Attaquant Arcanique", "Lame Psychique"], tools:"Outils de voleur", desc:"Spécialiste de la finesse et de la ruse. Attaque sournoise (1d6→10d6 selon niv., 1×/tour). Argot des voleurs. Action rusée (Foncer/Désengager/Se cacher en action Bonus). Esquive totale niv. 7. Esquive niv. 5. Fiabilité niv. 11." },
 ];
 
 // ── Espèces D&D 2024 ──
@@ -1662,15 +1667,15 @@ const SUBCLASSES_DB = [
   { name:"Collège de la Danse", class:"Barde", desc:"Barde danseur utilisant le mouvement comme magie. Niv.3 : Pied vif (se déplacer après avoir utilisé l'Inspiration bardique sans provoquer d'AO). Niv.6 : Chorégraphie inspirante (les alliés recevant votre Inspiration peuvent se déplacer immédiatement). Niv.14 : Maestro (vous et vos alliés bénéficiez d'une vitesse de déplacement bonus)." },
   { name:"Collège du Glamour", class:"Barde", desc:"Barde aux pouvoirs féeriques. Niv.3 : Manteau d'étoiles (PV temporaires = CHA à qui reçoit votre Inspiration + mouvement bonus). Niv.3 : Présence enchanteresse (charmer des créatures). Niv.6 : Refuge inspirant (abri temporaire pour vos alliés). Niv.14 : Charme ensorcelant (les créatures charmées peuvent être redirigées)." },
   { name:"Collège du Savoir", class:"Barde", desc:"Barde polyvalent maîtrisant tous les savoirs. Niv.3 : 3 maîtrises supplémentaires (toute compétence). Mots cinglants (dé d'Inspiration négatif contre un ennemi après son attaque). Niv.6 : Secrets magiques supplémentaires (2 sorts de n'importe quelle liste). Niv.14 : Perfection incomparable (relancer 1 jet quelconque)." },
-  { name:"Collège de la Valeur", class:"Barde", desc:"Barde guerrier. Niv.3 : Maîtrises supplémentaires (armures intermédiaires, boucliers, armes de guerre). Inspiration martiale (dé d'Inspiration pour dégâts ou CA). Niv.6 : Attaque supplémentaire. Niv.14 : Sort de bataille (sorts en combinaison avec les attaques)." },
+  { name:"Collège de la Valeur", class:"Barde", extraProf:{armor:"Armures intermédiaires, boucliers", weapons:"Armes de guerre"}, desc:"Barde guerrier. Niv.3 : Maîtrises supplémentaires (armures intermédiaires, boucliers, armes de guerre). Inspiration martiale (dé d'Inspiration pour dégâts ou CA). Niv.6 : Attaque supplémentaire. Niv.14 : Sort de bataille (sorts en combinaison avec les attaques)." },
   { name:"Domaine de la Connaissance", class:"Clerc", desc:"Gardien du savoir. Sorts : Identification, Suggestion, Clairvoyance, Vision arcanique, Immobilisation de monstre, Vœu de vérité, Œil du mage, Tremblement d'esprit. Niv.3 : Bénédiction du savoir (maîtrise 2 langues + 2 compétences au choix). Niv.6 : Lire les pensées (Canalisation divine, détecter les pensées). Niv.17 : Esprit omniscient (avantage tous les tests d'INT)." },
-  { name:"Domaine de la Guerre", class:"Clerc", desc:"Guerrier sacré. Armure lourde. Sorts : Faveur divine, Magie de guerre, Esprits gardiens, Liberté de mouvement, Colonne de flammes, Bouclier de la foi amélioré. Niv.3 : Maîtrise de la guerre (attaque bonus 1×/tour). Niv.6 : Canal divin : Frappe guidée. Niv.17 : Avatar de la bataille (résistance bludgeoning/percing/slashing non-magique)." },
+  { name:"Domaine de la Guerre", class:"Clerc", extraProf:{armor:"Armures lourdes", weapons:"Armes de guerre"}, desc:"Guerrier sacré. Armure lourde. Sorts : Faveur divine, Magie de guerre, Esprits gardiens, Liberté de mouvement, Colonne de flammes, Bouclier de la foi amélioré. Niv.3 : Maîtrise de la guerre (attaque bonus 1×/tour). Niv.6 : Canal divin : Frappe guidée. Niv.17 : Avatar de la bataille (résistance bludgeoning/percing/slashing non-magique)." },
   { name:"Domaine de la Lumière", class:"Clerc", desc:"Apôtre de la lumière et du feu. Sorts : Lueurs féeriques, Boule de feu, Gardien de la foi, Mur de feu, Colonne de flammes, Lumière du soleil. Niv.3 : Voile de lumière (réaction : imposer désavantage à une attaque contre vous). Niv.6 : Canal divin : Flamboyance radieuse. Niv.17 : Couronne de lumière solaire (zone de lumière du soleil permanente)." },
   { name:"Domaine de la Nature", class:"Clerc", desc:"Gardien de la nature. Sorts : Enchevêtrement, Croissance d'épines, Mur de vent, Appel de la foudre, Contrôle de l'eau, Invocation d'élémental. Niv.3 : Affinity naturelle (1 sort mineur de druide + maîtrise Nature/Survie/Dressage). Niv.6 : Charme animaux et plantes. Niv.17 : Maître de la nature." },
-  { name:"Domaine de la Tempête", class:"Clerc", desc:"Maître des tempêtes. Armure lourde. Sorts : Nappe de brouillard, Grondement du tonnerre, Appel de la foudre, Contrôle de l'eau, Tempête de grêle, Chaîne d'éclairs. Niv.3 : Colère des tempêtes (riposte en tonnerre/foudre). Niv.6 : Canal divin : Foulée du vent. Niv.17 : Âme de la tempête (immunité foudre/tonnerre, vol 9m)." },
+  { name:"Domaine de la Tempête", class:"Clerc", extraProf:{armor:"Armures lourdes"}, desc:"Maître des tempêtes. Armure lourde. Sorts : Nappe de brouillard, Grondement du tonnerre, Appel de la foudre, Contrôle de l'eau, Tempête de grêle, Chaîne d'éclairs. Niv.3 : Colère des tempêtes (riposte en tonnerre/foudre). Niv.6 : Canal divin : Foulée du vent. Niv.17 : Âme de la tempête (immunité foudre/tonnerre, vol 9m)." },
   { name:"Domaine de la Tromperie", class:"Clerc", desc:"Maître de l'illusion et de la duperie. Sorts : Charme-personne, Image miroir, Distorsion, Confusion, Contact de l'ombre, Veil. Niv.3 : Imposteur des dieux (double illusoire). Niv.6 : Canal divin : Cloak of Shadows. Niv.17 : Divinité cachée (invisibilité)." },
   { name:"Domaine de la Vie", class:"Clerc", desc:"Guérisseur par excellence. Armure lourde. Sorts : Bénédiction, Soins, Restauration moindre, Revivification, Soin de groupe, Rappel à la vie. Niv.3 : Disciple de la vie (+2+niv sort aux soins). Niv.6 : Préservation de la vie (soin de zone en Canalisation divine). Niv.17 : Guérison suprême (max les dés de soins)." },
-  { name:"Domaine de l'Ordre", class:"Clerc", desc:"Garant de la loi et de l'autorité. Armure lourde. Sorts : Heroïsme, Suggestion, Ralentissement, Domination de personne, Communauté. Niv.3 : Voix d'autorité (quand vous lancez un sort sur un allié, il peut attaquer en réaction). Niv.6 : Force de l'ordre (bonus aux jets de sauvegarde des alliés). Niv.17 : Ordre absolu." },
+  { name:"Domaine de l'Ordre", class:"Clerc", extraProf:{armor:"Armures lourdes"}, desc:"Garant de la loi et de l'autorité. Armure lourde. Sorts : Heroïsme, Suggestion, Ralentissement, Domination de personne, Communauté. Niv.3 : Voix d'autorité (quand vous lancez un sort sur un allié, il peut attaquer en réaction). Niv.6 : Force de l'ordre (bonus aux jets de sauvegarde des alliés). Niv.17 : Ordre absolu." },
   { name:"Cercle de la Terre", class:"Druide", desc:"Druide lié à un terrain naturel. Niv.3 : Récupération naturelle (regain emplacements repos court). Sorts de cercle selon le terrain (Arctique, Côte, Désert, Forêt, Prairie, Marais, Montagne, Sous-sol). Niv.6 : Pas dans les plantes (non entravé par végétation). Niv.10 : Esprit de nature (immunité aux terrains difficiles naturels). Niv.14 : Sanctuaire terrestre." },
   { name:"Cercle de la Lune", class:"Druide", desc:"Druide expert en transformation. Niv.3 : Formes de combat (Forme sauvage en action Bonus, CR max 1→ évolue, attaques magiques). Niv.6 : Frappe de bête primordiale (les attaques en Forme sauvage sont magiques). Niv.10 : Forme élémentaire (se transformer en élémental). Niv.14 : Maîtrise des formes (se transformer 2× et garder les sorts)." },
   { name:"Cercle de la Mer", class:"Druide", desc:"Druide des profondeurs. Niv.3 : Sorts de la mer (appels aux créatures aquatiques, contrôle de l'eau). Niv.6 : Bénédiction marine (respirer sous l'eau + vitesse nage). Niv.10 : Abysses océaniques (Forme sauvage de créatures aquatiques puissantes). Niv.14 : Maelström (zone de contrôle aquatique)." },
@@ -1692,7 +1697,7 @@ const SUBCLASSES_DB = [
   { name:"École de l'Invocation", class:"Magicien", desc:"Maître des convocations. Niv.3 : Conjuration distante (sorts de téléportation réduits de 50% en distance). Focalisateur ésotérique (ignorer composantes matérielles ≤ 100 po). Niv.6 : Fidèle de l'invocation (les créatures convoquées ont +2 jets d'attaque et +2 CA). Niv.10 : Banissement ciblé. Niv.14 : Maître convocateur." },
   { name:"École de la Nécromancie", class:"Magicien", desc:"Maître des mort-vivants. Niv.3 : Familier lugubre (sorts de nécromancie moins chers). Moisson des morts (régénérer PV temporaires quand vous tuez). Niv.6 : Servitude des mort-vivants (mort-vivants commandés jusqu'à 5×niv PV). Niv.10 : Indomptable mort-vivant (mort-vivants résistants). Niv.14 : Commandement des morts." },
   { name:"École de la Transmutation", class:"Magicien", desc:"Maître de la transformation. Niv.3 : Alchimie mineure (transmutation temporaire de matériaux). Niv.6 : Pierre du transmutateur (avantages évolutifs selon type choisi). Niv.10 : Façonneur de corps (restauration par la transmutation). Niv.14 : Maître transmutateur (métamorphose sans emplacement 1×/repos long)." },
-  { name:"Chantelame", class:"Magicien", desc:"[UA 2025 – Révisé] Tradition elfique alliant épée et sorcellerie. Niv.3 : Chantelame (action bonus : +INT à CA, +3 m vitesse, concentration améliorée, INT pour jets d'attaque de corps à corps) + Formation en Guerre et Chant (armes martiales légères ou à finesse, arme comme focalisateur arcanique). Niv.6 : Attaque Supplémentaire. Niv.10 : Chant de Défense (utiliser emplacement de sort pour réduire dégâts reçus). Niv.14 : Chant de Victoire (attaque bonus après un sort)." },
+  { name:"Chantelame", class:"Magicien", extraProf:{armor:"Armures légères", weapons:"Épées courtes"}, desc:"[UA 2025 – Révisé] Tradition elfique alliant épée et sorcellerie. Niv.3 : Chantelame (action bonus : +INT à CA, +3 m vitesse, concentration améliorée, INT pour jets d'attaque de corps à corps) + Formation en Guerre et Chant (armes martiales légères ou à finesse, arme comme focalisateur arcanique). Niv.6 : Attaque Supplémentaire. Niv.10 : Chant de Défense (utiliser emplacement de sort pour réduire dégâts reçus). Niv.14 : Chant de Victoire (attaque bonus après un sort)." },
   { name:"Voie de la Main Ouverte", class:"Moine", desc:"Moine de combat pur. Niv.3 : Technique de la main ouverte (après Tempête de coups : renverser, repousser 4,5m, ou bloquer réaction). Niv.6 : Intégrité de la paume (immunité maladies/poisons). Niv.11 : Plénitude du corps (soins par méditation 1×/repos long). Niv.17 : Quiétude de la paume (immunité sorts et effets enchantement en Tempête de coups)." },
   { name:"Voie de l'Ombre", class:"Moine", desc:"Moine des ombres. Niv.3 : Sorts d'ombre (Illusion mineure, Ténèbres, Silence, Passe-muraille, dépense ki). Niv.6 : Camouflage des ombres (se cacher dans l'obscurité totale). Niv.11 : Pas dans les ombres (téléporter entre zones d'ombre). Niv.17 : Manteau de l'obscurité (obscurité permanente personnelle)." },
   { name:"Voie des Éléments", class:"Moine", desc:"Moine maîtrisant les éléments. Niv.3 : Discipline élémentaire (dépenser ki pour effets élémentaires : Onde déferlante, Coup du vent, Frappe de tonnerre, Fléau de feu). Niv.6 : Frappe élémentaire (dégâts élémentaires au corps à corps). Niv.11 : Marche élémentaire (se déplacer sans entrave). Niv.17 : Maîtrise élémentaire." },
@@ -3137,6 +3142,8 @@ document.addEventListener('DOMContentLoaded', () => {
       if (id === 'char-background') onBackgroundChange();
     });
   });
+  // Maîtrises initiales
+  updateProficiencies();
   addAttack(); addAttack(); addAttack();
   addItem(); addItem();
   addSpell(); addSpell(); addSpell();
@@ -3530,6 +3537,58 @@ function refreshInfoPanel() {
   document.getElementById('char-info-panel').style.display = any ? 'block' : 'none';
 }
 
+
+// ── Maîtrises automatiques ──
+function updateProficiencies() {
+  const clsName = document.getElementById('char-class').value;
+  const subName = document.getElementById('char-subclass').value;
+  const bgName  = document.getElementById('char-background').value;
+
+  const cls = CLASSES_DB.find(c => c.name === clsName);
+  const sub = subName ? SUBCLASSES_DB.find(s => s.name === subName) : null;
+  const bg  = bgName  ? BACKGROUNDS_DB.find(b => b.name === bgName) : null;
+
+  const div = document.getElementById('proficiencies-auto');
+  if (!div) return;
+  if (!cls && !bg) {
+    div.innerHTML = '<em style="color:var(--text-dim)">Choisissez une classe et/ou un historique</em>';
+    return;
+  }
+
+  // Collecte armures
+  const armor = [];
+  if (cls && cls.armor && cls.armor !== 'Aucune') armor.push({ src: cls.name, val: cls.armor });
+  if (sub && sub.extraProf && sub.extraProf.armor) armor.push({ src: sub.name, val: sub.extraProf.armor });
+
+  // Collecte armes
+  const weapons = [];
+  if (cls && cls.weapons) weapons.push({ src: cls.name, val: cls.weapons });
+  if (sub && sub.extraProf && sub.extraProf.weapons) weapons.push({ src: sub.name, val: sub.extraProf.weapons });
+
+  // Collecte outils
+  const tools = [];
+  if (cls && cls.tools) tools.push({ src: cls.name, val: cls.tools });
+  if (sub && sub.extraProf && sub.extraProf.tools) tools.push({ src: sub.name, val: sub.extraProf.tools });
+  if (bg && bg.tool) tools.push({ src: bg.name, val: bg.tool });
+
+  function row(item) {
+    return `<div style="margin-bottom:2px;">
+      <span style="font-size:10px;color:var(--text-dim);font-style:italic;">[${item.src}]</span>
+      <span style="margin-left:4px;">${item.val}</span>
+    </div>`;
+  }
+  function section(title, items) {
+    if (!items.length) return '';
+    return `<div style="margin-bottom:7px;">
+      <div style="font-size:10px;font-family:'Cinzel',serif;letter-spacing:1px;text-transform:uppercase;color:var(--red);margin-bottom:2px;">${title}</div>
+      ${items.map(row).join('')}
+    </div>`;
+  }
+
+  const html = section('Armures', armor) + section('Armes', weapons) + section('Outils', tools);
+  div.innerHTML = html || '<em style="color:var(--text-dim)">Aucune maîtrise connue</em>';
+}
+
 // ── Classe ──
 function onClassChange() {
   const val = document.getElementById('char-class').value;
@@ -3560,6 +3619,7 @@ function onClassChange() {
   const level = document.getElementById('char-level').value || '1';
   document.getElementById('hit-dice').value = level + cls.hitDie;
   updateAll();
+  updateProficiencies();
   autoSave();
 }
 
@@ -3569,6 +3629,7 @@ function onSubclassChange() {
   const cls = CLASSES_DB.find(c => c.name === clsName);
   const sub = subName ? SUBCLASSES_DB.filter(s => s.class === clsName).find(s => s.name === subName) : null;
   if (cls) renderClassInfoBody(cls, sub);
+  updateProficiencies();
   autoSave();
 }
 
@@ -3696,7 +3757,7 @@ function onBackgroundChange() {
   const val = document.getElementById('char-background').value;
   const bg  = BACKGROUNDS_DB.find(b => b.name === val);
   const box = document.getElementById('background-info-box');
-  if (!bg) { box.style.display = 'none'; refreshInfoPanel(); autoSave(); return; }
+  if (!bg) { box.style.display = 'none'; updateProficiencies(); refreshInfoPanel(); autoSave(); return; }
 
   document.getElementById('background-info-title').textContent = bg.name;
 
@@ -3715,6 +3776,7 @@ function onBackgroundChange() {
     <span style="color:var(--text-dim);font-size: 15px;margin-top:4px;display:block;">${bg.desc}</span>
   `;
   box.style.display = 'block';
+  updateProficiencies();
   refreshInfoPanel();
   autoSave();
 }
