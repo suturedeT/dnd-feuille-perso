@@ -1388,6 +1388,10 @@ body.print-measuring .slot-box     { width: 13px !important; height: 13px !impor
           <option value="merveilleux">Merveilleux</option>
         </select>
       </div>
+      <div class="field" style="min-width:150px;">
+        <label>Rechercher</label>
+        <input type="text" id="search-magic" placeholder="Nom…" oninput="filterMagicPicker()" style="width:100%;box-sizing:border-box;">
+      </div>
       <div class="field picker-ui" style="flex:2;min-width:200px;">
         <label>Objet magique</label>
         <div class="cb-picker" id="magic-picker"></div>
@@ -1416,6 +1420,10 @@ body.print-measuring .slot-box     { width: 13px !important; height: 13px !impor
           <option value="monture">Montures</option>
           <option value="kit">Kits de départ</option>
         </select>
+      </div>
+      <div class="field" style="min-width:150px;">
+        <label>Rechercher</label>
+        <input type="text" id="search-equip" placeholder="Nom…" oninput="filterEquipPicker()" style="width:100%;box-sizing:border-box;">
       </div>
       <div class="field picker-ui" style="flex:2;min-width:200px;">
         <label>Objet</label>
@@ -4442,13 +4450,15 @@ function applyData(data) {
 //  OBJETS MAGIQUES
 // ══════════════════════════════════════════
 function filterMagicPicker() {
-  const rarity = document.getElementById('filter-magic-rarity').value;
-  const type   = document.getElementById('filter-magic-type').value;
-  const picker = document.getElementById('magic-picker');
+  const rarity  = document.getElementById('filter-magic-rarity').value;
+  const type    = document.getElementById('filter-magic-type').value;
+  const search  = (document.getElementById('search-magic').value || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+  const picker  = document.getElementById('magic-picker');
   const filtered = MAGIC_ITEMS_DB.filter(i => {
-    const matchRarity = !rarity || i.rarity === rarity;
-    const matchType   = !type   || i.type.includes(type);
-    return matchRarity && matchType;
+    const matchRarity  = !rarity || i.rarity === rarity;
+    const matchType    = !type   || i.type.includes(type);
+    const matchSearch  = !search || i.name.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').includes(search);
+    return matchRarity && matchType && matchSearch;
   }).sort((a,b) => {
     const order = ['commun','peu commun','rare','très rare','légendaire'];
     return order.indexOf(a.rarity)-order.indexOf(b.rarity) || a.name.localeCompare(b.name);
@@ -4497,9 +4507,13 @@ function addMagicItemToInventory() {
 // ══════════════════════════════════════════
 function filterEquipPicker() {
   const cat    = document.getElementById('filter-equip-cat').value;
+  const search = (document.getElementById('search-equip').value || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
   const picker = document.getElementById('equip-picker');
-  const filtered = EQUIPMENT_DB.filter(e => !cat || e.cat === cat)
-    .sort((a,b) => a.name.localeCompare(b.name));
+  const filtered = EQUIPMENT_DB.filter(e => {
+    const matchCat    = !cat    || e.cat === cat;
+    const matchSearch = !search || e.name.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').includes(search);
+    return matchCat && matchSearch;
+  }).sort((a,b) => a.name.localeCompare(b.name));
   picker.innerHTML = filtered.map(e => `<label class="cb-item"><input type="checkbox" value="${e.name}" onchange="updateEquipPickerInfo()">[${e.cost}] ${e.name}</label>`).join('');
   updateEquipPickerInfo();
 }
