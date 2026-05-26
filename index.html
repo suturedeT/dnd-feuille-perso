@@ -4871,91 +4871,27 @@ function renderLanguages() {
 //  IMPRESSION / PDF
 // ══════════════════════════════════════════
 function printSheet() {
+  // Approche pure CSS : pas de mesure ni de scaling JS
+  // @media print applique height:297mm + overflow:hidden sur chaque page
   const allPages = Array.from(document.querySelectorAll('.page'));
   const pages    = allPages.filter(p => p.id !== 'page-des');
   const saved    = allPages.map(p => ({
-    display  : p.style.display,
-    classes  : [...p.classList],
-    width    : p.style.width    || '',
-    maxWidth : p.style.maxWidth || '',
-    height   : p.style.height   || '',
-    overflow : p.style.overflow || '',
+    display : p.style.display,
+    classes : [...p.classList],
   }));
 
-  // 1 — Montrer toutes les pages à imprimer
-  allPages.forEach(p => {
-    p.style.display = 'none';
-    p.classList.remove('print-active');
-  });
-  pages.forEach(p => {
-    p.style.display = 'block';
-    p.classList.add('print-active');
-  });
+  allPages.forEach(p => { p.style.display = 'none'; p.classList.remove('print-active'); });
+  pages.forEach(p => { p.style.display = 'block'; p.classList.add('print-active'); });
 
-  // 2 — CSS compact pour mesure précise
-  document.body.classList.add('print-measuring');
-
-  setTimeout(() => {
-    // @page margin:10mm → zone imprimable = 718 × 1046 px à 96 dpi
-    const A4_H = 1046;
-    const A4_W = 718;
-    pages.forEach(p => {
-      p.style.width    = A4_W + 'px';
-      p.style.maxWidth = A4_W + 'px';
+  window.addEventListener('afterprint', () => {
+    allPages.forEach((p, i) => {
+      p.style.display = saved[i].display;
+      p.classList.remove('print-active');
+      if (saved[i].classes.includes('active')) p.classList.add('active');
     });
+  }, { once: true });
 
-    // 3 — Pour chaque page : wrapper transform:scale() + hauteur A4 fixe
-    //     transform:scale() est fiable en impression, contrairement à zoom CSS
-    const wrappers = [];
-    pages.forEach(p => {
-      const h     = p.scrollHeight;
-      const scale = A4_H / h;
-
-      // Wrapper : dimensions pré-scale → visuellement A4_W × A4_H après scale
-      const w = document.createElement('div');
-      w.style.cssText = `
-        width            : ${Math.round(A4_W / scale)}px;
-        height           : ${h}px;
-        transform        : scale(${scale.toFixed(6)});
-        transform-origin : top left;
-        overflow         : visible;
-        position         : relative;
-      `.replace(/\s+/g, ' ');
-
-      // Déplacer tous les enfants dans le wrapper
-      while (p.firstChild) w.appendChild(p.firstChild);
-      p.appendChild(w);
-
-      // Page = exactement 1 feuille A4 (print-engine voit 1046px = 1 page)
-      p.style.height   = A4_H + 'px';
-      p.style.overflow = 'hidden';
-
-      wrappers.push({ p, w });
-    });
-
-    // NE PAS retirer print-measuring ici — le contenu doit rester compact
-    // pendant window.print(), sinon les tailles changent et le scale est faux
-
-    // 4 — Restaurer le DOM après impression
-    window.addEventListener('afterprint', () => {
-      document.body.classList.remove('print-measuring'); // retiré ICI
-      wrappers.forEach(({ p, w }) => {
-        while (w.firstChild) p.insertBefore(w.firstChild, w);
-        w.remove();
-      });
-      allPages.forEach((p, i) => {
-        p.style.display  = saved[i].display;
-        p.style.width    = saved[i].width;
-        p.style.maxWidth = saved[i].maxWidth;
-        p.style.height   = saved[i].height;
-        p.style.overflow = saved[i].overflow;
-        p.classList.remove('print-active');
-        if (saved[i].classes.includes('active')) p.classList.add('active');
-      });
-    }, { once: true });
-
-    window.print();
-  }, 500);
+  window.print();
 }
 
 // ══════════════════════════════════════════
