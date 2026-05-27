@@ -1103,27 +1103,30 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
 
     </div>
 
-    <!-- Jets de sauvegarde -->
-    <div class="panel section-gap">
-      <div class="panel-title">Jets de sauvegarde</div>
-      <div id="saves-list"></div>
-    </div>
+    <!-- Jets de sauvegarde + Sens passifs côte à côte -->
+    <div class="section-gap" style="display:grid;grid-template-columns:1fr 1fr;gap:7px;align-items:start;">
 
-    <!-- Sens passifs -->
-    <div class="panel section-gap">
-      <div class="panel-title">Sens passifs</div>
-      <div class="check-row">
-        <span class="sname">Perception passive</span>
-        <span class="bonus" id="passive-perc">10</span>
+      <div class="panel">
+        <div class="panel-title">Jets de sauvegarde</div>
+        <div id="saves-list"></div>
       </div>
-      <div class="check-row">
-        <span class="sname">Investigation passive</span>
-        <span class="bonus" id="passive-inv">10</span>
+
+      <div class="panel">
+        <div class="panel-title">Sens passifs</div>
+        <div class="check-row">
+          <span class="sname">Perception passive</span>
+          <span class="bonus" id="passive-perc">10</span>
+        </div>
+        <div class="check-row">
+          <span class="sname">Investigation passive</span>
+          <span class="bonus" id="passive-inv">10</span>
+        </div>
+        <div class="check-row">
+          <span class="sname">Perspicacité passive</span>
+          <span class="bonus" id="passive-ins">10</span>
+        </div>
       </div>
-      <div class="check-row">
-        <span class="sname">Perspicacité passive</span>
-        <span class="bonus" id="passive-ins">10</span>
-      </div>
+
     </div>
 
     <!-- Attaques résumé -->
