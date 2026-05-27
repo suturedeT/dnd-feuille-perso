@@ -799,6 +799,32 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
         <span style="color:#7a6a50;font-size:20px;">Pas encore de compte ? </span>
         <a onclick="authShowRegister()" style="color:#c8a84b;cursor:pointer;font-size:20px;">Faire une demande</a>
       </div>
+      <div style="text-align:center;margin-top:8px;">
+        <a onclick="authShowReset()" style="color:#4a3a28;cursor:pointer;font-size:15px;letter-spacing:0.5px;">Mot de passe oublié ?</a>
+      </div>
+    </div>
+
+    <!-- RESET PANEL -->
+    <div id="auth-reset-panel" style="display:none;">
+      <div style="font-family:'Cinzel',serif;color:#c8a84b;font-size:22px;margin-bottom:8px;text-align:center;">Réinitialisation</div>
+      <div style="color:#7a6a50;font-size:17px;text-align:center;margin-bottom:16px;">Entrez le code secret et votre nouveau mot de passe.</div>
+      <div class="auth-field">
+        <label class="auth-label">Code secret</label>
+        <input id="reset-code" type="password" placeholder="••••••••" class="auth-input">
+      </div>
+      <div class="auth-field" style="margin-top:12px;">
+        <label class="auth-label">Nouveau mot de passe</label>
+        <input id="reset-password" type="password" placeholder="••••••••" class="auth-input">
+      </div>
+      <div class="auth-field" style="margin-top:12px;">
+        <label class="auth-label">Confirmer</label>
+        <input id="reset-password2" type="password" placeholder="••••••••" class="auth-input" onkeydown="if(event.key==='Enter')authResetPassword()">
+      </div>
+      <div id="reset-message" style="font-size:20px;min-height:18px;margin:10px 0 4px;"></div>
+      <button onclick="authResetPassword()" style="width:100%;padding:10px;background:#8b5e1a;border:1px solid #c8a84b;border-radius:6px;color:#f0e0c0;font-family:'Cinzel',serif;font-size:21px;cursor:pointer;margin-top:4px;">Réinitialiser</button>
+      <div style="text-align:center;margin-top:14px;">
+        <a onclick="authShowLogin()" style="color:#7a6a50;cursor:pointer;font-size:20px;">← Retour à la connexion</a>
+      </div>
     </div>
 
     <!-- REGISTER PANEL -->
@@ -5082,6 +5108,10 @@ const Layout = (() => {
 // ══════════════════════════════════════════════════════════════════
 window.currentUser = null;
 
+// ── Code secret pour réinitialisation du mot de passe admin ──────────────────
+// Modifiez cette valeur pour définir votre code de secours personnel.
+const RESET_SECRET = 'DnD2024!';
+
 async function _hashPwd(pwd) {
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pwd));
   return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
@@ -5102,7 +5132,7 @@ async function initAuth() {
 }
 
 function _showPanel(id) {
-  ['auth-login-panel','auth-register-panel'].forEach(p => {
+  ['auth-login-panel','auth-register-panel','auth-reset-panel'].forEach(p => {
     document.getElementById(p).style.display = p===id ? 'block' : 'none';
   });
 }
@@ -5157,6 +5187,37 @@ async function authRegister() {
 
 function authShowRegister() { _showPanel('auth-register-panel'); document.getElementById('reg-message').textContent=''; }
 function authShowLogin()    { _showPanel('auth-login-panel');    document.getElementById('auth-error').textContent=''; }
+function authShowReset()    { _showPanel('auth-reset-panel');    document.getElementById('reset-message').textContent=''; document.getElementById('reset-code').value=''; document.getElementById('reset-password').value=''; document.getElementById('reset-password2').value=''; }
+
+async function authResetPassword() {
+  const code      = document.getElementById('reset-code').value;
+  const password  = document.getElementById('reset-password').value;
+  const password2 = document.getElementById('reset-password2').value;
+  const msg       = document.getElementById('reset-message');
+  msg.style.color = '#e05050'; msg.textContent = '';
+
+  if (!code || !password)          { msg.textContent = 'Remplissez tous les champs.'; return; }
+  if (code !== RESET_SECRET)       { msg.textContent = 'Code secret incorrect.'; return; }
+  if (password !== password2)      { msg.textContent = 'Les mots de passe ne correspondent pas.'; return; }
+  if (password.length < 6)         { msg.textContent = 'Mot de passe trop court (min. 6 caractères).'; return; }
+
+  const hash  = await _hashPwd(password);
+  const users = _getUsers();
+  const admin = users.find(u => u.role === 'admin');
+
+  if (!admin) {
+    // Aucun compte admin : le créer
+    users.push({ id:'admin', username:'admin', passwordHash:hash, role:'admin', approved:true });
+  } else {
+    admin.passwordHash = hash;
+  }
+  _saveUsers(users);
+  localStorage.removeItem('dnd_auth_session');
+
+  msg.style.color = '#60c060';
+  msg.textContent = '✓ Mot de passe modifié ! Reconnectez-vous.';
+  setTimeout(authShowLogin, 2000);
+}
 
 function authLogout() {
   localStorage.removeItem('dnd_auth_session');
