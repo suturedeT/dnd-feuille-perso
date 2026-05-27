@@ -893,6 +893,7 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
 <!-- ═══ ONGLETS ═══ -->
 <div class="tabs no-print">
   <div class="tab active" onclick="showTab('principal')">Principal</div>
+  <div class="tab" onclick="showTab('origine')" id="tab-origine">Origine</div>
   <div class="tab" onclick="showTab('combat')">Combat &amp; Dons</div>
   <div class="tab" onclick="showTab('sorts')">Sorts</div>
   <div class="tab" onclick="showTab('inventaire')">Inventaire</div>
@@ -1151,34 +1152,7 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
 
 
 
-    <!-- Panneau info classe / espèce / historique -->
-    <div id="char-info-panel" style="display:none;" class="section-gap">
-      <div style="display:flex;flex-direction:column;gap:6px;">
-        <div class="panel" id="class-info-box" style="display:none;">
-          <div class="panel-title" id="class-info-title">Classe</div>
-          <div id="class-info-body" style="font-size:18px;line-height:1.6;"></div>
-          <div style="margin-top:8px;display:flex;gap:5px;flex-wrap:wrap;">
-            <button class="btn btn-gold btn-sm" onclick="applyClassSaves()">✔ Jets de sauvegarde</button>
-            <button class="btn btn-gold btn-sm" onclick="applyClassSpellAbility()">✔ Caract. de sort</button>
-          </div>
-        </div>
-        <div class="panel" id="species-info-box" style="display:none;">
-          <div class="panel-title" id="species-info-title">Espèce</div>
-          <div id="species-info-body" style="font-size:18px;line-height:1.6;"></div>
-          <div style="margin-top:8px;">
-            <button class="btn btn-gold btn-sm" onclick="applySpeciesSpeed()">✔ Appliquer la vitesse</button>
-          </div>
-        </div>
-        <div class="panel" id="background-info-box" style="display:none;">
-          <div class="panel-title" id="background-info-title">Historique</div>
-          <div id="background-info-body" style="font-size:18px;line-height:1.6;"></div>
-          <div style="margin-top:8px;display:flex;gap:5px;flex-wrap:wrap;">
-            <button class="btn btn-gold btn-sm" onclick="applyBackgroundBonuses()">✔ Appliquer les bonus</button>
-            <button class="btn btn-gold btn-sm" onclick="applyBackgroundSkills()">✔ Cocher compétences</button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <!-- Panneaux Classe / Espèce / Historique déplacés → onglet Origine -->
 
     <!-- Maîtrises & Langues -->
         <div class="panel section-gap">
@@ -1203,6 +1177,49 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
   </div><!-- fin colonne centre -->
 </div><!-- fin grid 3 colonnes -->
 </div><!-- fin page-principal -->
+
+<!-- ════════════ PAGE : ORIGINE ════════════ -->
+<div class="page" id="page-origine">
+
+  <!-- Message si aucun choix effectué -->
+  <div id="origine-empty-msg" style="text-align:center;padding:40px 20px;color:var(--text-dim);font-size:20px;font-style:italic;">
+    Choisissez une <strong style="color:var(--red);">classe</strong>,
+    une <strong style="color:var(--red);">espèce</strong>
+    et un <strong style="color:var(--red);">historique</strong>
+    dans l'onglet <strong>Principal</strong> pour voir les détails ici.
+  </div>
+
+  <!-- Grille : Classe pleine largeur, puis Espèce + Historique côte à côte -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;">
+
+    <div class="panel section-gap" id="class-info-box" style="display:none;grid-column:1/-1;">
+      <div class="panel-title" id="class-info-title">Classe</div>
+      <div id="class-info-body" style="font-size:18px;line-height:1.6;"></div>
+      <div style="margin-top:8px;display:flex;gap:5px;flex-wrap:wrap;">
+        <button class="btn btn-gold btn-sm" onclick="applyClassSaves()">✔ Jets de sauvegarde</button>
+        <button class="btn btn-gold btn-sm" onclick="applyClassSpellAbility()">✔ Caract. de sort</button>
+      </div>
+    </div>
+
+    <div class="panel" id="species-info-box" style="display:none;">
+      <div class="panel-title" id="species-info-title">Espèce</div>
+      <div id="species-info-body" style="font-size:18px;line-height:1.6;"></div>
+      <div style="margin-top:8px;">
+        <button class="btn btn-gold btn-sm" onclick="applySpeciesSpeed()">✔ Appliquer la vitesse</button>
+      </div>
+    </div>
+
+    <div class="panel" id="background-info-box" style="display:none;">
+      <div class="panel-title" id="background-info-title">Historique</div>
+      <div id="background-info-body" style="font-size:18px;line-height:1.6;"></div>
+      <div style="margin-top:8px;display:flex;gap:5px;flex-wrap:wrap;">
+        <button class="btn btn-gold btn-sm" onclick="applyBackgroundBonuses()">✔ Appliquer les bonus</button>
+        <button class="btn btn-gold btn-sm" onclick="applyBackgroundSkills()">✔ Cocher compétences</button>
+      </div>
+    </div>
+
+  </div>
+</div><!-- fin page-origine -->
 
 <!-- ════════════ PAGE : COMBAT & DONS ════════════ -->
 <div class="page" id="page-combat">
@@ -3730,7 +3747,12 @@ function adjustHP(dir) {
 function refreshInfoPanel() {
   const any = ['class-info-box','species-info-box','background-info-box']
     .some(id => document.getElementById(id).style.display !== 'none');
-  document.getElementById('char-info-panel').style.display = any ? 'block' : 'none';
+  // Badge "•" sur l'onglet Origine quand du contenu est disponible
+  const tab = document.getElementById('tab-origine');
+  if (tab) tab.textContent = any ? 'Origine •' : 'Origine';
+  // Message vide si aucun panneau actif
+  const msg = document.getElementById('origine-empty-msg');
+  if (msg) msg.style.display = any ? 'none' : 'block';
 }
 
 
@@ -5113,7 +5135,7 @@ window.currentUser = null;
 
 // ── Code secret pour réinitialisation du mot de passe admin ──────────────────
 // Modifiez cette valeur pour définir votre code de secours personnel.
-const RESET_SECRET = '06550312';
+const RESET_SECRET = 'DnD2024!';
 
 async function _hashPwd(pwd) {
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pwd));
