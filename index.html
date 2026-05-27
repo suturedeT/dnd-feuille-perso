@@ -221,6 +221,23 @@ header h1 {
   box-shadow: inset 0 0 0 2px rgba(0,0,0,0.3);
 }
 
+/* Sauvegarde intégrée (dans case caract.) */
+.ability-save-row {
+  display: flex; align-items: center; gap: 4px;
+  border-top: 2px solid var(--border-light);
+  margin-top: 4px; padding-top: 3px;
+  font-size: 17px;
+}
+.ability-save-row .save-lbl {
+  flex: 1; font-size: 16px; color: var(--text-dim);
+  font-family: 'Cinzel', serif; letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.ability-save-row .save-val { font-weight: 700; font-size: 20px; min-width: 28px; text-align: right; }
+.ability-save-row input[type=checkbox] { width: 13px; height: 13px; accent-color: var(--red); flex-shrink: 0; }
+.ability-save-row .prof-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; background: transparent; border: 2px solid #888; }
+.ability-save-row .prof-dot.prof { background: var(--text); border-color: var(--text); }
+
 /* Compétences liées (dans case caract.) */
 .ability-skills {
   border-top: 2.5px solid #ccc;
@@ -1102,33 +1119,26 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
         </div>
       </div>
 
-    </div>
-
-    <!-- Jets de sauvegarde + Sens passifs côte à côte -->
-    <div class="section-gap" style="display:grid;grid-template-columns:1fr 1fr;gap:7px;align-items:start;">
-
-      <div class="panel">
-        <div class="panel-title">Jets de sauvegarde</div>
-        <div id="saves-list"></div>
-      </div>
-
-      <div class="panel">
+      <!-- Sens passifs — aligné sur PV / Dés de vie / Jets de mort -->
+      <div class="panel" style="flex:1;min-width:110px;">
         <div class="panel-title">Sens passifs</div>
         <div class="check-row">
-          <span class="sname">Perception passive</span>
+          <span class="sname">Perception</span>
           <span class="bonus" id="passive-perc">10</span>
         </div>
         <div class="check-row">
-          <span class="sname">Investigation passive</span>
+          <span class="sname">Investigation</span>
           <span class="bonus" id="passive-inv">10</span>
         </div>
         <div class="check-row">
-          <span class="sname">Perspicacité passive</span>
+          <span class="sname">Perspicacité</span>
           <span class="bonus" id="passive-ins">10</span>
         </div>
       </div>
 
     </div>
+
+    <!-- Jets de sauvegarde intégrés dans les cases caract. — panneau supprimé -->
 
     <!-- Attaques résumé -->
     <div class="panel section-gap">
@@ -3322,7 +3332,6 @@ let state = {
 document.addEventListener('DOMContentLoaded', () => {
   populateSelects();
   buildAbilities();
-  buildSaves();
   buildSkills();
   buildDeathSaves();
   buildExhaustion();
@@ -3407,25 +3416,18 @@ function buildAbilities() {
       <input type="number" class="score-input" id="score-${a.id}" value="10"
         oninput="updateAll()" min="1" max="30">
       <div class="modifier" id="mod-${a.id}">+0</div>
+      <div class="ability-save-row">
+        <input type="checkbox" id="save-prof-${a.id}" onchange="updateAll()" title="Maîtrise sauvegarde">
+        <div class="prof-dot" id="save-dot-${a.id}"></div>
+        <span class="save-val" id="save-val-${a.id}">+0</span>
+        <span class="save-lbl">Sauv.</span>
+      </div>
       ${skillsHtml}
     `;
     grid.appendChild(box);
   });
 }
 
-function buildSaves() {
-  const list = document.getElementById('saves-list');
-  list.innerHTML = '';
-  ABILITIES.forEach(a => {
-    list.innerHTML += `
-      <div class="check-row">
-        <input type="checkbox" id="save-prof-${a.id}" onchange="updateAll()">
-        <div class="prof-dot" id="save-dot-${a.id}"></div>
-        <span class="bonus" id="save-val-${a.id}">+0</span>
-        <span class="sname">${a.label}</span>
-      </div>`;
-  });
-}
 
 function buildSkills() {
   const list = document.getElementById('skills-list');
