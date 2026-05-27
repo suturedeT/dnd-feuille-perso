@@ -5110,7 +5110,7 @@ window.currentUser = null;
 
 // ── Code secret pour réinitialisation du mot de passe admin ──────────────────
 // Modifiez cette valeur pour définir votre code de secours personnel.
-const RESET_SECRET = 'DnD2024!';
+const RESET_SECRET = '06550312';
 
 async function _hashPwd(pwd) {
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pwd));
