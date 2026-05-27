@@ -823,25 +823,7 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
       </div>
     </div>
 
-    <!-- SETUP PANEL (premier lancement) -->
-    <div id="auth-setup-panel" style="display:none;">
-      <div style="font-family:'Cinzel',serif;color:#c8a84b;font-size:22px;margin-bottom:8px;text-align:center;">Configuration initiale</div>
-      <div style="color:#7a6a50;font-size:18px;text-align:center;margin-bottom:16px;">Créez le compte administrateur</div>
-      <div class="auth-field">
-        <label class="auth-label">Identifiant admin</label>
-        <input id="setup-username" type="text" placeholder="ex: admin" class="auth-input" value="admin">
-      </div>
-      <div class="auth-field" style="margin-top:12px;">
-        <label class="auth-label">Mot de passe</label>
-        <input id="setup-password" type="password" placeholder="••••••••" class="auth-input">
-      </div>
-      <div class="auth-field" style="margin-top:12px;">
-        <label class="auth-label">Confirmer</label>
-        <input id="setup-password2" type="password" placeholder="••••••••" class="auth-input" onkeydown="if(event.key==='Enter')authSetup()">
-      </div>
-      <div id="setup-message" style="color:#e05050;font-size:20px;min-height:18px;margin:10px 0 4px;"></div>
-      <button onclick="authSetup()" style="width:100%;padding:10px;background:#8b5e1a;border:1px solid #c8a84b;border-radius:6px;color:#f0e0c0;font-family:'Cinzel',serif;font-size:21px;cursor:pointer;margin-top:4px;">Créer le compte admin</button>
-    </div>
+    <!-- SETUP PANEL supprimé — création compte admin désactivée -->
   </div>
 </div>
 
@@ -5110,12 +5092,6 @@ function _getSession()  { return localStorage.getItem('dnd_auth_session'); }
 
 async function initAuth() {
   const users = _getUsers();
-  if (users.length === 0) {
-    // Premier lancement : configurer le compte admin
-    _showPanel('auth-setup-panel');
-    document.getElementById('auth-overlay').style.display = 'flex';
-    return;
-  }
   const session = _getSession();
   if (session) {
     const u = users.find(x => x.id === session && x.approved);
@@ -5126,7 +5102,7 @@ async function initAuth() {
 }
 
 function _showPanel(id) {
-  ['auth-login-panel','auth-register-panel','auth-setup-panel'].forEach(p => {
+  ['auth-login-panel','auth-register-panel'].forEach(p => {
     document.getElementById(p).style.display = p===id ? 'block' : 'none';
   });
 }
@@ -5178,21 +5154,6 @@ async function authRegister() {
   setTimeout(authShowLogin, 3000);
 }
 
-async function authSetup() {
-  const username  = document.getElementById('setup-username').value.trim();
-  const password  = document.getElementById('setup-password').value;
-  const password2 = document.getElementById('setup-password2').value;
-  const msg       = document.getElementById('setup-message');
-  msg.textContent = '';
-  if (!username || !password)  { msg.textContent = 'Remplissez tous les champs.'; return; }
-  if (password !== password2)  { msg.textContent = 'Les mots de passe ne correspondent pas.'; return; }
-  if (password.length < 6)     { msg.textContent = 'Mot de passe trop court (min. 6 caractères).'; return; }
-  const hash = await _hashPwd(password);
-  _saveUsers([{ id:'admin', username, passwordHash:hash, role:'admin', approved:true }]);
-  window.currentUser = { id:'admin', username, role:'admin', approved:true };
-  localStorage.setItem('dnd_auth_session', 'admin');
-  _showApp();
-}
 
 function authShowRegister() { _showPanel('auth-register-panel'); document.getElementById('reg-message').textContent=''; }
 function authShowLogin()    { _showPanel('auth-login-panel');    document.getElementById('auth-error').textContent=''; }
