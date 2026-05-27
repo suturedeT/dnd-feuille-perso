@@ -903,6 +903,7 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
     <button class="btn btn-sm" onclick="printSheet()" style="background:transparent;border-color:rgba(255,255,255,0.5);">🖨 Imprimer</button>
     <button id="layout-btn" class="btn btn-sm" onclick="Layout.toggle()" style="background:transparent;border-color:rgba(255,255,255,0.5);" title="Déplacer les panneaux">⊞ Disposition</button>
     <button class="btn btn-sm" onclick="Layout.reset()" style="background:transparent;border-color:rgba(255,255,255,0.3);" title="Réinitialiser la disposition">↺</button>
+    <button class="btn btn-sm" onclick="newCharacter()" style="background:#2a4a1a;border-color:#4a8a2a;color:#a8e070;" title="Sauvegarder et créer un nouveau personnage">✦ Nouveau perso</button>
   </div>
 </header>
 
@@ -4526,6 +4527,91 @@ function saveSheet() {
   a.href = URL.createObjectURL(blob);
   a.download = name.replace(/[^a-z0-9]/gi,'_')+'_dnd.json';
   a.click();
+}
+
+function newCharacter() {
+  const name = document.getElementById('char-name').value || 'ce personnage';
+  if (!confirm(`Sauvegarder et vider la feuille ?\n\nLe personnage "${name}" sera téléchargé en JSON, puis la feuille sera réinitialisée pour un nouveau personnage.`)) return;
+
+  // 1. Sauvegarder dans localStorage immédiatement
+  try {
+    const _saveKey = window.currentUser ? 'dnd_sheet_'+window.currentUser.username : 'dnd_sheet';
+    localStorage.setItem(_saveKey, JSON.stringify(collectFormData()));
+  } catch(e) {}
+
+  // 2. Télécharger le JSON
+  saveSheet();
+
+  // 3. Réinitialiser l'état
+  state.attacks    = [];
+  state.items      = [];
+  state.spells     = [];
+  state.feats      = [];
+  state.languages  = [];
+  state.spellSlots = {};
+  state.rollHistory = [];
+  state.panelLayouts = {};
+  state.deathSaves = { success:[false,false,false], fail:[false,false,false] };
+  state.exhaustion  = 0;
+  state.inspiration = false;
+
+  // 4. Vider tous les champs de formulaire (inputs, textareas, selects)
+  document.querySelectorAll('#page-principal input:not([type=button]):not([type=submit]), #page-principal textarea, #page-principal select').forEach(el => {
+    if (el.type === 'checkbox') el.checked = false;
+    else el.value = '';
+  });
+  ['page-origine','page-competences','page-combat','page-sorts','page-inventaire','page-historique'].forEach(pid => {
+    const pg = document.getElementById(pid);
+    if (!pg) return;
+    pg.querySelectorAll('input:not([type=button]):not([type=submit]), textarea, select').forEach(el => {
+      if (el.type === 'checkbox') el.checked = false;
+      else el.value = '';
+    });
+  });
+
+  // 5. Réinitialiser les composants dynamiques
+  renderAttacks();
+  renderItems();
+  renderSpells();
+  renderFeats();
+  renderLanguages();
+  renderRollHistory();
+
+  // 6. Réinitialiser cases à cocher des jets de mort
+  ['success','fail'].forEach(t => { for(let i=0;i<3;i++) {
+    const dot = document.getElementById(`ds-${t}-${i}`);
+    if (dot) dot.classList.remove('filled');
+  }});
+
+  // 7. Réinitialiser épuisement et inspiration
+  state.exhaustion = 0;
+  buildExhaustion();
+  if (state.inspiration) { state.inspiration = false; }
+  const inspBtn = document.getElementById('inspiration-btn');
+  if (inspBtn) inspBtn.classList.remove('active');
+
+  // 8. Réinitialiser les emplacements de sorts
+  for (let lvl=1;lvl<=9;lvl++) {
+    const maxEl = document.getElementById('slot-max-'+lvl);
+    if (maxEl) { maxEl.value = ''; state.spellSlots[lvl] = {max:0,used:0}; updateSlotPips(lvl); }
+  }
+
+  // 9. Réinitialiser les panneaux info (classe, espèce, historique)
+  onClassChange && onClassChange();
+  onSpeciesChange && onSpeciesChange();
+  onBackgroundChange && onBackgroundChange();
+  onSubclassChange && onSubclassChange();
+
+  // 10. Recalculer tout
+  updateAll();
+
+  // 11. Effacer l'autosave de cet utilisateur (nouveau perso = page vierge)
+  try {
+    const _saveKey = window.currentUser ? 'dnd_sheet_'+window.currentUser.username : 'dnd_sheet';
+    localStorage.removeItem(_saveKey);
+  } catch(e) {}
+
+  showTab('principal');
 }
 
 function loadSheet(silent=false) {
