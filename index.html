@@ -1154,16 +1154,7 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
 
     <!-- Panneaux Classe / Espèce / Historique déplacés → onglet Origine -->
 
-    <!-- Maîtrises & Langues -->
-        <div class="panel section-gap">
-          <div class="panel-title">Maîtrises</div>
-          <div id="proficiencies-auto" style="font-size:20px;line-height:1.6;min-height:40px;padding:4px 0 6px;">
-            <em style="color:var(--text-dim)">Choisissez une classe et/ou un historique</em>
-          </div>
-          <div style="border-top:1px solid var(--border-light);margin:5px 0 4px;"></div>
-          <div style="font-size:14px;font-style:italic;color:var(--text-dim);margin-bottom:3px;font-family:'Cinzel',serif;letter-spacing:.5px;">Notes supplémentaires</div>
-          <textarea id="proficiencies" placeholder="Langues supplémentaires, maîtrises de compétences spéciales…" style="min-height:40px;" oninput="autoSave()"></textarea>
-        </div>
+    <!-- Maîtrises déplacées → onglet Origine -->
 
         <!-- Langues (résumé — gestion dans Historique) -->
         <div class="panel">
@@ -1219,6 +1210,18 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
     </div>
 
   </div>
+
+  <!-- Maîtrises -->
+  <div class="panel section-gap">
+    <div class="panel-title">Maîtrises</div>
+    <div id="proficiencies-auto" style="font-size:20px;line-height:1.6;min-height:40px;padding:4px 0 6px;">
+      <em style="color:var(--text-dim)">Choisissez une classe et/ou un historique</em>
+    </div>
+    <div style="border-top:1px solid var(--border-light);margin:5px 0 4px;"></div>
+    <div style="font-size:14px;font-style:italic;color:var(--text-dim);margin-bottom:3px;font-family:'Cinzel',serif;letter-spacing:.5px;">Notes supplémentaires</div>
+    <textarea id="proficiencies" placeholder="Langues supplémentaires, maîtrises de compétences spéciales…" style="min-height:40px;" oninput="autoSave()"></textarea>
+  </div>
+
 </div><!-- fin page-origine -->
 
 <!-- ════════════ PAGE : COMBAT & DONS ════════════ -->
