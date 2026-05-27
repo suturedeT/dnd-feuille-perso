@@ -1182,9 +1182,6 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
           <div id="proficiencies-auto" style="font-size:20px;line-height:1.6;min-height:40px;padding:4px 0 6px;">
             <em style="color:var(--text-dim)">Choisissez une classe et/ou un historique</em>
           </div>
-          <div style="border-top:1px solid var(--border-light);margin:5px 0 4px;"></div>
-          <div style="font-size:14px;font-style:italic;color:var(--text-dim);margin-bottom:3px;font-family:'Cinzel',serif;letter-spacing:.5px;">Notes supplémentaires</div>
-          <textarea id="proficiencies" placeholder="Langues supplémentaires, maîtrises de compétences spéciales…" style="min-height:40px;" oninput="autoSave()"></textarea>
         </div>
 
   </div><!-- fin colonne centre -->
@@ -3428,7 +3425,7 @@ function buildAbilities() {
         <input type="checkbox" id="save-prof-${a.id}" onchange="updateAll()" title="Maîtrise sauvegarde">
         <div class="prof-dot" id="save-dot-${a.id}"></div>
         <span class="save-val" id="save-val-${a.id}">+0</span>
-        <span class="save-lbl">Sauv.</span>
+        <span class="save-lbl">JS</span>
       </div>
       ${skillsHtml}
     `;
