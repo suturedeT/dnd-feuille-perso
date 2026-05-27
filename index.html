@@ -2846,8 +2846,7 @@ const FEATS_DB = [
   // ── DONS GÉNÉRAUX ─────────────────────────────────────────────────
   { name:"Acteur", cat:"général", prereq:"niveau 4 ou supérieur, Charisme 13 ou plus", desc:"+1 CHA. Maîtrise Représentation et Tromperie (ou Expertise si déjà maîtrisées). Peut imiter parfaitement la voix d'une créature après 1 minute d'écoute (test CHA DD 15 pour détecter)." },
   { name:"Adepte élémentaire", cat:"général", prereq:"niveau 4 ou supérieur, aptitude Sorts ou Magie de pacte", desc:"+1 INT, SAG ou CHA. Maîtrise des énergies : choisissez acide, feu, foudre, froid ou tonnerre ; vos sorts ignorent la Résistance à ce type et les résultats de 1 sur les dés comptent comme 2. Répétable (type différent à chaque fois)." },
-  { name:"Alerte", cat:"général", prereq:"aucun", desc:"+5 à l'Initiative. Vous ne pouvez pas être surpris tant que vous êtes conscient. Les créatures Invisibles pour vous n'ont pas l'Avantage aux jets d'attaque contre vous." },
-  { name:"Ambidextre", cat:"général", prereq:"niveau 4 ou supérieur, Dextérité 13 ou plus", desc:"+1 DEX. En dégainant une arme sans propriété Deux mains, vous pouvez en dégainer ou ranger une seconde simultanément. En combat à deux armes légères, ajoutez votre modificateur aux dégâts de la 2e attaque." },
+  { name:"Ambidextre", cat:"général", prereq:"niveau 4 ou supérieur, Dextérité 13 ou plus", desc:"+1 DEX. Polyvalence d'armes : utilisez toute arme sans propriété Deux mains (même sans Légère) pour l'attaque bonus de la propriété Légère. Dégainage double : dégainez ou rangez deux armes simultanément. Dégâts améliorés : ajoutez votre modificateur de caractéristique aux dégâts de l'attaque supplémentaire." },
   { name:"Athlète", cat:"général", prereq:"niveau 4 ou supérieur", desc:"+1 FOR, DEX ou CON. Se relever d'allongé ne coûte que 1,5 m de mouvement. Escalader et nager ne coûtent pas de mouvement supplémentaire. Saut en longueur après 1,5 m de course." },
   { name:"Discret", cat:"général", prereq:"niveau 4 ou supérieur, Dextérité 13 ou plus", desc:"+1 DEX. Vision aveugle 3 m. Avantage aux tests de Dextérité (Discrétion) lors d'une action Furtivité en combat. Un jet d'attaque raté ne révèle pas votre position si vous étiez furtif." },
   { name:"Duelliste défensif", cat:"général", prereq:"niveau 4 ou supérieur, Dextérité 13 ou plus", desc:"+1 DEX. Réaction : si vous tenez une arme Finesse et êtes touché par une attaque de corps à corps, ajoutez votre bonus de maîtrise à votre CA contre cette attaque et toutes les attaques de corps à corps jusqu'au début de votre prochain tour." },
@@ -4860,7 +4859,7 @@ function filterFeatPicker() {
     return (!cat || f.cat === cat) && matchSearch;
   }).sort((a,b) => a.name.localeCompare(b.name));
   const catLabel = { origine:'Origine', général:'Général', 'style de combat':'Style de combat', 'faveur épique':'Faveur épique' };
-  picker.innerHTML = filtered.map(f => `<label class="cb-item"><input type="checkbox" value="${f.name}" onchange="updateFeatPickerInfo()">[${catLabel[f.cat]||f.cat}] ${f.name}${f.prereq !== 'Aucun' ? ' — '+f.prereq : ''}</label>`).join('');
+  picker.innerHTML = filtered.map(f => `<label class="cb-item"><input type="checkbox" value="${f.name}" onchange="updateFeatPickerInfo()">[${catLabel[f.cat]||f.cat}] ${f.name}${f.prereq.toLowerCase() !== 'aucun' ? ' — '+f.prereq : ''}</label>`).join('');
   updateFeatPickerInfo();
 }
 
