@@ -911,6 +911,7 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
 <div class="tabs no-print">
   <div class="tab active" onclick="showTab('principal')">Principal</div>
   <div class="tab" onclick="showTab('origine')" id="tab-origine">Origine</div>
+  <div class="tab" onclick="showTab('competences')">Compétences</div>
   <div class="tab" onclick="showTab('combat')">Combat &amp; Dons</div>
   <div class="tab" onclick="showTab('sorts')">Sorts</div>
   <div class="tab" onclick="showTab('inventaire')">Inventaire</div>
@@ -1167,12 +1168,23 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
     <!-- Maîtrises déplacées → onglet Origine -->
 
         <!-- Langues (résumé — gestion dans Historique) -->
-        <div class="panel">
+        <div class="panel section-gap">
           <div class="panel-title">Langues connues</div>
           <div class="lang-tags" id="languages-list-main" style="min-height:22px;"></div>
           <div style="font-size:14px;font-style:italic;color:var(--text-dim);margin-top:5px;font-family:'Cinzel',serif;letter-spacing:.5px;">
             → Ajouter / retirer dans l'onglet <strong>Historique</strong>
           </div>
+        </div>
+
+        <!-- Maîtrises -->
+        <div class="panel">
+          <div class="panel-title">Maîtrises</div>
+          <div id="proficiencies-auto" style="font-size:20px;line-height:1.6;min-height:40px;padding:4px 0 6px;">
+            <em style="color:var(--text-dim)">Choisissez une classe et/ou un historique</em>
+          </div>
+          <div style="border-top:1px solid var(--border-light);margin:5px 0 4px;"></div>
+          <div style="font-size:14px;font-style:italic;color:var(--text-dim);margin-bottom:3px;font-family:'Cinzel',serif;letter-spacing:.5px;">Notes supplémentaires</div>
+          <textarea id="proficiencies" placeholder="Langues supplémentaires, maîtrises de compétences spéciales…" style="min-height:40px;" oninput="autoSave()"></textarea>
         </div>
 
   </div><!-- fin colonne centre -->
@@ -1221,24 +1233,13 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
 
   </div>
 
-  <!-- Maîtrises -->
-  <div class="panel section-gap">
-    <div class="panel-title">Maîtrises</div>
-    <div id="proficiencies-auto" style="font-size:20px;line-height:1.6;min-height:40px;padding:4px 0 6px;">
-      <em style="color:var(--text-dim)">Choisissez une classe et/ou un historique</em>
-    </div>
-    <div style="border-top:1px solid var(--border-light);margin:5px 0 4px;"></div>
-    <div style="font-size:14px;font-style:italic;color:var(--text-dim);margin-bottom:3px;font-family:'Cinzel',serif;letter-spacing:.5px;">Notes supplémentaires</div>
-    <textarea id="proficiencies" placeholder="Langues supplémentaires, maîtrises de compétences spéciales…" style="min-height:40px;" oninput="autoSave()"></textarea>
-  </div>
 
 </div><!-- fin page-origine -->
 
-<!-- ════════════ PAGE : COMBAT & DONS ════════════ -->
-<div class="page" id="page-combat">
+<!-- ════════════ PAGE : COMPÉTENCES ════════════ -->
+<div class="page" id="page-competences">
 
-  <!-- ══ COMPÉTENCES ══ -->
-  <div class="grid-2" style="margin-bottom:7px;">
+  <div class="grid-2">
     <div class="panel">
       <div class="panel-title">Compétences</div>
       <div id="skills-list"></div>
@@ -1254,6 +1255,13 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
       </div>
     </div>
   </div>
+
+</div><!-- fin page-competences -->
+
+<!-- ════════════ PAGE : COMBAT & DONS ════════════ -->
+<div class="page" id="page-combat">
+
+  <!-- Compétences / Maîtrises & Notes / Capacités → onglet Compétences -->
 
   <!-- ══ COMBAT ══ -->
   <div style="margin-bottom:7px;">
