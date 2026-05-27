@@ -751,6 +751,22 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
 
   /* ── Attaques ── */
   .attack-row td, .attack-row input { font-size:16px !important; }
+
+  /* ── Rangée PV / Dés / Jets / Sens passifs ── */
+  .pv-row {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    gap: 2px !important;
+    align-items: flex-start !important;
+  }
+  .check-row { padding: 1px 0 !important; gap: 3px !important; }
+  .check-row .sname  { font-size: 11px !important; white-space: nowrap !important; }
+  .check-row .bonus  { font-size: 14px !important; min-width: 18px !important; }
+  .death-saves { gap: 4px !important; }
+  .ds-group .ds-dot  { width: 11px !important; height: 11px !important; border-width: 1.5px !important; }
+  .exhaustion-pips   { font-size: 11px !important; gap: 1px !important; }
+  .hp-adjust-row     { display: none !important; }
+  .hp-bar-wrap       { display: none !important; }
 }
 
   /* ── CARACTÉRISTIQUES – Colonne gauche ── */
@@ -1055,7 +1071,7 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
     </div>
 
     <!-- Points de vie + Dés de vie + Jets de mort (même ligne) -->
-    <div class="section-gap" style="display:flex;gap:6px;align-items:flex-start;flex-wrap:wrap;">
+    <div class="pv-row section-gap" style="display:flex;gap:6px;align-items:flex-start;flex-wrap:wrap;">
 
       <!-- Points de vie -->
       <div class="panel" style="flex:3;min-width:185px;">
@@ -1123,18 +1139,18 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
       </div>
 
       <!-- Sens passifs — aligné sur PV / Dés de vie / Jets de mort -->
-      <div class="panel" style="flex:1;min-width:110px;">
+      <div class="panel" style="flex:1;min-width:140px;">
         <div class="panel-title">Sens passifs</div>
         <div class="check-row">
-          <span class="sname">Perception</span>
+          <span class="sname" style="white-space:nowrap;">Perception</span>
           <span class="bonus" id="passive-perc">10</span>
         </div>
         <div class="check-row">
-          <span class="sname">Investigation</span>
+          <span class="sname" style="white-space:nowrap;">Investigation</span>
           <span class="bonus" id="passive-inv">10</span>
         </div>
         <div class="check-row">
-          <span class="sname">Perspicacité</span>
+          <span class="sname" style="white-space:nowrap;">Perspicacité</span>
           <span class="bonus" id="passive-ins">10</span>
         </div>
       </div>
