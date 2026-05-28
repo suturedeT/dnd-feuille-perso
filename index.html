@@ -2414,6 +2414,79 @@ const SPELLS_DB = [
   { name:"Présence royale de Yolane", level:5, school:"Enchantement", classes:"Barde, Magicien" },
   { name:"Vigueur arcanique", level:0, school:"Abjuration", classes:"Ensorceleur, Magicien" },
   { name:"Mot de guérison de groupe", level:3, school:"Évocation", classes:"Barde, Clerc, Druide" },
+  // ── Sorts manquants ajoutés (PHB 2024 FR) ──
+  // Cantrips
+  { name:"Voile défensif", level:0, school:"Abjuration", classes:"Barde, Ensorceleur, Occultiste, Magicien" },
+  { name:"Poussière d'étoile", level:0, school:"Évocation", classes:"Barde" },
+  { name:"Couleurs dansantes", level:1, school:"Illusion", classes:"Barde, Ensorceleur, Magicien" },
+  // Niveau 1
+  { name:"Grande foulée", level:1, school:"Transmutation", classes:"Barde, Druide, Rôdeur, Magicien" },
+  { name:"Purification de la nourriture et de l'eau", level:1, school:"Transmutation", classes:"Clerc, Druide, Paladin" },
+  { name:"Châtiment divin", level:1, school:"Évocation", classes:"Paladin" },
+  // Niveau 2
+  { name:"Agrandissement/Rapetissement", level:2, school:"Transmutation", classes:"Barde, Druide, Ensorceleur, Magicien" },
+  { name:"Cécité/Surdité", level:2, school:"Transmutation", classes:"Barde, Clerc, Magicien, Occultiste" },
+  { name:"Corde enchantée", level:2, school:"Transmutation", classes:"Magicien" },
+  { name:"Déblocage", level:2, school:"Transmutation", classes:"Barde, Ensorceleur, Magicien" },
+  { name:"Doux repos", level:2, school:"Nécromancie", classes:"Clerc, Magicien, Paladin" },
+  { name:"Épine mentale", level:2, school:"Divination", classes:"Magicien, Occultiste" },
+  { name:"Patte d'araignée", level:2, school:"Transmutation", classes:"Ensorceleur, Magicien, Occultiste" },
+  { name:"Toile d'araignée", level:2, school:"Invocation", classes:"Ensorceleur, Magicien" },
+  { name:"Aura magique de Nystul", level:2, school:"Illusion", classes:"Magicien" },
+  { name:"Perception bestiale", level:2, school:"Divination", classes:"Druide, Rôdeur" },
+  { name:"Messager animal", level:2, school:"Enchantement", classes:"Barde, Druide, Rôdeur" },
+  { name:"Détection des pièges", level:2, school:"Divination", classes:"Clerc, Druide, Rôdeur" },
+  { name:"Discours captivant", level:2, school:"Enchantement", classes:"Barde, Occultiste" },
+  { name:"Châtiment de révélation", level:2, school:"Transmutation", classes:"Paladin" },
+  // Niveau 3
+  { name:"Clignotement", level:3, school:"Transmutation", classes:"Ensorceleur, Magicien" },
+  { name:"Communication à distance", level:3, school:"Divination", classes:"Barde, Clerc, Magicien, Occultiste" },
+  { name:"Convocation de mort-vivant", level:3, school:"Nécromancie", classes:"Magicien, Occultiste" },
+  { name:"Motif hypnotique", level:3, school:"Illusion", classes:"Barde, Ensorceleur, Magicien, Occultiste" },
+  { name:"Petite hutte de Léomund", level:3, school:"Évocation", classes:"Barde, Magicien" },
+  { name:"Voracité de Hadar", level:3, school:"Invocation", classes:"Occultiste" },
+  { name:"Châtiment de cécité", level:3, school:"Évocation", classes:"Paladin" },
+  { name:"Création de nourriture et d'eau", level:3, school:"Invocation", classes:"Clerc, Paladin" },
+  { name:"Aura du croisé", level:3, school:"Transmutation", classes:"Paladin" },
+  // Niveau 4
+  { name:"Chien de garde de Mordenkainen", level:4, school:"Invocation", classes:"Magicien" },
+  { name:"Coffre secret de Léomund", level:4, school:"Invocation", classes:"Magicien" },
+  { name:"Convocation d'aberration", level:4, school:"Invocation", classes:"Magicien, Occultiste" },
+  { name:"Convocation d'artificiel", level:4, school:"Invocation", classes:"Magicien" },
+  { name:"Fabrication", level:4, school:"Transmutation", classes:"Magicien" },
+  { name:"Sphère résiliente d'Otiluke", level:4, school:"Abjuration", classes:"Ensorceleur, Magicien" },
+  { name:"Sphère de vitriol", level:4, school:"Évocation", classes:"Ensorceleur, Magicien" },
+  { name:"Fontaine de lune", level:4, school:"Évocation", classes:"Barde, Druide" },
+  { name:"Châtiment de stupeur", level:4, school:"Enchantement", classes:"Paladin" },
+  // Niveau 5
+  { name:"Brume mortelle", level:5, school:"Invocation", classes:"Ensorceleur, Magicien" },
+  { name:"Création", level:5, school:"Illusion", classes:"Magicien" },
+  { name:"Entrave planaire", level:5, school:"Abjuration", classes:"Clerc, Druide, Magicien, Occultiste" },
+  { name:"Apparence trompeuse", level:5, school:"Illusion", classes:"Barde, Ensorceleur, Magicien" },
+  { name:"Tempête radieuse de Jallarzi", level:5, school:"Évocation", classes:"Ensorceleur, Occultiste, Magicien" },
+  { name:"Double illusoire", level:5, school:"Illusion", classes:"Barde, Ensorceleur, Magicien" },
+  { name:"Convocation de dragon", level:5, school:"Invocation", classes:"Magicien" },
+  { name:"Châtiment du ban", level:5, school:"Invocation", classes:"Paladin" },
+  // Niveau 6
+  { name:"Chaudron bouillonnant de Tasha", level:6, school:"Invocation", classes:"Magicien, Occultiste" },
+  { name:"Convocation de fiélon", level:6, school:"Invocation", classes:"Occultiste" },
+  { name:"Convocations instantanées de Drawmij", level:6, school:"Invocation", classes:"Magicien" },
+  { name:"Mauvais œil", level:6, school:"Nécromancie", classes:"Barde, Ensorceleur, Magicien, Occultiste" },
+  { name:"Possession", level:6, school:"Nécromancie", classes:"Occultiste" },
+  { name:"Préméditation", level:6, school:"Abjuration", classes:"Magicien" },
+  { name:"Protections et sceaux", level:6, school:"Abjuration", classes:"Barde, Magicien" },
+  // Niveau 7
+  { name:"Dissimulation suprême", level:7, school:"Transmutation", classes:"Magicien" },
+  { name:"Embruns prismatiques", level:7, school:"Évocation", classes:"Ensorceleur, Magicien" },
+  { name:"Épée de Mordenkainen", level:7, school:"Évocation", classes:"Magicien" },
+  { name:"Parole divine", level:7, school:"Évocation", classes:"Clerc" },
+  { name:"Mot de pouvoir fortifiant", level:7, school:"Enchantement", classes:"Barde" },
+  // Niveau 8
+  { name:"Aliénation", level:8, school:"Enchantement", classes:"Barde, Magicien, Occultiste" },
+  { name:"Esprit impénétrable", level:8, school:"Abjuration", classes:"Barde, Magicien" },
+  { name:"Aura sacrée", level:8, school:"Abjuration", classes:"Clerc" },
+  // Niveau 9
+  { name:"Ennemi subconscient", level:9, school:"Illusion", classes:"Magicien, Occultiste" },
 ];
 
 // ── Base de données des armes D&D 2024 ──
@@ -2828,6 +2901,28 @@ const EQUIPMENT_DB = [
   { name:"Kit de l'ecclésiastique",cat:"kit",           cost:"19 po",   weight:9,    desc:"Sac à dos, couverture, 10 bougies, boîte à amadou, rations 2j, outre, symbole sacré." },
   { name:"Kit du diplomate",       cat:"kit",           cost:"39 po",   weight:18,   desc:"Coffre, 2 étuis à parchemins, habits fins, encre, plume, lampe, huile ×2, papier ×5, cire à cacheter." },
   { name:"Kit du cambrioleur",     cat:"kit",           cost:"16 po",   weight:21.5, desc:"Sac à dos, billes, corde soie 3m, cloche, 5 bougies, pied-de-biche, marteau, 10 pitons, lanterne, huile ×2, rations 5j, boîte à amadou, outre, outils de voleur." },
+  // ── Équipement supplémentaire ──
+  { name:"Acide (fiole)",           cat:"équipement",    cost:"25 po",   weight:0.5,  desc:"Action Attaque : jet 6 m. JS Dex (8+DEX+maîtrise) ou 2d6 dégâts d'acide." },
+  { name:"Bélier portable",         cat:"équipement",    cost:"4 po",    weight:17.5, desc:"+4 au test de Force pour enfoncer une porte. Avantage si assisté." },
+  { name:"Cadenas",                  cat:"équipement",    cost:"10 po",   weight:0.5,  desc:"Livré avec une clef. Crocheter : test Dex (Escamotage) DD 15 + outils de voleur." },
+  { name:"Carquois",                 cat:"équipement",    cost:"1 po",    weight:0.5,  desc:"Contient jusqu'à 20 flèches." },
+  { name:"Chaîne (3 m)",             cat:"équipement",    cost:"5 po",    weight:5,    desc:"Immobiliser une cible agrippée/entravée/neutralisée (test For Athlétisme DD 13). Se libérer : Dex Acrobaties DD 18 ou For DD 20 (action)." },
+  { name:"Chausse-trappes",          cat:"équipement",    cost:"1 po",    weight:1,    desc:"Couvrir 1,5m×1,5m. Premier passage : JS Dex DD 15 ou 1 dégât perforant + Vitesse 0 jusqu'au prochain tour." },
+  { name:"Feu grégeois (flasque)",   cat:"équipement",    cost:"50 po",   weight:0.5,  desc:"Action Attaque : jet 6 m. JS Dex (8+DEX+maîtrise) ou 1d4 feu + prend feu." },
+  { name:"Filet de pêche",           cat:"équipement",    cost:"1 po",    weight:2.5,  desc:"Usage civil. Distinct du filet de combat (arme martiale)." },
+  { name:"Lampe",                    cat:"équipement",    cost:"5 pa",    weight:0.5,  desc:"Éclaire 4,5 m vive + 9 m faible, 6 h / flasque d'huile." },
+  { name:"Parchemin de sort (mineur)",cat:"équipement",   cost:"30 po",   weight:0,    desc:"Contient un sort mineur. Utilisable une seule fois." },
+  { name:"Parchemin de sort (niv. 1)",cat:"équipement",   cost:"50 po",   weight:0,    desc:"Contient un sort de niveau 1. Utilisable une seule fois." },
+  { name:"Pelle",                    cat:"équipement",    cost:"2 po",    weight:2.5,  desc:"Outil de fouille standard." },
+  { name:"Potion de guérison",       cat:"équipement",    cost:"50 po",   weight:0.25, desc:"Action Bonus : regagnez 2d4+2 PV." },
+  { name:"Robe",                     cat:"équipement",    cost:"1 po",    weight:2,    desc:"Vêtement ample de base." },
+  { name:"Sac de couchage",          cat:"équipement",    cost:"1 po",    weight:3.5,  desc:"Permet de dormir confortablement à l'extérieur." },
+  { name:"Étui à carreaux d'arbalète",cat:"équipement",   cost:"1 po",    weight:1,    desc:"Contient jusqu'à 20 carreaux d'arbalète." },
+  // ── Outils supplémentaires ──
+  { name:"Matériel de brasseur",     cat:"outil",         cost:"20 po",   weight:4.5,  desc:"Détecter un breuvage empoisonné (DD 15), identifier un alcool (DD 10). Artisanat : antidote." },
+  { name:"Matériel de calligraphe",  cat:"outil",         cost:"10 po",   weight:2.5,  desc:"Écrire avec fioritures (DD 10), déchiffrer un vieux parchemin (DD 15). Artisanat : parchemin de sorts." },
+  { name:"Outils de souffleur de verre", cat:"outil",     cost:"30 po",   weight:2.5,  desc:"Déterminer ce qu'a contenu un objet en verre lors des dernières 24h (DD 15). Artisanat : bouteille, fiole, longue-vue, loupe." },
+  { name:"Ustensiles de cuisinier",  cat:"outil",         cost:"1 po",    weight:4,    desc:"Améliorer saveur (DD 10), détecter un aliment avarié ou empoisonné (DD 15)." },
 ];
 
 // ── Dons D&D 2024 (PHB FR) ──
