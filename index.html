@@ -176,41 +176,61 @@ header h1 {
   margin-bottom: 7px;
 }
 
-/* ════════ CASE CARACTÉRISTIQUE (style image) ════════ */
+/* ════════ CASE CARACTÉRISTIQUE (style image PDF) ════════ */
 .ability-box {
   background: var(--panel-bg);
-  border: 3px solid var(--frame-outer);
-  border-radius: 5px;
+  border: 4px solid var(--frame-outer);
+  border-radius: 4px;
   text-align: center;
-  padding: 0 0 5px;
-  overflow: hidden;
-  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.3), 0 1px 4px rgba(0,0,0,0.25);
+  padding: 0 0 6px;
+  overflow: visible;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.07), 0 2px 5px rgba(0,0,0,0.35);
   margin-bottom: 4px;
+  position: relative;
+}
+
+/* Crochets décoratifs aux coins */
+.ability-box::before, .ability-box::after {
+  content: '';
+  position: absolute;
+  width: 10px; height: 10px;
+  border-color: var(--frame-outer);
+  border-style: solid;
+  pointer-events: none;
+  z-index: 1;
+}
+.ability-box::before {
+  top: -2px; left: -2px;
+  border-width: 3px 0 0 3px;
+}
+.ability-box::after {
+  bottom: -2px; right: -2px;
+  border-width: 0 3px 3px 0;
 }
 
 .ability-box:hover { border-color: var(--red); }
 
 .ability-box .name {
   font-family: 'Cinzel', serif;
-  font-size: 11px; letter-spacing: 1.5px;
+  font-size: 12px; letter-spacing: 1.5px;
   color: var(--text); text-transform: uppercase; font-weight: 700;
   background: var(--ab-band);
   padding: 4px 4px 3px;
   margin: 0;
   display: block;
-  border-bottom: 2px solid rgba(0,0,0,0.3);
+  border-bottom: 2px solid rgba(0,0,0,0.35);
 }
 
-/* ── Zone centrale : anneau modificateur (gauche) + valeur (droite) ── */
+/* ── Zone centrale : anneau (gauche) + valeur (droite) ── */
 .ab-main {
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  padding: 6px 6px 4px;
+  justify-content: space-evenly;
+  padding: 8px 4px 2px;
   gap: 4px;
 }
 
-/* Anneau modificateur */
+/* Colonne anneau modificateur */
 .ab-mod-wrap {
   display: flex;
   flex-direction: column;
@@ -218,41 +238,41 @@ header h1 {
   flex: 1 1 0;
 }
 
+/* Anneau extérieur */
 .ab-mod-ring {
-  width: 52px; height: 52px;
+  width: 58px; height: 58px;
   border: 4px solid var(--frame-outer);
   border-radius: 50%;
   background: var(--panel-bg);
-  box-shadow: 0 0 0 2px rgba(0,0,0,0.2), inset 0 0 0 4px rgba(0,0,0,0.08);
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.25);
   display: flex; align-items: center; justify-content: center;
   position: relative;
 }
 
-/* Anneau intérieur décoratif */
-.ab-mod-ring::before {
-  content: '';
-  position: absolute;
-  inset: 6px;
-  border-radius: 50%;
-  border: 1.5px solid rgba(200,168,75,0.35);
-  pointer-events: none;
-}
-
-/* Triangle indicateur sous le cercle */
+/* Triangle indicateur sous l'anneau */
 .ab-mod-ring::after {
   content: '';
   position: absolute;
-  bottom: -9px; left: 50%; transform: translateX(-50%);
+  bottom: -10px; left: 50%; transform: translateX(-50%);
   width: 0; height: 0;
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
-  border-top: 7px solid var(--frame-outer);
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 8px solid var(--frame-outer);
   pointer-events: none;
 }
 
+/* Disque intérieur foncé (le "bouton" avec le chiffre) */
+.ab-mod-inner {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--frame-outer);
+  box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
+  display: flex; align-items: center; justify-content: center;
+}
+
 .ability-box .modifier {
-  font-size: 22px; font-weight: 700;
-  color: var(--text);
+  font-size: 26px; font-weight: 700;
+  color: #e8d8b8;
   font-family: 'Cinzel', serif;
   line-height: 1;
   background: transparent;
@@ -264,34 +284,34 @@ header h1 {
 
 .ab-mod-lbl {
   font-family: 'Cinzel', serif;
-  font-size: 8px; letter-spacing: 0.4px;
+  font-size: 8px; letter-spacing: 0.3px;
   text-transform: uppercase;
   color: var(--text-dim);
-  margin-top: 11px;
+  margin-top: 13px;
   white-space: nowrap;
 }
 
-/* Zone score/valeur */
+/* Colonne score/valeur */
 .ab-score-wrap {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
+  gap: 3px;
   flex: 1 1 0;
 }
 
 .ab-score-lbl {
   font-family: 'Cinzel', serif;
-  font-size: 8px; letter-spacing: 0.4px;
+  font-size: 8px; letter-spacing: 0.3px;
   text-transform: uppercase;
   color: var(--text-dim);
   white-space: nowrap;
 }
 
 .ability-box .score-input {
-  font-size: 22px; font-weight: 700; text-align: center;
-  width: 44px;
-  background: rgba(0,0,0,0.08);
+  font-size: 28px; font-weight: 700; text-align: center;
+  width: 46px;
+  background: rgba(0,0,0,0.1);
   border: 2px solid var(--border);
   border-radius: 3px;
   color: var(--text); padding: 3px 0;
@@ -700,9 +720,10 @@ body.print-measuring .stat-bubble  { min-width: 44px !important; height: auto !i
 body.print-measuring .stat-bubble .lbl { font-size: 9px !important; white-space: nowrap !important; }
 body.print-measuring #abilities-grid { gap: 2px !important; grid-template-columns: 1fr 1fr !important; display: grid !important; }
 body.print-measuring #abilities-grid .ability-box { padding: 0 2px 3px !important; margin: 0 !important; }
-body.print-measuring #abilities-grid .ability-box .score-input { font-size:16px !important; width:28px !important; }
-body.print-measuring #abilities-grid .ability-box .modifier    { font-size:16px !important; }
-body.print-measuring #abilities-grid .ab-mod-ring              { width:30px !important; height:30px !important; }
+body.print-measuring #abilities-grid .ability-box .score-input { font-size:16px !important; width:30px !important; }
+body.print-measuring #abilities-grid .ability-box .modifier    { font-size:14px !important; color:#fff !important; }
+body.print-measuring #abilities-grid .ab-mod-ring              { width:32px !important; height:32px !important; }
+body.print-measuring #abilities-grid .ab-mod-inner             { width:22px !important; height:22px !important; }
 body.print-measuring .slot-pip     { width: 10px !important; height: 10px !important; }
 body.print-measuring .slot-box     { padding: 2px !important; margin: 1px !important; }
 body.print-measuring .slot-level   { font-size: 8px !important; margin-bottom: 2px !important; }
@@ -766,8 +787,10 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
     background: #fff !important;
     border: 2.5px solid #333 !important;
     box-shadow: none !important;
-    padding: 0 !important;
+    padding: 0 0 3px !important;
+    overflow: visible !important;
   }
+  .ability-box::before, .ability-box::after { display: none !important; }
   .ability-box .name {
     background: #e8e4d8 !important;
     color: #1a1008 !important;
@@ -777,15 +800,19 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
     border-bottom: 1.5px solid #999 !important;
   }
   .ab-mod-ring {
-    width: 30px !important; height: 30px !important;
+    width: 32px !important; height: 32px !important;
     border: 2.5px solid #333 !important;
     box-shadow: none !important;
   }
-  .ab-mod-ring::before { display: none !important; }
-  .ab-mod-ring::after  { display: none !important; }
-  .ability-box .modifier { font-size: 16px !important; color: #000 !important; }
-  .ability-box .score-input { font-size: 16px !important; width: 28px !important; padding: 1px 0 !important; color: #000 !important; border: 1.5px solid #888 !important; }
-  .ab-mod-lbl, .ab-score-lbl { font-size: 6px !important; }
+  .ab-mod-ring::after { display: none !important; }
+  .ab-mod-inner {
+    width: 22px !important; height: 22px !important;
+    background: #333 !important;
+    box-shadow: none !important;
+  }
+  .ability-box .modifier { font-size: 14px !important; color: #fff !important; }
+  .ability-box .score-input { font-size: 16px !important; width: 30px !important; padding: 1px 0 !important; color: #000 !important; border: 1.5px solid #888 !important; }
+  .ab-mod-lbl, .ab-score-lbl { font-size: 6px !important; margin-top: 5px !important; }
   .ab-main { padding: 3px 2px 1px !important; gap: 2px !important; }
   #abilities-grid { gap: 2px !important; grid-template-columns: 1fr 1fr !important; display: grid !important; }
   #abilities-grid .ability-box { margin: 0 !important; }
@@ -861,7 +888,7 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
     width: 100%;
     box-sizing: border-box;
     margin-bottom: 0;
-    padding: 0;
+    padding: 0 0 5px;
   }
   #abilities-grid .ability-box .name {
     margin: 0;
@@ -872,14 +899,17 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
     text-overflow: ellipsis;
   }
   #abilities-grid .ability-box .score-input {
-    font-size: 22px;
-    width: 40px;
+    font-size: 24px;
+    width: 42px;
   }
   #abilities-grid .ability-box .modifier {
-    font-size: 20px;
+    font-size: 22px;
   }
   #abilities-grid .ab-mod-ring {
-    width: 46px; height: 46px;
+    width: 50px; height: 50px;
+  }
+  #abilities-grid .ab-mod-inner {
+    width: 34px; height: 34px;
   }
   /* Skills visibles dans la colonne des caractéristiques */
   #abilities-grid .ability-skills {
@@ -3610,7 +3640,9 @@ function buildAbilities() {
       <div class="ab-main">
         <div class="ab-mod-wrap">
           <div class="ab-mod-ring">
-            <div class="modifier" id="mod-${a.id}">+0</div>
+            <div class="ab-mod-inner">
+              <div class="modifier" id="mod-${a.id}">+0</div>
+            </div>
           </div>
           <div class="ab-mod-lbl">Modificateur</div>
         </div>
@@ -3624,7 +3656,7 @@ function buildAbilities() {
         <input type="checkbox" id="save-prof-${a.id}" onchange="updateAll()" title="Maîtrise sauvegarde">
         <div class="prof-dot" id="save-dot-${a.id}"></div>
         <span class="save-val" id="save-val-${a.id}">+0</span>
-        <span class="save-lbl">Jet de sauvegarde</span>
+        <span class="save-lbl">JS</span>
       </div>
       ${skillsHtml}
     `;
