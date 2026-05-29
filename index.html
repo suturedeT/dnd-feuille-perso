@@ -4458,61 +4458,48 @@ function addAttackFromPicker() {
 
 
 function filterCantripsOffPicker() {
-  var search = (document.getElementById("search-cantrip-off").value || "").toLowerCase();
-  var picker = document.getElementById("cantrip-off-picker");
+  const search = (document.getElementById('search-cantrip-off')?.value || '').toLowerCase();
+  const picker = document.getElementById('cantrip-off-picker');
   if (!picker) return;
-  var filtered = CANTRIPS_OFFENSIFS_DB.filter(function(c) {
-    return !search || c.name.toLowerCase().indexOf(search) !== -1;
-  }).sort(function(a, b) { return a.name.localeCompare(b.name, "fr"); });
-  picker.innerHTML = filtered.map(function(c) {
-    var typeLabel = c.attack ? "Attaque" : ("JS " + c.save);
-    return "<label class=\"cb-item\">" +
-      "<input type=\"checkbox\" value=\"" + c.name + "\" onchange=\"updateCantripsOffInfo()\">" +
-      "<span>" + c.name + "</span>" +
-      "<span style=\"color:var(--text-dim);margin-left:auto;font-size:18px;\">" + c.dmg + " " + c.dmgType + "</span>" +
-      "</label>";
-  }).join("");
+  const filtered = CANTRIPS_OFFENSIFS_DB
+    .filter(c => !search || c.name.toLowerCase().includes(search))
+    .sort((a, b) => a.name.localeCompare(b.name));
+  picker.innerHTML = filtered.map(c => {
+    const tl = c.attack ? 'Attaque' : ('JS ' + c.save);
+    return `<label class="cb-item"><input type="checkbox" value="${c.name}" onchange="updateCantripsOffInfo()">${c.name} <span style="color:var(--text-dim);font-size:18px;">${c.dmg} ${c.dmgType} · ${tl}</span></label>`;
+  }).join('');
   updateCantripsOffInfo();
 }
 
 function updateCantripsOffInfo() {
-  var picker = document.getElementById("cantrip-off-picker");
-  var info   = document.getElementById("cantrip-off-info");
+  const picker = document.getElementById('cantrip-off-picker');
+  const info   = document.getElementById('cantrip-off-info');
   if (!picker || !info) return;
-  var sel = Array.from(picker.querySelectorAll("input:checked")).map(function(cb) { return cb.value; });
-  if (!sel.length) { info.innerHTML = ""; return; }
-  if (sel.length > 1) { info.innerHTML = "<span style=\"color:var(--gold);\">" + sel.length + " sorts sélectionnés</span>"; return; }
-  var c = CANTRIPS_OFFENSIFS_DB.find(function(x) { return x.name === sel[0]; });
+  const sel = Array.from(picker.querySelectorAll('input:checked'));
+  if (!sel.length) { info.innerHTML = ''; return; }
+  if (sel.length > 1) { info.innerHTML = `<span style="color:var(--gold);">${sel.length} sorts sélectionnés</span>`; return; }
+  const c = CANTRIPS_OFFENSIFS_DB.find(x => x.name === sel[0].value);
   if (!c) return;
-  var typeLabel = c.attack ? "Jet d attaque" : ("JS " + c.save);
-  info.innerHTML = "<strong>" + c.name + "</strong> &middot; " + typeLabel + " &middot; " + c.dmg + " " + c.dmgType + " &middot; " + c.range + " <span style=\"color:var(--text-dim);\">" + c.note + "</span>";
+  const tl = c.attack ? "Jet d'attaque" : ('JS ' + c.save);
+  info.innerHTML = `<strong>${c.name}</strong> &middot; ${tl} &middot; ${c.dmg} ${c.dmgType} &middot; ${c.range} <span style="color:var(--text-dim);">${c.note}</span>`;
 }
 
 function addCantripsOffFromPicker() {
-  var picker = document.getElementById("cantrip-off-picker");
+  const picker = document.getElementById('cantrip-off-picker');
   if (!picker) return;
-  var selected = Array.from(picker.querySelectorAll("input:checked")).map(function(cb) { return cb.value; });
-  if (!selected.length) return;
-  var atkEl = document.getElementById("spell-atk");
-  var dcEl  = document.getElementById("spell-dc");
-  var atkStr = (atkEl && atkEl.textContent.trim() !== "—") ? atkEl.textContent.trim() : "+?";
-  var dcStr  = (dcEl  && dcEl.textContent.trim()  !== "—") ? dcEl.textContent.trim()  : "?";
-  selected.forEach(function(cname) {
-    var c = CANTRIPS_OFFENSIFS_DB.find(function(x) { return x.name === cname; });
+  const sel = Array.from(picker.querySelectorAll('input:checked'));
+  if (!sel.length) return;
+  const atkEl = document.getElementById('spell-atk');
+  const dcEl  = document.getElementById('spell-dc');
+  const atkStr = (atkEl && atkEl.textContent.trim() !== '—') ? atkEl.textContent.trim() : '+?';
+  const dcStr  = (dcEl  && dcEl.textContent.trim()  !== '—') ? dcEl.textContent.trim()  : '?';
+  sel.forEach(cb => {
+    const c = CANTRIPS_OFFENSIFS_DB.find(x => x.name === cb.value);
     if (!c) return;
-    var bonusStr = c.attack ? atkStr : (c.save !== "---" ? "JS " + c.save + " DD " + dcStr : "—");
-    var id = Date.now() + "_" + Math.random();
-    state.attacks.push({
-      id: id,
-      name:  c.name,
-      bonus: bonusStr,
-      dmg:   c.dmg + " " + c.dmgType,
-      range: c.range,
-      notes: "Sort mineur - " + c.note,
-      magicBonus: 0
-    });
+    const bonus = c.attack ? atkStr : (c.save !== '---' ? `JS ${c.save} DD ${dcStr}` : '—');
+    state.attacks.push({ id: Date.now()+'_'+Math.random(), name: c.name, bonus, dmg: c.dmg+' '+c.dmgType, range: c.range, notes: 'Sort mineur - '+c.note, magicBonus: 0 });
   });
-  picker.querySelectorAll("input").forEach(function(cb) { cb.checked = false; });
+  picker.querySelectorAll('input').forEach(cb => cb.checked = false);
   updateCantripsOffInfo();
   renderAttacks();
   autoSave();
