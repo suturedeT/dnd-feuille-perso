@@ -924,7 +924,7 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
 <body>
 
 <!-- ════════════ AUTH OVERLAY ════════════ -->
-<div id="auth-overlay" style="position:fixed;inset:0;z-index:99999;background:linear-gradient(135deg,#1a0a00 0%,#2d1200 40%,#1a0a00 100%);display:flex;align-items:center;justify-content:center;font-family:'Crimson Text',serif;">
+<div id="auth-overlay" style="display:none;position:fixed;inset:0;z-index:99999;background:linear-gradient(135deg,#1a0a00 0%,#2d1200 40%,#1a0a00 100%);display:flex;align-items:center;justify-content:center;font-family:'Crimson Text',serif;">
   <div style="background:#1e1208;border:3px solid #8b5e1a;border-radius:12px;padding:36px 40px;min-width:340px;max-width:400px;width:90%;box-shadow:0 0 40px rgba(139,94,26,.4);">
     <div style="text-align:center;margin-bottom:24px;">
       <div style="font-family:'Cinzel',serif;font-size:33px;color:#c8a84b;letter-spacing:2px;">⚔ D&amp;D 2024 FR</div>
@@ -1014,7 +1014,7 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
 </style>
 
 
-<div id="main-app" style="display:none;">
+<div id="main-app" style="display:block;">
 <!-- Dragon overlay (gardé pour compatibilité JS) -->
 
 
@@ -5609,27 +5609,17 @@ function _getUsers()    { try { return JSON.parse(localStorage.getItem('dnd_auth
 function _saveUsers(u)  { localStorage.setItem('dnd_auth_users', JSON.stringify(u)); }
 function _getSession()  { return localStorage.getItem('dnd_auth_session'); }
 
-async function initAuth() {
-  // ── Bypass urgence : ?reset_auth=DnD2024! dans l'URL ─────────────
-  const _up = new URLSearchParams(window.location.search);
-  if (_up.get('reset_auth') === RESET_SECRET) {
-    localStorage.removeItem('dnd_auth_users');
-    localStorage.removeItem('dnd_auth_session');
-    history.replaceState({}, '', window.location.pathname);
-    const hash = await _hashPwd(RESET_SECRET);
-    _saveUsers([{ id:'admin', username:'admin', passwordHash:hash, role:'admin', approved:true }]);
-    window.currentUser = { id:'admin', username:'admin', role:'admin', approved:true };
-    localStorage.setItem('dnd_auth_session', 'admin');
-    _showApp(); return;
-  }
-  const users = _getUsers();
-  const session = _getSession();
-  if (session) {
-    const u = users.find(x => x.id === session && x.approved);
-    if (u) { window.currentUser = u; _showApp(); return; }
-  }
-  _showPanel('auth-login-panel');
-  document.getElementById('auth-overlay').style.display = 'flex';
+function initAuth() {
+  // Auth désactivée — accès direct
+  window.currentUser = { id:'admin', username:'admin', role:'admin', approved:true };
+  document.getElementById('auth-overlay').style.display = 'none';
+  document.getElementById('main-app').style.display = 'block';
+  const ud = document.getElementById('user-display');
+  if (ud) ud.textContent = '';
+  const ab = document.getElementById('admin-btn');
+  if (ab) ab.style.display = 'none';
+  loadSheet(true);
+  updateAll();
 }
 
 function _showPanel(id) {
