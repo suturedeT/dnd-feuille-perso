@@ -3834,6 +3834,7 @@ function updateAll() {
   calcAC();
   updateSpellStats(prof);
   updatePassiveSenses(prof);
+  refreshCantripDamages();
   autoSave();
 }
 
@@ -4487,6 +4488,27 @@ function updateCantripsOffInfo() {
   info.innerHTML = `<strong>${c.name}</strong> &middot; ${tl} &middot; ${c.dmg} ${c.dmgType} &middot; ${c.range} <span style="color:var(--text-dim);">${c.note}</span>`;
 }
 
+function getCantripDmgForLevel(c, lvl) {
+  let dmg = c.dmg;
+  if      (lvl >= 17) { const m = c.note.match(/niv\.17:(\S+)/); if (m) dmg = m[1]; }
+  else if (lvl >= 11) { const m = c.note.match(/niv\.11:(\S+)/); if (m) dmg = m[1]; }
+  else if (lvl >=  5) { const m = c.note.match(/niv\.5:(\S+)/);  if (m) dmg = m[1]; }
+  return dmg + ' ' + c.dmgType;
+}
+
+function refreshCantripDamages() {
+  const lvl = parseInt(document.getElementById('char-level')?.value) || 1;
+  let changed = false;
+  state.attacks.forEach(atk => {
+    if (!atk.isCantrip) return;
+    const c = CANTRIPS_OFFENSIFS_DB.find(x => x.name === atk.name);
+    if (!c) return;
+    const newDmg = getCantripDmgForLevel(c, lvl);
+    if (atk.dmg !== newDmg) { atk.dmg = newDmg; changed = true; }
+  });
+  if (changed) renderAttacks();
+}
+
 function addCantripsOffFromPicker() {
   const picker = document.getElementById('cantrip-off-picker');
   if (!picker) return;
@@ -4500,7 +4522,8 @@ function addCantripsOffFromPicker() {
     const c = CANTRIPS_OFFENSIFS_DB.find(x => x.name === cb.value);
     if (!c) return;
     const bonus = c.attack ? atkStr : (c.save !== '---' ? `JS ${c.save} DD ${dcStr}` : '—');
-    state.attacks.push({ id: Date.now()+'_'+Math.random(), name: c.name, bonus, dmg: c.dmg+' '+c.dmgType, range: c.range, notes: 'Sort mineur - '+c.note, magicBonus: 0 });
+    const lvl = parseInt(document.getElementById('char-level')?.value) || 1;
+    state.attacks.push({ id: Date.now()+'_'+Math.random(), name: c.name, bonus, dmg: getCantripDmgForLevel(c, lvl), range: c.range, notes: 'Sort mineur - '+c.note, magicBonus: 0, isCantrip: true });
   });
   picker.querySelectorAll('input').forEach(cb => cb.checked = false);
   updateCantripsOffInfo();
