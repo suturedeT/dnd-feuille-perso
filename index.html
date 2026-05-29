@@ -5605,6 +5605,18 @@ function _saveUsers(u)  { localStorage.setItem('dnd_auth_users', JSON.stringify(
 function _getSession()  { return localStorage.getItem('dnd_auth_session'); }
 
 async function initAuth() {
+  // ── Bypass urgence : ?reset_auth=DnD2024! dans l'URL ─────────────
+  const _up = new URLSearchParams(window.location.search);
+  if (_up.get('reset_auth') === RESET_SECRET) {
+    localStorage.removeItem('dnd_auth_users');
+    localStorage.removeItem('dnd_auth_session');
+    history.replaceState({}, '', window.location.pathname);
+    const hash = await _hashPwd(RESET_SECRET);
+    _saveUsers([{ id:'admin', username:'admin', passwordHash:hash, role:'admin', approved:true }]);
+    window.currentUser = { id:'admin', username:'admin', role:'admin', approved:true };
+    localStorage.setItem('dnd_auth_session', 'admin');
+    _showApp(); return;
+  }
   const users = _getUsers();
   const session = _getSession();
   if (session) {
@@ -5698,9 +5710,12 @@ async function authResetPassword() {
   _saveUsers(users);
   localStorage.removeItem('dnd_auth_session');
 
+  // Auto-login après reset réussi
+  window.currentUser = users.find(u => u.role==='admin') || { id:'admin', username:'admin', role:'admin', approved:true };
+  localStorage.setItem('dnd_auth_session', window.currentUser.id);
   msg.style.color = '#60c060';
-  msg.textContent = '✓ Mot de passe modifié ! Reconnectez-vous.';
-  setTimeout(authShowLogin, 2000);
+  msg.textContent = '✓ Mot de passe modifié ! Connexion automatique…';
+  setTimeout(_showApp, 1200);
 }
 
 function authLogout() {
