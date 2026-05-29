@@ -5726,7 +5726,17 @@ function showAdminPanel() {
           ${active.length ? active.map(u=>row(u, deleteBtn(u.id))).join('') : '<div style="color:#7a6a50;font-size:20px;">Aucun utilisateur.</div>'}
         </div>
 
-        <button onclick="document.getElementById('_admin_modal').remove()" style="margin-top:18px;width:100%;padding:9px;background:#3a2010;border:1px solid #8b5e1a;border-radius:6px;color:#c8a84b;cursor:pointer;font-family:\'Cinzel\',serif;">Fermer</button>
+        <div style="margin-top:18px;border-top:1px solid #3a2010;padding-top:14px;">
+          <div style="color:#c8a84b;font-size:20px;font-family:\'Cinzel\',serif;margin-bottom:10px;">➕ Créer un compte</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <input id="_new_user" type="text" placeholder="Identifiant (min. 3 caractères)" style="padding:7px 10px;background:#2a1a08;border:1px solid #5a3a18;border-radius:5px;color:#e8d8b0;font-size:18px;width:100%;box-sizing:border-box;">
+            <input id="_new_pass" type="password" placeholder="Mot de passe (min. 6 caractères)" style="padding:7px 10px;background:#2a1a08;border:1px solid #5a3a18;border-radius:5px;color:#e8d8b0;font-size:18px;width:100%;box-sizing:border-box;">
+            <div id="_new_msg" style="font-size:17px;min-height:16px;color:#e05050;"></div>
+            <button onclick="adminCreateUser()" style="padding:8px;background:#2a4a1a;border:1px solid #4a8a2a;color:#c0e0a0;font-size:18px;border-radius:5px;cursor:pointer;font-family:\'Cinzel\',serif;">Créer le compte</button>
+          </div>
+        </div>
+
+        <button onclick="document.getElementById('_admin_modal').remove()" style="margin-top:14px;width:100%;padding:9px;background:#3a2010;border:1px solid #8b5e1a;border-radius:6px;color:#c8a84b;cursor:pointer;font-family:\'Cinzel\',serif;">Fermer</button>
       </div>
     </div>`;
   document.body.insertAdjacentHTML('beforeend', html);
@@ -5752,6 +5762,25 @@ function adminDelete(id) {
   const i = users.findIndex(x=>x.id===id);
   if (i>=0) { users.splice(i,1); _saveUsers(users); }
   _refreshAdmin();
+}
+
+async function adminCreateUser() {
+  const username = (document.getElementById('_new_user').value || '').trim();
+  const password =  document.getElementById('_new_pass').value || '';
+  const msg      =  document.getElementById('_new_msg');
+  msg.style.color = '#e05050'; msg.textContent = '';
+  if (username.length < 3) { msg.textContent = 'Identifiant trop court (min. 3 caractères).'; return; }
+  if (password.length < 6) { msg.textContent = 'Mot de passe trop court (min. 6 caractères).'; return; }
+  const users = _getUsers();
+  if (users.find(u => u.username === username)) { msg.textContent = 'Cet identifiant est déjà utilisé.'; return; }
+  const hash = await _hashPwd(password);
+  users.push({ id:'user_'+Date.now(), username, passwordHash:hash, role:'user', approved:true });
+  _saveUsers(users);
+  msg.style.color = '#60c060';
+  msg.textContent = '✓ Compte créé ! Identifiant : ' + username;
+  document.getElementById('_new_user').value = '';
+  document.getElementById('_new_pass').value = '';
+  setTimeout(_refreshAdmin, 1500);
 }
 
 </script>
