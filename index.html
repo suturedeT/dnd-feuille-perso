@@ -3960,6 +3960,7 @@ function calcAC() {
   if (el('calc-ac-display')) el('calc-ac-display').textContent = total;
   if (el('ac-breakdown'))    el('ac-breakdown').textContent    = parts.join(' + ');
 
+  autoSave();
   return total;
 }
 
