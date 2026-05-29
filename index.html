@@ -1387,6 +1387,10 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
       <div class="panel-title">Compétences</div>
       <div id="skills-list"></div>
     </div>
+    <div class="panel">
+      <div class="panel-title">Trésor &amp; Objets magiques</div>
+      <textarea id="treasure" placeholder="Objets magiques, gemmes, œuvres d'art…" style="min-height:100px;" oninput="autoSave()"></textarea>
+    </div>
   </div>
 
   <!-- ═══ TRAITS DE PERSONNALITÉ ═══ -->
@@ -1847,10 +1851,6 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
     <div style="margin-top:6px;font-size:18px;color:var(--text-dim);">
       Poids total : <span id="total-weight" style="color:var(--red);font-weight:700;">0</span> kg
     </div>
-  </div>
-  <div class="panel">
-    <div class="panel-title">Trésor &amp; Objets magiques</div>
-    <textarea id="treasure" placeholder="Objets magiques, gemmes, œuvres d'art…" style="min-height:100px;" oninput="autoSave()"></textarea>
   </div>
 </div>
 
