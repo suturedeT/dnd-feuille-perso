@@ -3719,6 +3719,7 @@ function buildDeathSaves() {
 
 function buildExhaustion() {
   const wrap = document.getElementById('exhaustion-pips');
+  if (!wrap) return; // panneau épuisement absent du DOM
   wrap.innerHTML = '';
   for (let i=1;i<=6;i++) {
     const p = document.createElement('div');
@@ -4331,7 +4332,8 @@ function toggleDeathSave(type, idx) {
 function setExhaustion(lvl) {
   state.exhaustion = (state.exhaustion === lvl) ? 0 : lvl;
   for(let i=1;i<=6;i++) {
-    document.getElementById('ex-'+i).classList.toggle('active', i <= state.exhaustion);
+    const pip = document.getElementById('ex-'+i);
+    if (pip) pip.classList.toggle('active', i <= state.exhaustion);
   }
   autoSave();
 }
