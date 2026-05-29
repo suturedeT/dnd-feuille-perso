@@ -5522,12 +5522,6 @@ function _getSession()  { return localStorage.getItem('dnd_auth_session'); }
 function initAuth() {
   // Auth désactivée — accès direct
   window.currentUser = { id:'admin', username:'admin', role:'admin', approved:true };
-  document.getElementById('auth-overlay').style.display = 'none';
-  document.getElementById('main-app').style.display = 'block';
-  const ud = document.getElementById('user-display');
-  if (ud) ud.textContent = '';
-  const ab = document.getElementById('admin-btn');
-  if (ab) ab.style.display = 'none';
   loadSheet(true);
   updateAll();
 }
