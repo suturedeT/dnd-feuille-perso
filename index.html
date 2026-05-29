@@ -923,8 +923,93 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
 </head>
 <body>
 
+<!-- ════════════ AUTH OVERLAY ════════════ -->
+<div id="auth-overlay" style="position:fixed;inset:0;z-index:99999;background:linear-gradient(135deg,#1a0a00 0%,#2d1200 40%,#1a0a00 100%);display:flex;align-items:center;justify-content:center;font-family:'Crimson Text',serif;">
+  <div style="background:#1e1208;border:3px solid #8b5e1a;border-radius:12px;padding:36px 40px;min-width:340px;max-width:400px;width:90%;box-shadow:0 0 40px rgba(139,94,26,.4);">
+    <div style="text-align:center;margin-bottom:24px;">
+      <div style="font-family:'Cinzel',serif;font-size:33px;color:#c8a84b;letter-spacing:2px;">⚔ D&amp;D 2024 FR</div>
+      <div style="font-size:20px;color:#7a6a50;margin-top:4px;">Feuille de Personnage</div>
+    </div>
 
-<div id="main-app" style="display:block;">
+    <!-- LOGIN PANEL -->
+    <div id="auth-login-panel">
+      <div class="auth-field">
+        <label class="auth-label">Identifiant</label>
+        <input id="auth-username" type="text" placeholder="votre identifiant" class="auth-input" onkeydown="if(event.key==='Enter')document.getElementById('auth-password').focus()">
+      </div>
+      <div class="auth-field" style="margin-top:12px;">
+        <label class="auth-label">Mot de passe</label>
+        <input id="auth-password" type="password" placeholder="••••••••" class="auth-input" onkeydown="if(event.key==='Enter')authLogin()">
+      </div>
+      <div id="auth-error" style="color:#e05050;font-size:20px;min-height:18px;margin:10px 0 4px;"></div>
+      <button onclick="authLogin()" style="width:100%;padding:10px;background:#8b5e1a;border:1px solid #c8a84b;border-radius:6px;color:#f0e0c0;font-family:'Cinzel',serif;font-size:21px;cursor:pointer;margin-top:4px;">Se connecter</button>
+      <div style="text-align:center;margin-top:14px;">
+        <span style="color:#7a6a50;font-size:20px;">Pas encore de compte ? </span>
+        <a onclick="authShowRegister()" style="color:#c8a84b;cursor:pointer;font-size:20px;">Faire une demande</a>
+      </div>
+      <div style="text-align:center;margin-top:8px;">
+        <a onclick="authShowReset()" style="color:#4a3a28;cursor:pointer;font-size:15px;letter-spacing:0.5px;">Mot de passe oublié ?</a>
+      </div>
+    </div>
+
+    <!-- RESET PANEL -->
+    <div id="auth-reset-panel" style="display:none;">
+      <div style="font-family:'Cinzel',serif;color:#c8a84b;font-size:22px;margin-bottom:8px;text-align:center;">Réinitialisation</div>
+      <div style="color:#7a6a50;font-size:17px;text-align:center;margin-bottom:16px;">Entrez le code secret et votre nouveau mot de passe.</div>
+      <div class="auth-field">
+        <label class="auth-label">Code secret</label>
+        <input id="reset-code" type="password" placeholder="••••••••" class="auth-input">
+      </div>
+      <div class="auth-field" style="margin-top:12px;">
+        <label class="auth-label">Nouveau mot de passe</label>
+        <input id="reset-password" type="password" placeholder="••••••••" class="auth-input">
+      </div>
+      <div class="auth-field" style="margin-top:12px;">
+        <label class="auth-label">Confirmer</label>
+        <input id="reset-password2" type="password" placeholder="••••••••" class="auth-input" onkeydown="if(event.key==='Enter')authResetPassword()">
+      </div>
+      <div id="reset-message" style="font-size:20px;min-height:18px;margin:10px 0 4px;"></div>
+      <button onclick="authResetPassword()" style="width:100%;padding:10px;background:#8b5e1a;border:1px solid #c8a84b;border-radius:6px;color:#f0e0c0;font-family:'Cinzel',serif;font-size:21px;cursor:pointer;margin-top:4px;">Réinitialiser</button>
+      <div style="text-align:center;margin-top:14px;">
+        <a onclick="authShowLogin()" style="color:#7a6a50;cursor:pointer;font-size:20px;">← Retour à la connexion</a>
+      </div>
+    </div>
+
+    <!-- REGISTER PANEL -->
+    <div id="auth-register-panel" style="display:none;">
+      <div style="font-family:'Cinzel',serif;color:#c8a84b;font-size:22px;margin-bottom:16px;text-align:center;">Demande de compte</div>
+      <div class="auth-field">
+        <label class="auth-label">Identifiant souhaité</label>
+        <input id="reg-username" type="text" placeholder="min. 3 caractères" class="auth-input">
+      </div>
+      <div class="auth-field" style="margin-top:12px;">
+        <label class="auth-label">Mot de passe</label>
+        <input id="reg-password" type="password" placeholder="••••••••" class="auth-input">
+      </div>
+      <div class="auth-field" style="margin-top:12px;">
+        <label class="auth-label">Confirmer le mot de passe</label>
+        <input id="reg-password2" type="password" placeholder="••••••••" class="auth-input" onkeydown="if(event.key==='Enter')authRegister()">
+      </div>
+      <div id="reg-message" style="font-size:20px;min-height:18px;margin:10px 0 4px;"></div>
+      <button onclick="authRegister()" style="width:100%;padding:10px;background:#2a4a1a;border:1px solid #4a8a2a;border-radius:6px;color:#c0e0a0;font-family:'Cinzel',serif;font-size:21px;cursor:pointer;margin-top:4px;">Envoyer la demande</button>
+      <div style="text-align:center;margin-top:14px;">
+        <a onclick="authShowLogin()" style="color:#7a6a50;cursor:pointer;font-size:20px;">← Retour à la connexion</a>
+      </div>
+    </div>
+
+    <!-- SETUP PANEL supprimé — création compte admin désactivée -->
+  </div>
+</div>
+
+<style>
+.auth-input { width:100%;padding:8px 10px;background:#2a1a08;border:1px solid #5a3a10;border-radius:4px;color:#e8d8b0;font-family:'Crimson Text',serif;font-size:22px;outline:none;box-sizing:border-box; }
+.auth-input:focus { border-color:#c8a84b; }
+.auth-label { font-size:16px;letter-spacing:1px;text-transform:uppercase;color:#7a6a50;display:block;margin-bottom:4px;font-family:'Cinzel',serif; }
+.auth-field {}
+</style>
+
+
+<div id="main-app" style="display:none;">
 <!-- Dragon overlay (gardé pour compatibilité JS) -->
 
 
@@ -1375,21 +1460,6 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
       </div>
       <div id="weapon-picker-info" class="picker-info" style="margin-top:6px;min-height:16px;"></div>
     </div>
-
-    <!-- ── Picker sorts mineurs offensifs ── -->
-    <div class="panel section-gap no-print" style="margin-top:6px;">
-      <div class="panel-title">Ajouter un sort mineur offensif</div>
-      <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;">
-        <div class="field picker-ui" style="flex:2;min-width:200px;">
-          <label>Sort mineur</label>
-          <input type="text" id="search-cantrip-off" placeholder="🔍 Rechercher…" oninput="filterCantripsOffPicker()" style="width:100%;padding:3px 6px;background:var(--panel-bg);border:1px solid var(--border);color:var(--text);font-size:20px;border-radius:3px;margin-bottom:3px;box-sizing:border-box;">
-          <div class="cb-picker" id="cantrip-off-picker"></div>
-        </div>
-        <button class="btn btn-gold" onclick="addCantripsOffFromPicker()" style="align-self:flex-end;">+ Ajouter</button>
-      </div>
-      <div id="cantrip-off-picker-info" class="picker-info" style="margin-top:6px;min-height:16px;font-size:19px;color:var(--text-dim);"></div>
-    </div>
-
     <div class="panel section-gap" style="margin-top:6px;">
       <div class="panel-title">Attaques
         <button class="btn btn-gold btn-sm" style="float:right;" onclick="addAttack()">+ Vide</button>
@@ -2510,32 +2580,6 @@ const SPELLS_DB = [
   { name:"Ennemi subconscient", level:9, school:"Illusion", classes:"Magicien, Occultiste" },
 ];
 
-// ── Sorts mineurs offensifs ──
-const CANTRIPS_OFFENSIFS_DB = [
-  // attack:true  → jet d'attaque de sort (bonus = sort-atk)
-  // attack:false → jet de sauvegarde (bonus affiché = "JS stat DD X")
-  // save : caractéristique du JS de la cible  |  stat : carac. du lanceur si spécifique
-  { name:"Contact glacial",      attack:true,  save:"",    damage:"1d10", damageType:"nécrotique", range:"Toucher", scaling:"niv.5→2d10, niv.11→3d10, niv.17→4d10", desc:"Jet d'attaque de sort. 1d10 nécrotique ; la cible ne peut regagner de PV jusqu'à votre prochain tour." },
-  { name:"Fléau des esprits",    attack:true,  save:"",    damage:"1d8",  damageType:"nécrotique", range:"Toucher", scaling:"niv.5→2d8, niv.11→3d8, niv.17→4d8",   desc:"Jet d'attaque de sort. 1d8 nécrotique ; désavantage aux jets d'attaque de la cible." },
-  { name:"Fouet épineux",        attack:true,  save:"",    damage:"1d6",  damageType:"perforante", range:"9 m",     scaling:"niv.5→2d6, niv.11→3d6, niv.17→4d6",   desc:"Jet d'attaque de sort. 1d6 perforante ; créature G ou moins attirée de 3 m vers vous." },
-  { name:"Poigne électrique",    attack:true,  save:"",    damage:"1d8",  damageType:"foudre",     range:"Toucher", scaling:"niv.5→2d8, niv.11→3d8, niv.17→4d8",   desc:"Jet d'attaque de sort. 1d8 foudre ; désavantage au JS si la cible porte du métal." },
-  { name:"Rayon de givre",       attack:true,  save:"",    damage:"1d8",  damageType:"froid",      range:"18 m",    scaling:"niv.5→2d8, niv.11→3d8, niv.17→4d8",   desc:"Jet d'attaque de sort. 1d8 froid ; vitesse de la cible réduite de 3 m jusqu'au prochain tour." },
-  { name:"Trait de feu",         attack:true,  save:"",    damage:"1d10", damageType:"feu",        range:"36 m",    scaling:"niv.5→2d10, niv.11→3d10, niv.17→4d10",desc:"Jet d'attaque de sort. 1d10 feu. Met le feu aux objets inflammables." },
-  { name:"Trait ensorcelé",      attack:true,  save:"",    damage:"1d10", damageType:"force",      range:"18 m",    scaling:"niv.5→2d10, niv.11→3d10, niv.17→4d10",desc:"Jet d'attaque de sort. 1d10 force." },
-  { name:"Trait sacré",          attack:true,  save:"",    damage:"1d8",  damageType:"radiant",    range:"18 m",    scaling:"niv.5→2d8, niv.11→3d8, niv.17→4d8",   desc:"Jet d'attaque de sort. 1d8 radiant." },
-  { name:"Étincelle de magefeu", attack:true,  save:"",    damage:"1d6",  damageType:"feu",        range:"18 m",    scaling:"niv.5→2d6, niv.11→3d6, niv.17→4d6",   desc:"Jet d'attaque de sort. 1d6 feu. Avantage si la cible est inflammable ou porte du feu." },
-  { name:"Aspersion acide",      attack:false, save:"CON", damage:"2d4",  damageType:"acide",      range:"18 m",    scaling:"niv.5→3d4, niv.11→4d4, niv.17→5d4",   desc:"JS Constitution ou 2d4 acide (2 cibles adjacentes possibles)." },
-  { name:"Bouffée de poison",    attack:false, save:"CON", damage:"2d6",  damageType:"poison",     range:"3 m",     scaling:"niv.5→3d6, niv.11→4d6, niv.17→5d6",   desc:"JS Constitution ou 2d6 poison et empoisonné jusqu'à votre prochain tour." },
-  { name:"Coup au but",          attack:false, save:"—",   damage:"1d6",  damageType:"radiant",    range:"Personnelle", scaling:"niv.5→2d6, niv.11→3d6, niv.17→4d6",desc:"Prochaine attaque ce tour avec Avantage. Si touche : +1d6 radiant." },
-  { name:"Coup de tonnerre",     attack:false, save:"CON", damage:"1d6",  damageType:"tonnerre",   range:"Pers. (sphère 1,5 m)", scaling:"niv.5→2d6, niv.11→3d6, niv.17→4d6", desc:"JS Constitution ou 1d6 tonnerre et repoussé de 3 m." },
-  { name:"Flamme sacrée",        attack:false, save:"DEX", damage:"1d8",  damageType:"radiant",    range:"18 m",    scaling:"niv.5→2d8, niv.11→3d8, niv.17→4d8",   desc:"JS Dextérité ou 1d8 radiant (pas de couverture)." },
-  { name:"Glas",                 attack:false, save:"SAG", damage:"1d8",  damageType:"nécrotique", range:"18 m",    scaling:"niv.5→2d8, niv.11→3d8, niv.17→4d8",   desc:"JS Sagesse : 1d8 nécrotique (ou 1d12 si PV max = 0)." },
-  { name:"Moquerie cruelle",     attack:false, save:"SAG", damage:"1d4",  damageType:"psychique",  range:"18 m",    scaling:"niv.5→2d4, niv.11→3d4, niv.17→4d4",   desc:"JS Sagesse ou 1d4 psychique + désavantage au prochain jet d'attaque." },
-  { name:"Piqûre mentale",       attack:false, save:"INT", damage:"1d6",  damageType:"psychique",  range:"18 m",    scaling:"niv.5→2d6, niv.11→3d6, niv.17→4d6",   desc:"JS Intelligence ou 1d6 psychique." },
-  { name:"Pointe du Fléau",      attack:false, save:"CON", damage:"1d8",  damageType:"nécrotique", range:"18 m",    scaling:"niv.5→2d8, niv.11→3d8, niv.17→4d8",   desc:"Requiert Fléau actif. JS Constitution ou 1d8 nécrotique supplémentaire." },
-  { name:"Poussière d'étoile",   attack:false, save:"CON", damage:"1d4×2",damageType:"radiant",    range:"9 m",     scaling:"niv.5→2d4×2, niv.11→3d4×2, niv.17→4d4×2", desc:"2 éclats de 1d4 radiant + aveuglé jusqu'à fin de votre prochain tour sur chaque échec." },
-];
-
 // ── Base de données des armes D&D 2024 ──
 // { name, cat:'simple'|'martial', type:'melee'|'ranged', stat:'FOR'|'DEX'|'FOR/DEX',
 //   damage, damageType, range, properties, desc }
@@ -3525,7 +3569,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target === e.currentTarget) e.currentTarget.style.display = 'none';
   });
   filterWeaponPicker();
-  filterCantripsOffPicker();
   filterEquipPicker();
   filterFeatPicker();
   renderFeats();
@@ -4370,66 +4413,6 @@ function addAttackFromPicker() {
   }); // end forEach
   picker.querySelectorAll('input').forEach(cb => cb.checked = false);
   updateWeaponPickerInfo();
-  renderAttacks();
-  autoSave();
-}
-
-function filterCantripsOffPicker() {
-  const search = (document.getElementById('search-cantrip-off').value || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-  const picker = document.getElementById('cantrip-off-picker');
-  const filtered = CANTRIPS_OFFENSIFS_DB.filter(c => {
-    return !search || c.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').includes(search);
-  }).sort((a,b) => a.name.localeCompare(b.name, 'fr'));
-  picker.innerHTML = filtered.map(c => `
-    <label class="cb-item">
-      <input type="checkbox" value="${c.name}" onchange="updateCantripsOffPickerInfo()">
-      <span>${c.name}</span>
-      <span style="color:var(--text-dim);margin-left:auto;font-size:18px;">${c.damage} ${c.damageType}</span>
-    </label>`).join('');
-  updateCantripsOffPickerInfo();
-}
-
-function updateCantripsOffPickerInfo() {
-  const picker = document.getElementById('cantrip-off-picker');
-  const info   = document.getElementById('cantrip-off-picker-info');
-  const sel    = Array.from(picker.querySelectorAll('input:checked')).map(cb => cb.value);
-  if (!sel.length) { info.innerHTML = ''; return; }
-  if (sel.length > 1) { info.innerHTML = `<span style="color:var(--gold);">${sel.length} sorts sélectionnés</span>`; return; }
-  const c = CANTRIPS_OFFENSIFS_DB.find(x => x.name === sel[0]);
-  if (!c) return;
-  const atkLabel = c.attack ? 'Jet d'attaque' : (c.save !== '—' ? `JS ${c.save}` : 'Spécial');
-  info.innerHTML = `<strong>${c.name}</strong> · ${atkLabel} · ${c.damage} ${c.damageType} · ${c.range} <span style="color:var(--text-dim);">(${c.scaling})</span>`;
-}
-
-function addCantripsOffFromPicker() {
-  const picker  = document.getElementById('cantrip-off-picker');
-  const selected = Array.from(picker.querySelectorAll('input:checked')).map(cb => cb.value);
-  if (!selected.length) return;
-
-  // Récupère le bonus d'attaque de sort actuel
-  const atkEl  = document.getElementById('spell-atk');
-  const dcEl   = document.getElementById('spell-dc');
-  const atkStr = atkEl ? atkEl.textContent.trim() : '?';
-  const dcStr  = dcEl  ? dcEl.textContent.trim()  : '?';
-
-  selected.forEach(cname => {
-    const c = CANTRIPS_OFFENSIFS_DB.find(x => x.name === cname);
-    if (!c) return;
-    const bonusStr = c.attack
-      ? (atkStr !== '—' ? atkStr : '+?')
-      : (c.save !== '—' ? `JS ${c.save} DD ${dcStr !== '—' ? dcStr : '?'}` : '—');
-    const dmgStr = `${c.damage} ${c.damageType}`;
-    const id = Date.now() + '_' + Math.random();
-    state.attacks.push({
-      id, name: c.name, bonus: bonusStr,
-      dmg:   dmgStr,
-      range: c.range,
-      notes: `Sort mineur · ${c.scaling}`,
-      magicBonus: 0,
-    });
-  });
-  picker.querySelectorAll('input').forEach(cb => cb.checked = false);
-  updateCantripsOffPickerInfo();
   renderAttacks();
   autoSave();
 }
@@ -5519,11 +5502,15 @@ function _getUsers()    { try { return JSON.parse(localStorage.getItem('dnd_auth
 function _saveUsers(u)  { localStorage.setItem('dnd_auth_users', JSON.stringify(u)); }
 function _getSession()  { return localStorage.getItem('dnd_auth_session'); }
 
-function initAuth() {
-  // Auth désactivée — accès direct
-  window.currentUser = { id:'admin', username:'admin', role:'admin', approved:true };
-  loadSheet(true);
-  updateAll();
+async function initAuth() {
+  const users = _getUsers();
+  const session = _getSession();
+  if (session) {
+    const u = users.find(x => x.id === session && x.approved);
+    if (u) { window.currentUser = u; _showApp(); return; }
+  }
+  _showPanel('auth-login-panel');
+  document.getElementById('auth-overlay').style.display = 'flex';
 }
 
 function _showPanel(id) {
@@ -5584,18 +5571,6 @@ function authShowRegister() { _showPanel('auth-register-panel'); document.getEle
 function authShowLogin()    { _showPanel('auth-login-panel');    document.getElementById('auth-error').textContent=''; }
 function authShowReset()    { _showPanel('auth-reset-panel');    document.getElementById('reset-message').textContent=''; document.getElementById('reset-code').value=''; document.getElementById('reset-password').value=''; document.getElementById('reset-password2').value=''; }
 
-async function emergencyBypass() {
-  // Efface tout le localStorage auth et connecte directement
-  localStorage.removeItem('dnd_auth_users');
-  localStorage.removeItem('dnd_auth_session');
-  const hash = await _hashPwd(RESET_SECRET);
-  const newAdmin = { id:'admin', username:'admin', passwordHash:hash, role:'admin', approved:true };
-  _saveUsers([newAdmin]);
-  window.currentUser = newAdmin;
-  localStorage.setItem('dnd_auth_session', 'admin');
-  _showApp();
-}
-
 async function authResetPassword() {
   const code      = document.getElementById('reset-code').value;
   const password  = document.getElementById('reset-password').value;
@@ -5621,12 +5596,9 @@ async function authResetPassword() {
   _saveUsers(users);
   localStorage.removeItem('dnd_auth_session');
 
-  // Auto-login après reset réussi
-  window.currentUser = users.find(u => u.role==='admin') || { id:'admin', username:'admin', role:'admin', approved:true };
-  localStorage.setItem('dnd_auth_session', window.currentUser.id);
   msg.style.color = '#60c060';
-  msg.textContent = '✓ Mot de passe modifié ! Connexion automatique…';
-  setTimeout(_showApp, 1200);
+  msg.textContent = '✓ Mot de passe modifié ! Reconnectez-vous.';
+  setTimeout(authShowLogin, 2000);
 }
 
 function authLogout() {
