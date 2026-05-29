@@ -930,7 +930,8 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
   <div class="tab" onclick="showTab('classe')" id="tab-classe">Classe</div>
   <div class="tab" onclick="showTab('origine')" id="tab-origine">Origine</div>
   <div class="tab" onclick="showTab('competences')">Compétences</div>
-  <div class="tab" onclick="showTab('combat')">Combat &amp; Dons</div>
+  <div class="tab" onclick="showTab('combat')">Combat</div>
+  <div class="tab" onclick="showTab('dons')">Dons</div>
   <div class="tab" onclick="showTab('sorts')">Sorts</div>
   <div class="tab" onclick="showTab('inventaire')">Inventaire</div>
   <div class="tab" onclick="showTab('historique')">Historique</div>
@@ -1287,10 +1288,8 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
 
 </div><!-- fin page-competences -->
 
-<!-- ════════════ PAGE : COMBAT & DONS ════════════ -->
+<!-- ════════════ PAGE : COMBAT ════════════ -->
 <div class="page" id="page-combat">
-
-  <!-- Compétences / Maîtrises & Notes / Capacités → onglet Compétences -->
 
   <!-- ══ COMBAT ══ -->
   <div style="margin-bottom:7px;">
@@ -1362,6 +1361,11 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
       <textarea id="combat-notes" placeholder="Capacités spéciales, notes de combat, conditions…" style="min-height:120px;" oninput="autoSave()"></textarea>
     </div>
   </div>
+
+</div><!-- fin page-combat -->
+
+<!-- ════════════ PAGE : DONS ════════════ -->
+<div class="page" id="page-dons">
 
   <!-- ══ DONS ══ -->
   <div>
@@ -4690,7 +4694,7 @@ function newCharacter() {
     if (el.type === 'checkbox') el.checked = false;
     else el.value = '';
   });
-  ['page-origine','page-competences','page-combat','page-sorts','page-inventaire','page-historique'].forEach(pid => {
+  ['page-origine','page-competences','page-combat','page-dons','page-sorts','page-inventaire','page-historique'].forEach(pid => {
     const pg = document.getElementById(pid);
     if (!pg) return;
     pg.querySelectorAll('input:not([type=button]):not([type=submit]), textarea, select').forEach(el => {
