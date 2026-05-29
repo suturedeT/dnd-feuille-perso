@@ -783,6 +783,12 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
     overflow: hidden !important;
     resize: none !important;
   }
+  #treasure {
+    max-height: none !important;
+    min-height: 200px !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
   input, select { font-size:16px !important; }
   label { font-size:10px !important; }
   .grid-2, .grid-3 { gap: 2px !important; }
@@ -5343,12 +5349,19 @@ function printSheet() {
   allPages.forEach(p => { p.style.display = 'none'; p.classList.remove('print-active'); });
   pages.forEach(p => { p.style.display = 'block'; p.classList.add('print-active'); });
 
+  // Ajuster #treasure à son contenu avant impression
+  const treasureEl = document.getElementById('treasure');
+  const savedTreasureHeight = treasureEl ? treasureEl.style.height : null;
+  if (treasureEl) { treasureEl.style.height = 'auto'; treasureEl.style.height = treasureEl.scrollHeight + 'px'; }
+
   window.addEventListener('afterprint', () => {
     allPages.forEach((p, i) => {
       p.style.display = saved[i].display;
       p.classList.remove('print-active');
       if (saved[i].classes.includes('active')) p.classList.add('active');
     });
+    // Restaurer la hauteur originale
+    if (treasureEl && savedTreasureHeight !== null) treasureEl.style.height = savedTreasureHeight;
   }, { once: true });
 
   window.print();
