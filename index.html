@@ -3894,12 +3894,14 @@ function calcAC() {
   const shieldMagic= num('shield-magic-bonus');
   const otherBonus = num('armor-other-bonus');
   const isUnarmored = (armorKey === 'none');
+  // Sans armure physique = pas d'armure manufacturée (mage-armor/barbare/moine = pas d'armure portée)
+  const isNotWearingArmor = ['none','mage-armor','barbare','moine'].includes(armorKey);
 
   // Objets magiques
   const ringProt  = chk('item-ring-prot')     ? 1 : 0;
   const cloakProt = chk('item-cloak-prot')    ? 1 : 0;
   const iounProt  = chk('item-ioun-prot')     ? 1 : 0;
-  const bracers   = (chk('item-bracers') && isUnarmored && !hasShield) ? 2 : 0;
+  const bracers   = (chk('item-bracers') && isNotWearingArmor && !hasShield) ? 2 : 0;
   const robeArcm  =  chk('item-robe-archmage') && isUnarmored;
 
   // Calcul base + DEX
