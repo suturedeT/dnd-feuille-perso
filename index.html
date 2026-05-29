@@ -1051,7 +1051,6 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
   <div class="tab" onclick="showTab('dons')">Dons</div>
   <div class="tab" onclick="showTab('sorts')">Sorts</div>
   <div class="tab" onclick="showTab('inventaire')">Inventaire</div>
-  <div class="tab" onclick="showTab('historique')">Historique</div>
   <div class="tab" onclick="showTab('des')">Dés</div>
 </div>
 
@@ -1373,7 +1372,7 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
     <div class="panel-title">Langues connues</div>
     <div class="lang-tags" id="languages-list-main" style="min-height:22px;"></div>
     <div style="font-size:14px;font-style:italic;color:var(--text-dim);margin-top:5px;font-family:'Cinzel',serif;letter-spacing:.5px;">
-      → Ajouter / retirer dans l'onglet <strong>Historique</strong>
+      → Ajouter / retirer dans l'onglet <strong>Compétences</strong>
     </div>
   </div>
 
@@ -1388,6 +1387,57 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
       <div class="panel-title">Compétences</div>
       <div id="skills-list"></div>
     </div>
+  </div>
+
+  <!-- ═══ TRAITS DE PERSONNALITÉ ═══ -->
+  <div style="display:flex;gap:6px;margin-bottom:6px;">
+
+    <div class="panel section-gap" style="zoom:1.3;">
+      <div class="panel-title">Monnaie</div>
+      <div class="currency-grid">
+        <div class="coin-box"><div class="coin-lbl">PC</div><div class="coin-icon">🟫</div><input type="number" id="coin-cp" placeholder="0" min="0" oninput="autoSave()"></div>
+        <div class="coin-box"><div class="coin-lbl">PA</div><div class="coin-icon">⬜</div><input type="number" id="coin-sp" placeholder="0" min="0" oninput="autoSave()"></div>
+        <div class="coin-box"><div class="coin-lbl">PE</div><div class="coin-icon">🟡</div><input type="number" id="coin-ep" placeholder="0" min="0" oninput="autoSave()"></div>
+        <div class="coin-box"><div class="coin-lbl">PO</div><div class="coin-icon">🟡</div><input type="number" id="coin-gp" placeholder="0" min="0" oninput="autoSave()"></div>
+        <div class="coin-box"><div class="coin-lbl">PP</div><div class="coin-icon">💎</div><input type="number" id="coin-pp" placeholder="0" min="0" oninput="autoSave()"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel section-gap">
+    <div class="panel-title">Apparence physique</div>
+    <div class="grid-3">
+      <div class="field"><label>Âge</label><input type="text" id="bio-age" oninput="autoSave()"></div>
+      <div class="field"><label>Taille</label><input type="text" id="bio-height" oninput="autoSave()"></div>
+      <div class="field"><label>Poids</label><input type="text" id="bio-weight" oninput="autoSave()"></div>
+      <div class="field"><label>Yeux</label><input type="text" id="bio-eyes" oninput="autoSave()"></div>
+      <div class="field"><label>Cheveux</label><input type="text" id="bio-hair" oninput="autoSave()"></div>
+      <div class="field"><label>Peau</label><input type="text" id="bio-skin" oninput="autoSave()"></div>
+    </div>
+  </div>
+
+  <!-- Langues connues (panneau complet) -->
+  <div class="panel section-gap">
+    <div class="panel-title">Langues connues</div>
+    <div class="no-print" style="display:flex;flex-wrap:wrap;gap:6px;align-items:flex-end;">
+      <div class="field" style="min-width:110px;">
+        <label>Catégorie</label>
+        <select id="filter-lang-cat" onchange="filterLanguagePicker()">
+          <option value="">Toutes</option>
+          <option value="standard">Standard</option>
+          <option value="exotique">Exotique</option>
+          <option value="rare">Rare</option>
+          <option value="secrète">Secrète</option>
+        </select>
+      </div>
+      <div class="field picker-ui" style="flex:2;min-width:160px;">
+        <label>Langue</label>
+        <div class="cb-picker" id="lang-picker" style="max-height:60px;"></div>
+      </div>
+      <button class="btn btn-gold" onclick="addLanguage()" style="white-space:nowrap;align-self:flex-end;">+ Ajouter</button>
+    </div>
+    <div id="lang-picker-info" class="picker-info" style="margin-top:4px;min-height:14px;"></div>
+    <div class="lang-tags" id="languages-list"></div>
   </div>
 
 </div><!-- fin page-competences -->
@@ -1801,60 +1851,6 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
   <div class="panel">
     <div class="panel-title">Trésor &amp; Objets magiques</div>
     <textarea id="treasure" placeholder="Objets magiques, gemmes, œuvres d'art…" style="min-height:100px;" oninput="autoSave()"></textarea>
-  </div>
-</div>
-
-<!-- ════════════ PAGE : HISTORIQUE ════════════ -->
-<div class="page" id="page-historique">
-  <!-- ═══ TRAITS DE PERSONNALITÉ ═══ -->
-  <div style="display:flex;gap:6px;margin-bottom:6px;">
-
-    <div class="panel section-gap" style="zoom:1.3;">
-      <div class="panel-title">Monnaie</div>
-      <div class="currency-grid">
-        <div class="coin-box"><div class="coin-lbl">PC</div><div class="coin-icon">🟫</div><input type="number" id="coin-cp" placeholder="0" min="0" oninput="autoSave()"></div>
-        <div class="coin-box"><div class="coin-lbl">PA</div><div class="coin-icon">⬜</div><input type="number" id="coin-sp" placeholder="0" min="0" oninput="autoSave()"></div>
-        <div class="coin-box"><div class="coin-lbl">PE</div><div class="coin-icon">🟡</div><input type="number" id="coin-ep" placeholder="0" min="0" oninput="autoSave()"></div>
-        <div class="coin-box"><div class="coin-lbl">PO</div><div class="coin-icon">🟡</div><input type="number" id="coin-gp" placeholder="0" min="0" oninput="autoSave()"></div>
-        <div class="coin-box"><div class="coin-lbl">PP</div><div class="coin-icon">💎</div><input type="number" id="coin-pp" placeholder="0" min="0" oninput="autoSave()"></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="panel section-gap">
-    <div class="panel-title">Apparence physique</div>
-    <div class="grid-3">
-      <div class="field"><label>Âge</label><input type="text" id="bio-age" oninput="autoSave()"></div>
-      <div class="field"><label>Taille</label><input type="text" id="bio-height" oninput="autoSave()"></div>
-      <div class="field"><label>Poids</label><input type="text" id="bio-weight" oninput="autoSave()"></div>
-      <div class="field"><label>Yeux</label><input type="text" id="bio-eyes" oninput="autoSave()"></div>
-      <div class="field"><label>Cheveux</label><input type="text" id="bio-hair" oninput="autoSave()"></div>
-      <div class="field"><label>Peau</label><input type="text" id="bio-skin" oninput="autoSave()"></div>
-    </div>
-  </div>
-
-  <!-- Langues connues (panneau complet) -->
-  <div class="panel section-gap">
-    <div class="panel-title">Langues connues</div>
-    <div class="no-print" style="display:flex;flex-wrap:wrap;gap:6px;align-items:flex-end;">
-      <div class="field" style="min-width:110px;">
-        <label>Catégorie</label>
-        <select id="filter-lang-cat" onchange="filterLanguagePicker()">
-          <option value="">Toutes</option>
-          <option value="standard">Standard</option>
-          <option value="exotique">Exotique</option>
-          <option value="rare">Rare</option>
-          <option value="secrète">Secrète</option>
-        </select>
-      </div>
-      <div class="field picker-ui" style="flex:2;min-width:160px;">
-        <label>Langue</label>
-        <div class="cb-picker" id="lang-picker" style="max-height:60px;"></div>
-      </div>
-      <button class="btn btn-gold" onclick="addLanguage()" style="white-space:nowrap;align-self:flex-end;">+ Ajouter</button>
-    </div>
-    <div id="lang-picker-info" class="picker-info" style="margin-top:4px;min-height:14px;"></div>
-    <div class="lang-tags" id="languages-list"></div>
   </div>
 </div>
 
@@ -4895,7 +4891,7 @@ function newCharacter() {
     if (el.type === 'checkbox') el.checked = false;
     else el.value = '';
   });
-  ['page-origine','page-competences','page-combat','page-dons','page-sorts','page-inventaire','page-historique'].forEach(pid => {
+  ['page-origine','page-competences','page-combat','page-dons','page-sorts','page-inventaire'].forEach(pid => {
     const pg = document.getElementById(pid);
     if (!pg) return;
     pg.querySelectorAll('input:not([type=button]):not([type=submit]), textarea, select').forEach(el => {
