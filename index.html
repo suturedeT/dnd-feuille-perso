@@ -157,9 +157,15 @@ header h1 {
     inset 0 0 0 2px var(--border),
     inset 0 0 0 5px var(--panel-bg),
     inset 0 0 0 6px rgba(0,0,0,0.3);
-  padding: 7px 9px 9px;
+  padding: 7px 2mm 9px 9px;  /* 2 mm après le dernier caractère à droite */
   position: relative;
   border-radius: 8px;
+  width: fit-content;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .panel + .panel { margin-top: 6px; }
