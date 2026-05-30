@@ -1652,8 +1652,8 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
     <div class="panel-title">Mes sorts
       <button class="btn btn-gold btn-sm" style="float:right;" onclick="addSpell()">+ Vide</button>
     </div>
-    <div style="display:grid;grid-template-columns:28px 1fr 80px 1fr 28px;gap:4px;font-size:14px;color:var(--red);padding:3px 0;letter-spacing:1px;text-transform:uppercase;border-bottom:1.5px solid var(--border);margin-bottom:3px;font-family:'Cinzel',serif;">
-      <span>Prép.</span><span>Nom</span><span>Niveau</span><span>École / Notes</span><span></span>
+    <div style="display:grid;grid-template-columns:28px 1fr 80px 90px 80px 1fr 28px;gap:4px;font-size:14px;color:var(--red);padding:3px 0;letter-spacing:1px;text-transform:uppercase;border-bottom:1.5px solid var(--border);margin-bottom:3px;font-family:'Cinzel',serif;">
+      <span>Prép.</span><span>Nom</span><span>Niveau</span><span>Action</span><span>Comp.</span><span>École / Notes</span><span></span>
     </div>
     <div id="spells-list"></div>
   </div>
@@ -4732,10 +4732,19 @@ function autoFillSpell(id) {
   const nameEl = document.getElementById('sp-name-'+id);
   const sp = SPELLS_DB.find(s => s.name === nameEl.value);
   if (!sp) return;
-  const lvlEl = document.getElementById('sp-level-'+id);
-  const notesEl = document.getElementById('sp-notes-'+id);
-  lvlEl.value  = String(sp.level);
+  const lvlEl    = document.getElementById('sp-level-'+id);
+  const notesEl  = document.getElementById('sp-notes-'+id);
+  const actionEl = document.getElementById('sp-action-'+id);
+  const compEl   = document.getElementById('sp-comp-'+id);
+  lvlEl.value   = String(sp.level);
   notesEl.value = sp.school + ' — ' + sp.classes;
+  // Auto-remplir action et composantes depuis SPELL_DESC si disponible
+  const desc = SPELL_DESC[sp.name];
+  if (desc) {
+    const parts = desc.split('|').map(p => p.trim());
+    if (actionEl && parts[0]) actionEl.value = parts[0]; // temps d'incantation
+    if (compEl   && parts[2]) compEl.value   = parts[2]; // composantes
+  }
 }
 
 function renderSpells() {
@@ -4743,7 +4752,7 @@ function renderSpells() {
   list.innerHTML = '';
   state.spells.forEach(sp => {
     const row = document.createElement('div');
-    row.style.cssText = 'display:grid;grid-template-columns:36px 1fr 90px 1fr 36px 36px;gap:4px;margin-bottom:4px;align-items:center;';
+    row.style.cssText = 'display:grid;grid-template-columns:36px 1fr 90px 90px 80px 1fr 36px 36px;gap:4px;margin-bottom:4px;align-items:center;';
     row.innerHTML = `
       <div style="text-align:center;"><input type="checkbox" id="sp-prep-${sp.id}" ${sp.prepared?'checked':''} onchange="saveSpell('${sp.id}')" style="accent-color:var(--purple);width:16px;height:16px;"></div>
       <input type="text" id="sp-name-${sp.id}" value="${sp.name||''}" placeholder="Nom du sort…" list="spells-datalist"
@@ -4752,6 +4761,8 @@ function renderSpells() {
         <option value="0" ${sp.level==='0'?'selected':''}>Tour de magie</option>
         ${[1,2,3,4,5,6,7,8,9].map(l=>`<option value="${l}" ${sp.level==l?'selected':''}>${l}</option>`).join('')}
       </select>
+      <input type="text" id="sp-action-${sp.id}" value="${sp.action||''}" placeholder="1 action…" oninput="saveSpell('${sp.id}')" style="font-size:19px;">
+      <input type="text" id="sp-comp-${sp.id}" value="${sp.comp||''}" placeholder="V,S,M…" oninput="saveSpell('${sp.id}')" style="font-size:19px;">
       <input type="text" id="sp-notes-${sp.id}" value="${sp.notes||''}" placeholder="École, classes…" oninput="saveSpell('${sp.id}')">
       <button class="btn btn-sm" title="Description" style="background:var(--panel2);border:1px solid var(--purple);color:var(--purple);padding:2px 4px;font-size:26px;" onclick="showSpellModal(document.getElementById('sp-name-${sp.id}').value)">?</button>
       <button class="btn btn-sm" style="background:var(--accent);padding:2px 6px;" onclick="removeSpell('${sp.id}')">✕</button>
@@ -4766,6 +4777,8 @@ function saveSpell(id) {
   sp.prepared = document.getElementById('sp-prep-'+id).checked;
   sp.name     = document.getElementById('sp-name-'+id).value;
   sp.level    = document.getElementById('sp-level-'+id).value;
+  sp.action   = document.getElementById('sp-action-'+id)?.value || '';
+  sp.comp     = document.getElementById('sp-comp-'+id)?.value   || '';
   sp.notes    = document.getElementById('sp-notes-'+id).value;
   autoSave();
 }
