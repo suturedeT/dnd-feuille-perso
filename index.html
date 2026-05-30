@@ -5000,7 +5000,7 @@ function applyData(data) {
   if (data.state) {
     if (data.state.attacks) { state.attacks = data.state.attacks; renderAttacks(); }
     if (data.state.items)   { state.items   = data.state.items;   renderItems();   }
-    if (data.state.spells)  { state.spells  = data.state.spells;  renderSpells();  }
+    if (data.state.spells)  { state.spells  = data.state.spells;  /* renderSpells() appelé après data.fields */ }
     if (data.state.feats)      { state.feats      = data.state.feats;      renderFeats();      }
     if (data.state.languages)  { state.languages  = data.state.languages;  renderLanguages();  }
     if (data.state.spellSlots) { state.spellSlots = data.state.spellSlots; }
@@ -5052,6 +5052,9 @@ function applyData(data) {
   }
   if (document.getElementById('char-species').value)    onSpeciesChange();
   if (document.getElementById('char-background').value) onBackgroundChange();
+  // renderSpells() ici : data.fields déjà appliqué, les champs sp-action/sp-comp ne seront
+  // pas écrasés. L'auto-fill depuis SPELL_DESC s'applique proprement.
+  if (data.state && data.state.spells) renderSpells();
   updateAll();
 }
 
