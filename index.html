@@ -1652,8 +1652,8 @@ body.print-measuring .ability-skill-row { padding: 0 !important; gap: 2px !impor
     <div class="panel-title">Mes sorts
       <button class="btn btn-gold btn-sm" style="float:right;" onclick="addSpell()">+ Vide</button>
     </div>
-    <div style="display:grid;grid-template-columns:28px 1fr 80px 90px 80px 1fr 28px;gap:4px;font-size:14px;color:var(--red);padding:3px 0;letter-spacing:1px;text-transform:uppercase;border-bottom:1.5px solid var(--border);margin-bottom:3px;font-family:'Cinzel',serif;">
-      <span>Prép.</span><span>Nom</span><span>Niveau</span><span>Action</span><span>Comp.</span><span>École / Notes</span><span></span>
+    <div style="display:grid;grid-template-columns:28px 1fr 80px 90px 80px 1fr 1fr 28px;gap:4px;font-size:14px;color:var(--red);padding:3px 0;letter-spacing:1px;text-transform:uppercase;border-bottom:1.5px solid var(--border);margin-bottom:3px;font-family:'Cinzel',serif;">
+      <span>Prép.</span><span>Nom</span><span>Niveau</span><span>Action</span><span>Comp.</span><span>École / Notes</span><span>Matériel (M)</span><span></span>
     </div>
     <div id="spells-list"></div>
   </div>
@@ -3097,6 +3097,111 @@ const FEATS_DB = [
   { name:"Faveur de vitesse", cat:"faveur épique", prereq:"niveau 19 ou supérieur", desc:"+1 à une caractéristique (max 30). Prestesse : Vitesse +9 m. Expert en désengagement (action Bonus) : entreprendre l'action Désengagement, ce qui met également fin à l'état Agrippé." },
   { name:"Faveur du destin", cat:"faveur épique", prereq:"niveau 19 ou supérieur", desc:"+1 à une caractéristique (max 30). Destin aiguillé (1×/repos court ou long) : quand vous-même ou une créature à 18 m réussit ou rate un Test d20, lancez 2d4 et appliquez le total comme bonus ou malus au résultat." },
 ];
+
+// ── Composantes matérielles des sorts (M) ──
+const SPELL_MATERIAL_DB = {
+  // Sorts mineurs
+  "Aspersion acide":           "acide",
+  "Bouffée de poison":         "herbes ou venin",
+  "Etincelle de magefeu":      "soufre",
+  "Lame aux flammes vertes":   "arme de mêlée (focus)",
+  "Lame retentissante":        "arme de mêlée (focus)",
+  "Shillelagh":                "gui et une feuille de trèfle à quatre feuilles",
+  // Niveau 1
+  "Appel de familier":         "charbon de bois, herbes et encens (10 po, consommés)",
+  "Armure d'Agathys":          "une coupe d'eau",
+  "Armure du mage":            "un morceau de cuir tanné",
+  "Baies nourricières":        "gui, brindille et trèfle à quatre feuilles",
+  "Bénédiction":               "eau bénite",
+  "Bouclier de la foi":        "un brin de parchemin saint",
+  "Détection du poison et de la maladie": "une feuille d'if",
+  "Disque de Tenser":          "une goutte de mercure, un sou en argent et une pincée de poussière",
+  "Identification":            "une perle d'une valeur d'au moins 100 po et un duvet de chouette",
+  "Image silencieuse":         "un bout de toison",
+  "Malédiction":               "l'œil d'une newt (conservé)",
+  "Orbe chromatique":          "un diamant d'au moins 50 po",
+  "Protection contre le bien et le mal": "eau bénite ou poudre de fer et d'argent (consommées)",
+  "Sanctuaire":                "un brin d'if et une petite relique",
+  "Saut":                      "une patte de sauterelle",
+  "Serviteur invisible":       "un brin de ficelle et un morceau de bois",
+  "Simulacre de vie":          "une petite quantité d'alcool ou de spiritueux",
+  "Sommeil":                   "un pétale de rose et du sable fin",
+  "Texte illusoire":           "encre au plomb (10 po, consommée)",
+  "Ténèbres":                  "toile de chauve-souris et une goutte d'encre de pieuvre (5 po)",
+  // Niveau 2
+  "Aide":                      "une bandelette de tissu blanc",
+  "Amélioration de caractéristique": "une touffe de poils de différents animaux",
+  "Augure":                    "baguettes incrustées de joyaux, os, cartes ou dés (25 po)",
+  "Clignotement":              "une patte de grenouille",
+  "Coup de vent":              "une légume frais",
+  "Croissance d'épines":       "sept épines acérées ou sept petites brindilles taillées en pointe",
+  "Flamme éternelle":          "rubis en poudre (50 po, consommé)",
+  "Forme gazeuse":             "un lambeau de tissu moite ou quelques cristaux de fumée",
+  "Invisibilité":              "un cil enrobé de gomme arabique",
+  "Lévitation":                "une petite boucle de cuir ou un crochet en or d'une valeur de 2 po",
+  "Métal brûlant":             "un morceau de fer et une flamme",
+  "Non-détection":             "poudre de diamant, de rubis ou d'opale (25 po, dispersée)",
+  "Nuage de mort":             "champignon poudreux ou fléchette empoisonnée",
+  "Nuage nauséabond":          "un œuf pourri ou plusieurs feuilles de chou gâté",
+  "Orbe de feu":               "une goutte de graisse de mouton et une pincée de soufre",
+  "Peau d'écorce":             "un poignée d'écorce de chêne",
+  "Rayon de lune":             "plusieurs graines de lunaire et un fragment de pierre de lune opalisée",
+  "Souffle du dragon":         "un piment fort",
+  "Verrou magique":            "une barre dorée (25 po, consommée)",
+  // Niveau 3
+  "Animation des morts":       "une goutte de sang, un morceau de chair et une pincée de poudre d'os",
+  "Cercle magique":            "sel, poudre d'argent et craie (100 po, consommés)",
+  "Clairvoyance":              "un focus (corne, cristal ou verre) d'au moins 100 po",
+  "Communication avec les morts": "encens de brûlage",
+  "Convocation de fée":        "une garland florale et 300 po de fée (consommés)",
+  "État cadavérique":          "une pincée de poussière de tombe et quelques gouttes de sang",
+  "Glyphe de garde":           "encens et poudres de diamant (200 po, consommés)",
+  "Image majeure":             "un bout de toison",
+  "Mot de retour":             "une petite cloche en argent et une épingle en argent fin",
+  "Mur de vent":               "une petite paire de soufflets",
+  "Revivification":            "un diamant d'au moins 300 po (consommé)",
+  "Éclairs":                   "un bâton d'ambre, de cristal ou de verre et de la fourrure",
+  // Niveau 4
+  "Aversion ou Attirance":     "un morceau de fer de 50 po ou un magnet",
+  "Banissement":               "un objet vaguement repoussant pour la cible",
+  "Bouclier de feu":           "un morceau de soufre ou de phosphore",
+  "Liberté de mouvement":      "un morceau de cuir",
+  "Métamorphose":              "un cocon de chenille",
+  "Mort simulée":              "une pincée de solanine de belladone",
+  // Niveau 5
+  "Animation des objets":      "du sable, de l'argile ou de la cire",
+  "Cercle de téléportation":   "cendres d'herbes rares (50 po, consommées par usage)",
+  "Châtiment du ban":          "l'icône sacrée de la divinité (focus divin)",
+  "Communion":                 "encens et libation (25 po, consommés)",
+  "Contact de l'ombre":        "un cœur momifié de n'importe quelle créature magique",
+  "Contagion":                 "des poils d'araignée et de la cendre",
+  "Festin des héros":          "bol en or (1 000 po, consommé)",
+  "Légende":                   "des herbes et huiles d'encens (250 po, consommées)",
+  "Mur de pierre":             "un peu de granite",
+  "Nuée d'insectes":           "une pincée de poussière de terre et quelques insectes",
+  "Passage par les arbres":    "un brin de bois vivant d'un arbre",
+  "Rappel à la vie":           "un diamant d'au moins 500 po (consommé)",
+  "Restauration supérieure":   "poudre de diamant (100 po, consommée)",
+  "Réincarner":                "huiles et herbes rares (1 000 po, consommées)",
+  // Niveau 6
+  "Festin des héros":          "bol en or (1 000 po, consommé)",
+  "Sanctification":            "herbes, huiles, encens et poudres d'argent (1 000 po, consommés)",
+  "Pétrification":             "poudre de péridot de corail (500 po)",
+  // Niveau 7
+  "Résurrection":              "un diamant d'au moins 1 000 po (consommé)",
+  "Téléportation":             "un objet appartenant à la destination",
+  // Niveau 8
+  "Pensées dominatrices":      "un peu d'encre de pieuvre",
+  "Tremblement de terre":      "une pincée de sable, un morceau de roche et une boulette d'argile",
+  // Niveau 9
+  "Arrêt du temps":            "de la poudre ou du sable",
+  "Porte de dimension":        "une boite ou d'un sac rempli de poudre de soufre et d'os broyés",
+  "Prémonition":               "une plume de colibri",
+  "Souhait":                   "— (aucune composante matérielle, mais un coût énorme en sort)",
+  "Tempête vengeresse":        "bol en or (1 000 po, consommé)",
+  "Vraie Résurrection":        "diamants (25 000 po, consommés)",
+  "Porte":                     "un diamant d'au moins 5 000 po (consommé)",
+};
 
 // ── Descriptions des sorts (Incantation | Portée | Durée | Effet) ──
 const SPELL_DESC = {
@@ -4736,6 +4841,7 @@ function autoFillSpell(id) {
   const notesEl  = document.getElementById('sp-notes-'+id);
   const actionEl = document.getElementById('sp-action-'+id);
   const compEl   = document.getElementById('sp-comp-'+id);
+  const matEl    = document.getElementById('sp-mat-'+id);
   lvlEl.value   = String(sp.level);
   notesEl.value = sp.school + ' — ' + sp.classes;
   // Auto-remplir action et composantes depuis SPELL_DESC si disponible
@@ -4745,6 +4851,13 @@ function autoFillSpell(id) {
     if (actionEl && parts[0]) actionEl.value = parts[0]; // temps d'incantation
     if (compEl   && parts[2]) compEl.value   = parts[2]; // composantes
   }
+  // Auto-remplir matériel depuis SPELL_MATERIAL_DB
+  if (matEl && SPELL_MATERIAL_DB[sp.name]) {
+    matEl.value = SPELL_MATERIAL_DB[sp.name];
+    matEl.style.opacity = '1';
+  } else if (matEl) {
+    matEl.style.opacity = compEl && compEl.value.includes('M') ? '1' : '0.3';
+  }
 }
 
 function renderSpells() {
@@ -4752,17 +4865,19 @@ function renderSpells() {
   list.innerHTML = '';
   let needsSave = false;
   state.spells.forEach(sp => {
-    // Auto-remplir action/comp depuis SPELL_DESC si le champ est vide et le sort connu
-    if (sp.name && (!sp.action || !sp.comp)) {
+    // Auto-remplir action/comp/mat depuis SPELL_DESC et SPELL_MATERIAL_DB si le champ est vide et le sort connu
+    if (sp.name && (!sp.action || !sp.comp || !sp.mat)) {
       const desc = SPELL_DESC[sp.name];
       if (desc) {
         const parts = desc.split('|').map(p => p.trim());
         if (!sp.action && parts[0]) { sp.action = parts[0]; needsSave = true; }
         if (!sp.comp   && parts[2]) { sp.comp   = parts[2]; needsSave = true; }
       }
+      if (!sp.mat && SPELL_MATERIAL_DB[sp.name]) { sp.mat = SPELL_MATERIAL_DB[sp.name]; needsSave = true; }
     }
+    const hasMat = sp.comp && sp.comp.includes('M');
     const row = document.createElement('div');
-    row.style.cssText = 'display:grid;grid-template-columns:36px 1fr 90px 90px 80px 1fr 36px 36px;gap:4px;margin-bottom:4px;align-items:center;';
+    row.style.cssText = 'display:grid;grid-template-columns:36px 1fr 90px 90px 80px 1fr 1fr 36px 36px;gap:4px;margin-bottom:4px;align-items:center;';
     row.innerHTML = `
       <div style="text-align:center;"><input type="checkbox" id="sp-prep-${sp.id}" ${sp.prepared?'checked':''} onchange="saveSpell('${sp.id}')" style="accent-color:var(--purple);width:16px;height:16px;"></div>
       <input type="text" id="sp-name-${sp.id}" value="${sp.name||''}" placeholder="Nom du sort…" list="spells-datalist"
@@ -4772,8 +4887,9 @@ function renderSpells() {
         ${[1,2,3,4,5,6,7,8,9].map(l=>`<option value="${l}" ${sp.level==l?'selected':''}>${l}</option>`).join('')}
       </select>
       <input type="text" id="sp-action-${sp.id}" value="${sp.action||''}" placeholder="1 action…" oninput="saveSpell('${sp.id}')" style="font-size:19px;">
-      <input type="text" id="sp-comp-${sp.id}" value="${sp.comp||''}" placeholder="V,S,M…" oninput="saveSpell('${sp.id}')" style="font-size:19px;">
+      <input type="text" id="sp-comp-${sp.id}" value="${sp.comp||''}" placeholder="V,S,M…" oninput="saveSpell('${sp.id}');updateMatVisibility('${sp.id}')" style="font-size:19px;">
       <input type="text" id="sp-notes-${sp.id}" value="${sp.notes||''}" placeholder="École, classes…" oninput="saveSpell('${sp.id}')">
+      <input type="text" id="sp-mat-${sp.id}" value="${sp.mat||''}" placeholder="Composante M…" oninput="saveSpell('${sp.id}')" style="font-size:15px;${hasMat?'':'opacity:0.3;'}">
       <button class="btn btn-sm" title="Description" style="background:var(--panel2);border:1px solid var(--purple);color:var(--purple);padding:2px 4px;font-size:26px;" onclick="showSpellModal(document.getElementById('sp-name-${sp.id}').value)">?</button>
       <button class="btn btn-sm" style="background:var(--accent);padding:2px 6px;" onclick="removeSpell('${sp.id}')">✕</button>
     `;
@@ -4791,7 +4907,15 @@ function saveSpell(id) {
   sp.action   = document.getElementById('sp-action-'+id)?.value || '';
   sp.comp     = document.getElementById('sp-comp-'+id)?.value   || '';
   sp.notes    = document.getElementById('sp-notes-'+id).value;
+  sp.mat      = document.getElementById('sp-mat-'+id)?.value    || '';
   autoSave();
+}
+
+function updateMatVisibility(id) {
+  const compEl = document.getElementById('sp-comp-'+id);
+  const matEl  = document.getElementById('sp-mat-'+id);
+  if (!compEl || !matEl) return;
+  matEl.style.opacity = compEl.value.includes('M') ? '1' : '0.3';
 }
 
 // ══════════════════════════════════════════
