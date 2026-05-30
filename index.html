@@ -4750,7 +4750,17 @@ function autoFillSpell(id) {
 function renderSpells() {
   const list = document.getElementById('spells-list');
   list.innerHTML = '';
+  let needsSave = false;
   state.spells.forEach(sp => {
+    // Auto-remplir action/comp depuis SPELL_DESC si le champ est vide et le sort connu
+    if (sp.name && (!sp.action || !sp.comp)) {
+      const desc = SPELL_DESC[sp.name];
+      if (desc) {
+        const parts = desc.split('|').map(p => p.trim());
+        if (!sp.action && parts[0]) { sp.action = parts[0]; needsSave = true; }
+        if (!sp.comp   && parts[2]) { sp.comp   = parts[2]; needsSave = true; }
+      }
+    }
     const row = document.createElement('div');
     row.style.cssText = 'display:grid;grid-template-columns:36px 1fr 90px 90px 80px 1fr 36px 36px;gap:4px;margin-bottom:4px;align-items:center;';
     row.innerHTML = `
@@ -4769,6 +4779,7 @@ function renderSpells() {
     `;
     list.appendChild(row);
   });
+  if (needsSave) autoSave();
 }
 
 function saveSpell(id) {
